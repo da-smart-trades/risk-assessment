@@ -1,0 +1,795 @@
+{
+  "fallbackType": "unknown",
+  "pages": {
+    "about": {
+      "customTypes": [
+        "AboutPage"
+      ],
+      "handler": "about",
+      "propsType": "AboutPage",
+      "route": "/about",
+      "tsType": "AboutPage",
+      "wrapWithContent": true
+    },
+    "admin/audit/list": {
+      "customTypes": [
+        "AuditLogItem",
+        "AuditLogPage"
+      ],
+      "handler": "list_audit_logs",
+      "propsType": "AuditLogPage",
+      "route": "/admin/audit",
+      "schemaRef": "#/components/schemas/AuditLogPage",
+      "tsType": "AuditLogPage",
+      "wrapWithContent": true
+    },
+    "admin/dashboard": {
+      "customTypes": [
+        "AdminDashboardPage",
+        "AdminStats",
+        "AuditLogItem"
+      ],
+      "handler": "dashboard",
+      "propsType": "AdminDashboardPage",
+      "route": "/admin",
+      "schemaRef": "#/components/schemas/AdminDashboardPage",
+      "tsType": "AdminDashboardPage",
+      "wrapWithContent": true
+    },
+    "admin/market-config/create": {
+      "customTypes": [
+        "AdminMarketConfigCreatePage"
+      ],
+      "handler": "create_page",
+      "propsType": "AdminMarketConfigCreatePage",
+      "route": "/admin/market-config/create",
+      "schemaRef": "#/components/schemas/AdminMarketConfigCreatePage",
+      "tsType": "AdminMarketConfigCreatePage",
+      "wrapWithContent": true
+    },
+    "admin/market-config/edit": {
+      "customTypes": [
+        "AdminMarketConfigEditPage",
+        "MarketConfig"
+      ],
+      "handler": "edit_page",
+      "propsType": "AdminMarketConfigEditPage",
+      "route": "/admin/market-config/{market_config_id}",
+      "schemaRef": "#/components/schemas/AdminMarketConfigEditPage",
+      "tsType": "AdminMarketConfigEditPage",
+      "wrapWithContent": true
+    },
+    "admin/market-config/list": {
+      "customTypes": [
+        "AdminMarketConfigListPage",
+        "MarketConfig"
+      ],
+      "handler": "list_page",
+      "propsType": "AdminMarketConfigListPage",
+      "route": "/admin/market-config",
+      "schemaRef": "#/components/schemas/AdminMarketConfigListPage",
+      "tsType": "AdminMarketConfigListPage",
+      "wrapWithContent": true
+    },
+    "admin/operator/promotion": {
+      "handler": "show",
+      "propsType": "{}",
+      "route": "/admin/operator/promotion"
+    },
+    "admin/teams/detail": {
+      "customTypes": [
+        "AdminTeamDetail",
+        "AdminTeamDetailPage"
+      ],
+      "handler": "get_team",
+      "propsType": "AdminTeamDetailPage",
+      "route": "/admin/teams/{team_id}",
+      "schemaRef": "#/components/schemas/AdminTeamDetailPage",
+      "tsType": "AdminTeamDetailPage",
+      "wrapWithContent": true
+    },
+    "admin/teams/list": {
+      "customTypes": [
+        "AdminTeamListItem",
+        "AdminTeamListPage"
+      ],
+      "handler": "list_teams",
+      "propsType": "AdminTeamListPage",
+      "route": "/admin/teams",
+      "schemaRef": "#/components/schemas/AdminTeamListPage",
+      "tsType": "AdminTeamListPage",
+      "wrapWithContent": true
+    },
+    "admin/users/create": {
+      "customTypes": [
+        "AdminUserCreatePage",
+        "RoleOption"
+      ],
+      "handler": "create_user_page",
+      "propsType": "AdminUserCreatePage",
+      "route": "/admin/users/create",
+      "schemaRef": "#/components/schemas/AdminUserCreatePage",
+      "tsType": "AdminUserCreatePage",
+      "wrapWithContent": true
+    },
+    "admin/users/detail": {
+      "customTypes": [
+        "AdminUserDetail",
+        "AdminUserDetailPage",
+        "RoleOption"
+      ],
+      "handler": "get_user",
+      "propsType": "AdminUserDetailPage",
+      "route": "/admin/users/{user_id}",
+      "schemaRef": "#/components/schemas/AdminUserDetailPage",
+      "tsType": "AdminUserDetailPage",
+      "wrapWithContent": true
+    },
+    "admin/users/list": {
+      "customTypes": [
+        "AdminUserListItem",
+        "AdminUserListPage",
+        "RoleOption"
+      ],
+      "handler": "list_users",
+      "propsType": "AdminUserListPage",
+      "route": "/admin/users",
+      "schemaRef": "#/components/schemas/AdminUserListPage",
+      "tsType": "AdminUserListPage",
+      "wrapWithContent": true
+    },
+    "admin/weighting-profiles/create": {
+      "customTypes": [
+        "AdminWeightingProfileCreatePage",
+        "TeamScopeOption"
+      ],
+      "handler": "create_page",
+      "propsType": "AdminWeightingProfileCreatePage",
+      "route": "/admin/weighting-profiles/create",
+      "schemaRef": "#/components/schemas/AdminWeightingProfileCreatePage",
+      "tsType": "AdminWeightingProfileCreatePage",
+      "wrapWithContent": true
+    },
+    "admin/weighting-profiles/edit": {
+      "customTypes": [
+        "AdminWeightingProfileEditPage",
+        "TeamScopeOption",
+        "WeightingProfile"
+      ],
+      "handler": "edit_page",
+      "propsType": "AdminWeightingProfileEditPage",
+      "route": "/admin/weighting-profiles/{profile_id}",
+      "schemaRef": "#/components/schemas/AdminWeightingProfileEditPage",
+      "tsType": "AdminWeightingProfileEditPage",
+      "wrapWithContent": true
+    },
+    "admin/weighting-profiles/list": {
+      "customTypes": [
+        "AdminWeightingProfileListPage",
+        "TeamScopeOption",
+        "WeightingProfile"
+      ],
+      "handler": "list_page",
+      "propsType": "AdminWeightingProfileListPage",
+      "route": "/admin/weighting-profiles",
+      "schemaRef": "#/components/schemas/AdminWeightingProfileListPage",
+      "tsType": "AdminWeightingProfileListPage",
+      "wrapWithContent": true
+    },
+    "alerts/history": {
+      "customTypes": [
+        "Alert",
+        "AlertHistory",
+        "AlertHistoryListPage"
+      ],
+      "handler": "history_page",
+      "propsType": "AlertHistoryListPage",
+      "route": "/alerts/{alert_id}/history",
+      "schemaRef": "#/components/schemas/AlertHistoryListPage",
+      "tsType": "AlertHistoryListPage",
+      "wrapWithContent": true
+    },
+    "alerts/integrations": {
+      "customTypes": [
+        "AlertIntegration",
+        "AlertIntegrationListPage"
+      ],
+      "handler": "integrations_page",
+      "propsType": "AlertIntegrationListPage",
+      "route": "/alerts/integrations",
+      "schemaRef": "#/components/schemas/AlertIntegrationListPage",
+      "tsType": "AlertIntegrationListPage",
+      "wrapWithContent": true
+    },
+    "alerts/list": {
+      "customTypes": [
+        "Alert",
+        "AlertListPage"
+      ],
+      "handler": "list_page",
+      "propsType": "AlertListPage",
+      "route": "/alerts",
+      "schemaRef": "#/components/schemas/AlertListPage",
+      "tsType": "AlertListPage",
+      "wrapWithContent": true
+    },
+    "auth/account-disabled": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "account_disabled",
+      "propsType": "NoProps",
+      "route": "/auth/account-disabled",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/confirm-password": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "show_confirm_password",
+      "propsType": "NoProps",
+      "route": "/confirm-password",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/force-password-change": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "show",
+      "propsType": "NoProps",
+      "route": "/auth/force-password-change",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/forgot-password": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "show_forgot",
+      "propsType": "NoProps",
+      "route": "/auth/forgot-password",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/idp-config-required": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "idp_config_required",
+      "propsType": "NoProps",
+      "route": "/auth/idp-config-required",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/invitation-required": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "invitation_required",
+      "propsType": "NoProps",
+      "route": "/auth/invitation-required",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/link-confirm": {
+      "handler": "show",
+      "propsType": "{}",
+      "route": "/auth/link-confirm",
+      "wrapWithContent": true
+    },
+    "auth/locked": {
+      "handler": "show_locked",
+      "propsType": "any",
+      "route": "/auth/locked",
+      "wrapWithContent": true
+    },
+    "auth/login": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "show_login",
+      "propsType": "NoProps",
+      "route": "/login",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/mfa": {
+      "customTypes": [
+        "MfaVerifyPage"
+      ],
+      "handler": "verify_page",
+      "propsType": "MfaVerifyPage",
+      "route": "/auth/mfa",
+      "tsType": "MfaVerifyPage",
+      "wrapWithContent": true
+    },
+    "auth/mfa-challenge": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "show_challenge",
+      "propsType": "NoProps",
+      "route": "/mfa-challenge",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/no-team": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "no_team",
+      "propsType": "NoProps",
+      "route": "/auth/no-team",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/operator-setup-required": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "operator_setup_required",
+      "propsType": "NoProps",
+      "route": "/auth/operator-setup-required",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/reauth": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "show",
+      "propsType": "NoProps",
+      "route": "/auth/reauth",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/reset-password": {
+      "customTypes": [
+        "PasswordResetToken"
+      ],
+      "handler": "show_reset",
+      "propsType": "PasswordResetToken",
+      "route": "/auth/reset/{token}",
+      "tsType": "PasswordResetToken",
+      "wrapWithContent": true
+    },
+    "auth/team-policy": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "team_policy",
+      "propsType": "NoProps",
+      "route": "/auth/team-policy",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "auth/verify-email": {
+      "customTypes": [
+        "VerifyEmailPage"
+      ],
+      "handler": "verify_email",
+      "propsType": "VerifyEmailPage",
+      "route": "/verify-email",
+      "tsType": "VerifyEmailPage",
+      "wrapWithContent": true
+    },
+    "auth/wrong-provider": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "wrong_provider",
+      "propsType": "NoProps",
+      "route": "/auth/wrong-provider",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "chain/list": {
+      "customTypes": [
+        "ChainListPage"
+      ],
+      "handler": "list_chains",
+      "propsType": "ChainListPage",
+      "route": "/chains",
+      "tsType": "ChainListPage",
+      "wrapWithContent": true
+    },
+    "chain/show": {
+      "customTypes": [
+        "ChainShowPage"
+      ],
+      "handler": "show_chain",
+      "propsType": "ChainShowPage",
+      "route": "/chains/{chain_name}",
+      "tsType": "ChainShowPage",
+      "wrapWithContent": true
+    },
+    "dashboard": {
+      "customTypes": [
+        "DashboardPage",
+        "DashboardSummary",
+        "ResolvedFavorite"
+      ],
+      "handler": "dashboard",
+      "propsType": "DashboardPage",
+      "route": "/dashboard",
+      "tsType": "DashboardPage",
+      "wrapWithContent": true
+    },
+    "invitation/accept": {
+      "customTypes": [
+        "InvitationAcceptPage",
+        "OidcProviderOption",
+        "TeamInvitationDetail"
+      ],
+      "handler": "get_invitation_page",
+      "propsType": "InvitationAcceptPage",
+      "route": "/invitations/{token}",
+      "tsType": "InvitationAcceptPage",
+      "wrapWithContent": true
+    },
+    "invitation/list": {
+      "customTypes": [
+        "UserPendingInvitation",
+        "UserPendingInvitationsPage"
+      ],
+      "handler": "get_user_invitations",
+      "propsType": "UserPendingInvitationsPage",
+      "route": "/invitations",
+      "schemaRef": "#/components/schemas/UserPendingInvitationsPage",
+      "tsType": "UserPendingInvitationsPage",
+      "wrapWithContent": true
+    },
+    "landing": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "landing",
+      "propsType": "NoProps",
+      "route": "/landing",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "legal/privacy-policy": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "privacy_policy",
+      "propsType": "NoProps",
+      "route": "/privacy-policy",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "legal/terms-of-service": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "terms_of_service",
+      "propsType": "NoProps",
+      "route": "/terms-of-service",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "manual-metrics/admin/create": {
+      "customTypes": [
+        "ManualMetric",
+        "ManualMetricGroup",
+        "ManualMetricListPage",
+        "MetricCategory",
+        "TeamOption"
+      ],
+      "handler": "admin_create_page",
+      "propsType": "ManualMetricListPage",
+      "route": "/manual-metrics/admin/create",
+      "schemaRef": "#/components/schemas/ManualMetricListPage",
+      "tsType": "ManualMetricListPage",
+      "wrapWithContent": true
+    },
+    "manual-metrics/admin/edit": {
+      "customTypes": [
+        "ManualMetric",
+        "ManualMetricGroup",
+        "ManualMetricListPage",
+        "MetricCategory",
+        "TeamOption"
+      ],
+      "handler": "admin_edit_page",
+      "propsType": "ManualMetricListPage",
+      "route": "/manual-metrics/admin/{metric_id}",
+      "schemaRef": "#/components/schemas/ManualMetricListPage",
+      "tsType": "ManualMetricListPage",
+      "wrapWithContent": true
+    },
+    "manual-metrics/admin/list": {
+      "customTypes": [
+        "ManualMetric",
+        "ManualMetricGroup",
+        "ManualMetricListPage",
+        "MetricCategory",
+        "TeamOption"
+      ],
+      "handler": "admin_list_page",
+      "propsType": "ManualMetricListPage",
+      "route": "/manual-metrics/admin",
+      "schemaRef": "#/components/schemas/ManualMetricListPage",
+      "tsType": "ManualMetricListPage",
+      "wrapWithContent": true
+    },
+    "manual-metrics/list": {
+      "customTypes": [
+        "ManualMetric",
+        "ManualMetricGroup",
+        "ManualMetricListPage",
+        "MetricCategory",
+        "TeamOption"
+      ],
+      "handler": "list_page",
+      "propsType": "ManualMetricListPage",
+      "route": "/manual-metrics",
+      "schemaRef": "#/components/schemas/ManualMetricListPage",
+      "tsType": "ManualMetricListPage",
+      "wrapWithContent": true
+    },
+    "market/list": {
+      "customTypes": [
+        "MarketListItem",
+        "MarketListPage"
+      ],
+      "handler": "list_markets",
+      "propsType": "MarketListPage",
+      "route": "/markets",
+      "tsType": "MarketListPage",
+      "wrapWithContent": true
+    },
+    "market/show": {
+      "customTypes": [
+        "AppliedWeightingProfile",
+        "AssuranceItem",
+        "DashboardOption",
+        "MarketListItem",
+        "MarketScoring",
+        "MarketShowPage",
+        "PdBreakdown",
+        "ScoreTrendPoint"
+      ],
+      "handler": "show_market",
+      "propsType": "MarketShowPage",
+      "route": "/markets/{protocol}/{chain_id}/{market_id_hex}",
+      "tsType": "MarketShowPage",
+      "wrapWithContent": true
+    },
+    "profile/edit": {
+      "customTypes": [
+        "Message"
+      ],
+      "handler": "profile",
+      "propsType": "Message",
+      "route": "/profile",
+      "tsType": "Message",
+      "wrapWithContent": true
+    },
+    "protocol/list": {
+      "customTypes": [
+        "ProtocolListPage"
+      ],
+      "handler": "list_protocols",
+      "propsType": "ProtocolListPage",
+      "route": "/protocols",
+      "tsType": "ProtocolListPage",
+      "wrapWithContent": true
+    },
+    "protocol/show": {
+      "customTypes": [
+        "ProtocolShowPage"
+      ],
+      "handler": "show_protocol",
+      "propsType": "ProtocolShowPage",
+      "route": "/protocols/{protocol_name}",
+      "tsType": "ProtocolShowPage",
+      "wrapWithContent": true
+    },
+    "security-reports/admin/list": {
+      "customTypes": [
+        "SecurityReport",
+        "SecurityReportListPage"
+      ],
+      "handler": "admin_list_page",
+      "propsType": "SecurityReportListPage",
+      "route": "/security-reports/admin",
+      "schemaRef": "#/components/schemas/SecurityReportListPage",
+      "tsType": "SecurityReportListPage",
+      "wrapWithContent": true
+    },
+    "security-reports/admin/upload": {
+      "customTypes": [
+        "SecurityReport",
+        "SecurityReportListPage"
+      ],
+      "handler": "admin_upload_page",
+      "propsType": "SecurityReportListPage",
+      "route": "/security-reports/admin/upload",
+      "schemaRef": "#/components/schemas/SecurityReportListPage",
+      "tsType": "SecurityReportListPage",
+      "wrapWithContent": true
+    },
+    "security-reports/list": {
+      "customTypes": [
+        "SecurityReport",
+        "SecurityReportListPage"
+      ],
+      "handler": "list_page",
+      "propsType": "SecurityReportListPage",
+      "route": "/security-reports",
+      "schemaRef": "#/components/schemas/SecurityReportListPage",
+      "tsType": "SecurityReportListPage",
+      "wrapWithContent": true
+    },
+    "settings/security/mfa-enroll": {
+      "customTypes": [
+        "MfaEnrollmentPage"
+      ],
+      "handler": "enroll_page",
+      "propsType": "MfaEnrollmentPage",
+      "route": "/settings/security/mfa/enroll",
+      "tsType": "MfaEnrollmentPage",
+      "wrapWithContent": true
+    },
+    "team/create": {
+      "customTypes": [
+        "NoProps"
+      ],
+      "handler": "create_team_page",
+      "propsType": "NoProps",
+      "route": "/teams/create",
+      "schemaRef": "#/components/schemas/NoProps",
+      "tsType": "NoProps",
+      "wrapWithContent": true
+    },
+    "team/edit": {
+      "customTypes": [
+        "Team",
+        "TeamMember",
+        "TeamTag"
+      ],
+      "handler": "update_team",
+      "propsType": "Team",
+      "route": "/teams/{team_slug}",
+      "schemaRef": "#/components/schemas/Team",
+      "tsType": "Team",
+      "wrapWithContent": true
+    },
+    "team/enforcement": {
+      "handler": "show",
+      "propsType": "{}",
+      "route": "/teams/{team_id}/enforcement"
+    },
+    "team/invitations": {
+      "customTypes": [
+        "TeamDetail",
+        "TeamInvitationItem",
+        "TeamInvitationsPage",
+        "TeamPermissions"
+      ],
+      "handler": "get_team_invitations",
+      "propsType": "TeamInvitationsPage",
+      "route": "/teams/{team_slug}/invitations",
+      "schemaRef": "#/components/schemas/TeamInvitationsPage",
+      "tsType": "TeamInvitationsPage",
+      "wrapWithContent": true
+    },
+    "team/list": {
+      "customTypes": [
+        "TeamListItem",
+        "TeamListPage"
+      ],
+      "handler": "list_teams",
+      "propsType": "TeamListPage",
+      "route": "/teams",
+      "schemaRef": "#/components/schemas/TeamListPage",
+      "tsType": "TeamListPage",
+      "wrapWithContent": true
+    },
+    "team/settings": {
+      "customTypes": [
+        "TeamDetail",
+        "TeamDetailPage",
+        "TeamInvitationItem",
+        "TeamPageMember",
+        "TeamPermissions"
+      ],
+      "handler": "get_team_settings",
+      "propsType": "TeamDetailPage",
+      "route": "/teams/{team_slug}/settings",
+      "schemaRef": "#/components/schemas/TeamDetailPage",
+      "tsType": "TeamDetailPage",
+      "wrapWithContent": true
+    },
+    "team/show": {
+      "customTypes": [
+        "TeamDetail",
+        "TeamDetailPage",
+        "TeamInvitationItem",
+        "TeamPageMember",
+        "TeamPermissions"
+      ],
+      "handler": "get_team",
+      "propsType": "TeamDetailPage",
+      "route": "/teams/{team_slug}",
+      "schemaRef": "#/components/schemas/TeamDetailPage",
+      "tsType": "TeamDetailPage",
+      "wrapWithContent": true
+    },
+    "token/list": {
+      "customTypes": [
+        "TokenListPage"
+      ],
+      "handler": "list_tokens",
+      "propsType": "TokenListPage",
+      "route": "/tokens",
+      "tsType": "TokenListPage",
+      "wrapWithContent": true
+    },
+    "token/show": {
+      "customTypes": [
+        "TokenShowPage"
+      ],
+      "handler": "show_token",
+      "propsType": "TokenShowPage",
+      "route": "/tokens/{token_name}",
+      "tsType": "TokenShowPage",
+      "wrapWithContent": true
+    }
+  },
+  "sharedProps": {
+    "auth": {
+      "optional": true,
+      "type": "AuthData"
+    },
+    "canResetPassword": {
+      "optional": true,
+      "type": "boolean"
+    },
+    "csrf_token": {
+      "optional": true,
+      "type": "string"
+    },
+    "currentTeam": {
+      "optional": true,
+      "type": "CurrentTeam"
+    },
+    "errors": {
+      "optional": true,
+      "type": "Record<string, string[]>"
+    },
+    "flash": {
+      "optional": true,
+      "type": "FlashMessages"
+    },
+    "githubOAuthEnabled": {
+      "optional": true,
+      "type": "boolean"
+    },
+    "googleOAuthEnabled": {
+      "optional": true,
+      "type": "boolean"
+    },
+    "hasTermsAndPrivacyPolicyFeature": {
+      "optional": true,
+      "type": "boolean"
+    },
+    "microsoftOAuthEnabled": {
+      "optional": true,
+      "type": "boolean"
+    },
+    "mustVerifyEmail": {
+      "optional": true,
+      "type": "boolean"
+    }
+  },
+  "typeGenConfig": {
+    "includeDefaultAuth": true,
+    "includeDefaultFlash": true
+  },
+  "typeImportPaths": {}
+}

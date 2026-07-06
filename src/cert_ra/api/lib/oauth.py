@@ -1,0 +1,204 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (C) 2026 Certora
+
+# pylint: disable=[invalid-name,import-outside-toplevel]
+from __future__ import annotations
+
+from functools import cache
+from typing import TYPE_CHECKING, Any, Dict, List, TypeAlias, Union  # noqa: UP035
+
+from httpx_oauth.clients.github import GitHubOAuth2
+from httpx_oauth.clients.google import GoogleOAuth2
+from httpx_oauth.oauth2 import BaseOAuth2, GetAccessTokenError, OAuth2Error, OAuth2Token
+from litestar import status_codes as status
+from litestar.exceptions import HTTPException, ValidationException
+from litestar.params import Parameter
+from litestar.plugins import InitPluginProtocol
+
+from cert_ra.settings.api import get_app_settings
+
+if TYPE_CHECKING:
+    import httpx
+    from litestar import Request
+    from litestar.config.app import AppConfig
+
+
+AccessTokenState: TypeAlias = tuple[OAuth2Token, str | None]  # noqa: UP040
+
+
+class OAuth2AuthorizeCallbackError(OAuth2Error, HTTPException):
+    """Error raised when an error occurs during the OAuth2 authorization callback.
+
+    It inherits from [HTTPException][litestar.exceptions.HTTPException], so you can either keep
+    the default Litestar error handling or implement something dedicated.
+
+    !!! Note
+        Due to the way the base `LitestarException` handles the `detail` argument,
+        the `OAuth2Error` is ordered first here
+    """
+
+    def __init__(
+        self,
+        status_code: int,
+        detail: Any = None,  # noqa: ANN401
+        headers: Union[Dict[str, str], None] = None,  # noqa: UP007, UP006
+        response: Union[httpx.Response, None] = None,  # noqa: UP007
+        extra: Union[Dict[str, Any], List[Any]] | None = None,  # noqa: UP007, UP006
+    ) -> None:
+        """Oauth2 Authorizer."""
+        OAuth2Error.__init__(self, message=detail)
+        HTTPException.__init__(
+            self,
+            detail=detail,
+            status_code=status_code,
+            extra=extra,
+            headers=headers,
+        )
+        self.response = response
+
+
+class OAuth2AuthorizeCallback:
+    """Dependency callable to handle the authorization callback. It reads the query parameters and returns the access token and the state.
+
+    Examples:
+        ```py
+        from litestar import get
+        from httpx_oauth.integrations.litestar import OAuth2AuthorizeCallback
+        from httpx_oauth.oauth2 import OAuth2
+
+        client = OAuth2("CLIENT_ID", "CLIENT_SECRET", "AUTHORIZE_ENDPOINT", "ACCESS_TOKEN_ENDPOINT")
+        oauth2_authorize_callback = OAuth2AuthorizeCallback(client, "oauth-callback")
+
+        @get("/oauth-callback", name="oauth-callback", dependencies={"access_token_state": Provide(oauth2_authorize_callback)})
+        async def oauth_callback(access_token_state: AccessTokenState)) -> Response:
+            token, state = access_token_state
+            # Do something useful
+        ```
+    """
+
+    client: BaseOAuth2
+    route_name: str | None
+    redirect_url: str | None
+    state_session_key: str | None
+
+    def __init__(
+        self,
+        client: BaseOAuth2,
+        route_name: str | None = None,
+        redirect_url: str | None = None,
+        state_session_key: str | None = None,
+    ) -> None:
+        """Initialize ``OAuth2AuthorizeCallback``.
+
+        Args:
+            client: An [OAuth2][httpx_oauth.oauth2.BaseOAuth2] client.
+            route_name: Name of the callback route, as defined in the `name` parameter
+                of the route decorator.
+            redirect_url: Full URL to the callback route.
+            state_session_key: If provided, the callback will check the `state` query
+                parameter against the value stored in the session under this key.
+                This is a recommended security measure to prevent CSRF attacks.
+        """
+        assert (route_name is not None and redirect_url is None) or (
+            route_name is None and redirect_url is not None
+        ), "You should either set route_name or redirect_url"
+        self.client = client
+        self.route_name = route_name
+        self.redirect_url = redirect_url
+        self.state_session_key = state_session_key
+
+    async def __call__(
+        self,
+        request: Request,
+        code: str | None = Parameter(query="code", required=False),
+        code_verifier: str | None = Parameter(query="code_verifier", required=False),
+        callback_state: str | None = Parameter(query="state", required=False),
+        error: str | None = Parameter(query="error", required=False),
+    ) -> AccessTokenState:
+        """Handle OAuth2 authorization callback.
+
+        Returns:
+            Tuple of access token and callback state.
+        """
+        if code is None or error is not None:
+            raise OAuth2AuthorizeCallbackError(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=error if error is not None else None,
+            )
+
+        if self.state_session_key:
+            expected_state = request.session.pop(self.state_session_key, None)
+            if not expected_state or expected_state != callback_state:
+                raise OAuth2AuthorizeCallbackError(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Invalid OAuth state.",
+                )
+
+        redirect_url = self.redirect_url
+        if self.route_name:
+            redirect_url = str(request.url_for(self.route_name))
+
+        if not redirect_url:
+            msg = (
+                "A redirect_url must be provided for the OAuth2 authorization callback."
+            )
+            raise ValidationException(msg)
+
+        try:
+            access_token = await self.client.get_access_token(
+                code,
+                redirect_url,
+                code_verifier,
+            )
+        except GetAccessTokenError as e:
+            raise OAuth2AuthorizeCallbackError(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=e.message,
+                response=e.response,
+                extra={"message": e.message},
+            ) from e
+
+        return access_token, callback_state
+
+
+class OAuth2ProviderPlugin(InitPluginProtocol):
+    """HTTPX OAuth2 Plugin configuration plugin."""
+
+    def on_app_init(self, app_config: AppConfig) -> AppConfig:
+        """Configure application for use with SQLAlchemy.
+
+        Args:
+            app_config: The :class:`AppConfig <.config.app.AppConfig>` instance.
+
+        Returns:
+            Updated application configuration.
+        """
+        app_config.signature_namespace.update(
+            {
+                "OAuth2AuthorizeCallback": OAuth2AuthorizeCallback,
+                "AccessTokenState": AccessTokenState,
+                "OAuth2Token": OAuth2Token,
+            },
+        )
+
+        return app_config
+
+
+@cache
+def get_oauth2_github_client() -> GitHubOAuth2:
+    """Get the configured GitHub OAuth2 client."""
+    settings = get_app_settings()
+    return GitHubOAuth2(
+        client_id=settings.github_oauth2_client_id,
+        client_secret=settings.github_oauth2_client_secret,
+    )
+
+
+@cache
+def get_oauth2_google_client() -> GoogleOAuth2:
+    """Get the configured Google OAuth2 client."""
+    settings = get_app_settings()
+    return GoogleOAuth2(
+        client_id=settings.google_oauth2_client_id,
+        client_secret=settings.google_oauth2_client_secret,
+    )

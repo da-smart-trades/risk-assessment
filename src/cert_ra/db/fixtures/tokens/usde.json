@@ -1,0 +1,365 @@
+{
+  "Name": "USDE",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Hedge integrity",
+      "desc": "Backing assets: BTC, ETH, SOL, ETH LSTs, USDC, USDT\nHedge instruments: perpetual futures and deliverable futures\nHedge strategy: delta-neutral (spot collateral vs short derivatives)\nHedge adjustment trigger: mint and redeem activity\nHedge management: off-chain hedging system\nHedge operations: pricing, order routing, risk monitoring, reconciliation\nIntervention mode: automated + manual\nHedge transparency: no full public proof of derivatives positions\nFunding stress buffer: reserve fund (~$46M as of Q4 2024)",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Hedge integrity",
+      "desc": "Hedge design is clear and actively managed.\nHowever hedge execution is off-chain and operationally dependent.\nTransparency of hedge positions is incomplete.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2.00%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Collateral custody integrity",
+      "desc": "Custody model: Off-Exchange Settlement (OES)\nCustody providers: Copper, Ceffu, Fireblocks\nAsset custody location: Held with OES providers\nExchange exposure: Collateral not transferred to exchange balance sheets\nTransparency: Partial on-chain wallet visibility\nCustodial attestations: Monthly attestations expected where assets are omnibus\nCustody insurance: Not disclosed",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Collateral custody integrity",
+      "desc": "OES model reduces exchange bankruptcy exposure.\nCustody still relies on centralized providers.\nLimited visibility of omnibus accounts.",
+      "value": "0.0125",
+      "notes": "Score: 2.5, PD: 1.25%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Exchange and counterparty integrity",
+      "desc": "Exchange counterparties: Binance, OKX, Deribit, Bybit\nCustody counterparties: Copper, Ceffu, Fireblocks\nLeverage policy: not disclosed",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Exchange and counterparty integrity",
+      "desc": "Exchange diversification exists.\nCustody diversification exists.\nHowever both depend entirely on CeFi venues.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2.00%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Operational risk management",
+      "desc": "Hedge operations: off-chain hedging system\nCore functions: pricing, routing, reconciliation, risk monitoring\nExposure checks: real-time portfolio risk validation\nIntervention mode: automated + manual\nAsset movement orchestration: yes\nDependency monitoring: yes\nRebalancing model: event-driven around mint/redeem\nPublic operational metrics: limited\nHistorical operational incidents: not disclosed\nOperational concentration: high off-chain dependency",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Operational risk management",
+      "desc": "Operations appear structured and actively monitored.\nDepends heavily on off-chain processes and human/operational responsiveness.\nLimited public evidence on operational track record makes this harder to score strongly.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2.00%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "SCORE",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nHedge integrity,3,2.00%\nCollateral custody integrity,2.5,1.25%\nExchange and counterparty integrity,3,2.00%\nOperational risk management,3,2.00%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Jurisdictional clarity",
+      "desc": "Issuer: Ethena Labs\nMint/redeem counterparties: KYC required\nExchange counterparties: Binance, OKX, Deribit, Bybit\nCustody counterparties: Copper, Ceffu, Fireblocks",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Jurisdictional clarity",
+      "desc": "Only KYC-ed users can mint/redeem USDe.\nCross-jurisdiction dependencies increase regulatory surface.\nA regulatory action affecting any one of the counterparties could affect operations.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance power distribution and participation",
+      "desc": "Governance: Different multisigs set up\nKey system configuration decisions largely protocol-controlled\nProtocol multisig threshold: 5 out of 11\nReserves multisig threshold: 4 out of 10\nProtocol controls: allowed collateral assets, custodian addresses, mint, redeem\nAdmin controls: grant and revoke roles",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance power distribution and participation",
+      "desc": "Governance is currently centralized.\nOperational changes can likely be influenced by a small group.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Transparency of reserves and hedge positions",
+      "desc": "Monitoring dashboards: Real-time dashboard available showing Ethena current positions\nOn-chain collateral: Partially verifiable\nHedge positions: Not fully provable",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Transparency of reserves and hedge positions",
+      "desc": "Limited hedge transparency increases monitoring difficulty.\nMarket participants cannot independently verify full hedge coverage.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Hedge design robustness",
+      "desc": "Strategy: delta-neutral hedge\nReserve fund for negative funding stress",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Hedge design robustness",
+      "desc": "Hedge construction is structurally sound.\nReserve fund reduces funding volatility risk.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral quality safeguards",
+      "desc": "Collateral types: BTC, ETH, SOL, LSTs, USDC, USDT\nMechanism: Admin multisig must approve new backing collaterals",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral quality safeguards",
+      "desc": "Highly liquid assets reduce backing risk.\nGovernance approval required for new collateral.",
+      "value": "0.97",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Counterparty diversification safeguards",
+      "desc": "Exchanges: Binance, OKX, Deribit, Bybit\nCustodians: Copper, Ceffu, Fireblocks\nOES structure separates custody and trading",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Counterparty diversification safeguards",
+      "desc": "Multiple venues reduce single-counterparty risk.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Margin and liquidation safeguards",
+      "desc": "Margin asset: USDT\nMargin model: cross-margin perpetual futures\nMargin buffer policy: not publicly disclosed\nLiquidation thresholds: exchange-defined\nReserve fund: ~$46M\nAutomated margin management: yes\nLiquidation incidents: None disclosed",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Margin and liquidation safeguards",
+      "desc": "$46M reserve fund meant to absorb margin stress.\nMargin stress and funding volatility remain potential risks.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Redemption and liquidity safeguards",
+      "desc": "Direct redemption available: Yes\nDirect redemption permissionless: No\nEligible redeemers: Approved counterparties only\nAccess control: REDEEMER_ROLE required\nMechanism: Redeemer submits USDe, receives underlying collateral, USDe is burned\nExecution model: Atomic on-chain execution after off-chain validation\nRedemption cap: Max redeem per block\nSecondary market access: USDe also tradable on DEXs and CEXs",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Redemption and liquidity safeguards",
+      "desc": "Redemption is not permissionless.\nDepends on approved counterparties along with off-chain validation.\nPer-block caps and role-gated access add friction under stress.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Operational complexity",
+      "desc": "On-chain functionality: minting, redemption, role management\nOff-chain functionality: hedging system, risk monitoring\nCounterparties: Copper, Ceffu, Fireblocks, Binance, OKX, Deribit, Bybit\nDependencies: exchanges, custodians, off-chain hedging infrastructure",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Operational complexity",
+      "desc": "High operational complexity increases failure surface.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Emergency roles risk",
+      "desc": "Privileged roles: DEFAULT_ADMIN_ROLE\nPrivileged role controls: change supported assets and custody addresses",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Emergency roles risk",
+      "desc": "Emergency roles improve safety but introduce centralized control.",
+      "value": "1.03",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "SCORE",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nJurisdictional clarity,1.05\nGovernance power distribution and participation,1.05\nTransparency of reserves and hedge positions,1.10\nHedge design robustness,0.95\nCollateral quality safeguards,0.97\nCounterparty diversification safeguards,0.95\nMargin and liquidation safeguards,1.05\nRedemption and liquidity safeguards,1.05\nOperational complexity,1.10\nEmergency roles risk,1.03",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Number of audits: 6\nAudit firms: Zellic, Spearbit, Quantstamp, Cantina, Pashov, Code4rena, Chaos Labs\nIssues addressed: Yes\nContent unaudited: Off-chain hedging system",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "Strong audit coverage for the on-chain functionality.\nThe biggest limitation is that the most critical hedge operations remain off-chain.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification performed: Not found",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "No evidence of formal verification.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Unit tests: Yes\nIntegration tests: Not found\nFork simulations: Not found\nInvariant tests: Not found",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "There is visible public testing evidence.\nNot enough evidence to score as a very strong testing program across the full system.",
+      "value": "0.97",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Real-time hedging alerts: Yes\nReal-time integrity monitoring of dependencies: Yes\nReal-time positions dashboard: Yes\nMonthly custodian attestations: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Monitoring evidence seems strong and clearly documented.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incidents history",
+      "desc": "Major incidents affecting in-scope contracts in last 24 months: Not found",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incidents history",
+      "desc": "No documented incident history — neutral, not a positive signal.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Operational changes history",
+      "desc": "Material upgrade disclosed: Mint & Redeem contracts V2\nBreaking change managed for whitelisted users: Yes\nUpgraded versions audited: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Operational changes history",
+      "desc": "There is evidence of at least one material upgrade handled in an organized way.\nThe disclosed sample is positive but still short.",
+      "value": "0.98",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Smart contract and operational maturity",
+      "desc": "Public contest repository: 2024\nMint & Redeem V2 live since: July 2024",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Smart contract and operational maturity",
+      "desc": "The system has meaningful production history.\nIt is still young relative to long-lived DeFi protocols — only a very small maturity benefit.",
+      "value": "0.98",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "SCORE",
+      "name": "Assurance multipliers scoring",
+      "desc": "Multiplier,Score\nAudits,0.90\nFormal verification,1.00\nTesting,0.97\nMonitoring,0.95\nIncidents history,1.00\nOperational changes history,0.98\nSmart contract and operational maturity,0.98",
+      "value": "",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,440 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 Certora
+
+import { Head, Link, router, useForm } from "@inertiajs/react"
+import { formatDistanceToNow } from "date-fns"
+import { ArrowLeft, Clock, Lock, Mail, Pencil, Plus, Send, ShieldCheck, Tag, Trash2, UserPlus, Users, X } from "lucide-react"
+import type React from "react"
+import { useState } from "react"
+import { Container } from "@/components/container"
+import { Header } from "@/components/header"
+import { InputError } from "@/components/input-error"
+import { SettingsSidebar, type SettingsSidebarItem } from "@/components/settings-sidebar"
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { toast } from "@/components/ui/use-toast"
+import { AppLayout } from "@/layouts/app-layout"
+import type { TeamDetailPage, TeamInvitationItem } from "@/lib/generated/api/types.gen"
+import { route } from "@/lib/generated/routes"
+import DeleteTeamForm from "@/pages/team/partials/delete-team-form"
+import TeamMemberManager from "@/pages/team/partials/team-member-manager"
+import UpdateTeamNameForm from "@/pages/team/partials/update-team-name-form"
+
+type Props = TeamDetailPage
+type PendingInvitation = TeamInvitationItem & { inviteeExists?: boolean }
+
+const getSidebarItems = (permissions: Props["permissions"], showEnforcement: boolean): SettingsSidebarItem[] => {
+	const items: SettingsSidebarItem[] = []
+
+	if (permissions.canUpdateTeam) {
+		items.push({
+			id: "team-details",
+			label: "Team Details",
+			icon: Pencil,
+			description: "Update team name and info",
+		})
+		items.push({
+			id: "team-tags",
+			label: "Tags",
+			icon: Tag,
+			description: "Manage team tags",
+		})
+	}
+
+	items.push({
+		id: "team-members",
+		label: "Team Members",
+		icon: Users,
+		description: "Manage team membership",
+	})
+
+	if (showEnforcement) {
+		items.push({
+			id: "team-enforcement",
+			label: "Sign-in Enforcement",
+			icon: ShieldCheck,
+			description: "Require a single sign-in provider",
+		})
+	}
+
+	if (permissions.canAddTeamMembers) {
+		items.push({
+			id: "pending-invitations",
+			label: "Invitations",
+			icon: Mail,
+			description: "Manage pending invites",
+		})
+	}
+
+	if (permissions.canDeleteTeam) {
+		items.push({
+			id: "delete-team",
+			label: "Delete Team",
+			icon: Trash2,
+			description: "Permanently delete this team",
+		})
+	}
+
+	return items
+}
+
+export default function TeamSettings({ team, members, permissions, pendingInvitations = [], enforcementEnabled = false }: Props) {
+	const invitations = pendingInvitations as PendingInvitation[]
+	const showEnforcement = enforcementEnabled && permissions.canDeleteTeam
+	const sidebarItems = getSidebarItems(permissions, showEnforcement)
+	const [activeSection, setActiveSection] = useState(() => sidebarItems[0]?.id ?? "team-members")
+	const [showInviteDialog, setShowInviteDialog] = useState(false)
+	const [invitationToCancel, setInvitationToCancel] = useState<TeamInvitationItem | null>(null)
+	const [newTag, setNewTag] = useState("")
+	const [isUpdatingTags, setIsUpdatingTags] = useState(false)
+
+	const inviteForm = useForm({
+		email: "",
+		role: "member",
+	})
+
+	const cancelForm = useForm({})
+
+	const addTag = (e: React.FormEvent) => {
+		e.preventDefault()
+		if (!newTag.trim()) return
+
+		const currentTags = team.tags?.map((t) => t.name) ?? []
+		if (currentTags.includes(newTag.trim())) {
+			toast({ description: "Tag already exists.", variant: "warning" })
+			return
+		}
+
+		setIsUpdatingTags(true)
+		router.patch(
+			route("teams.edit", { team_slug: team.slug }),
+			{ tags: [...currentTags, newTag.trim()] },
+			{
+				preserveScroll: true,
+				onSuccess: () => {
+					setNewTag("")
+					toast({ description: "Tag added.", variant: "success" })
+				},
+				onFinish: () => setIsUpdatingTags(false),
+			},
+		)
+	}
+
+	const removeTag = (tagName: string) => {
+		const currentTags = team.tags?.map((t) => t.name) ?? []
+		const updatedTags = currentTags.filter((t) => t !== tagName)
+
+		setIsUpdatingTags(true)
+		router.patch(
+			route("teams.edit", { team_slug: team.slug }),
+			{ tags: updatedTags },
+			{
+				preserveScroll: true,
+				onSuccess: () => {
+					toast({ description: "Tag removed.", variant: "success" })
+				},
+				onFinish: () => setIsUpdatingTags(false),
+			},
+		)
+	}
+
+	const sendInvitation = (e: React.FormEvent) => {
+		e.preventDefault()
+		inviteForm.post(route("teams.invite", { team_slug: team.slug }), {
+			preserveScroll: true,
+			onSuccess: () => {
+				inviteForm.reset()
+				setShowInviteDialog(false)
+			},
+		})
+	}
+
+	const cancelInvitation = () => {
+		if (!invitationToCancel) return
+		cancelForm.delete(route("teams.invitation.cancel", { team_slug: team.slug, invitation_id: invitationToCancel.id }), {
+			preserveScroll: true,
+			onSuccess: () => {
+				setInvitationToCancel(null)
+				toast({ description: "Invitation cancelled.", variant: "warning" })
+			},
+		})
+	}
+
+	return (
+		<>
+			<Head title={`${team.name} Settings`} />
+			<Header title="Team Settings">
+				<Link href={route("teams.show", { team_slug: team.slug })}>
+					<Button variant="outline" size="sm">
+						<ArrowLeft className="mr-2 h-4 w-4" />
+						Back to Team
+					</Button>
+				</Link>
+			</Header>
+			<Container>
+				<div className="grid gap-6 lg:grid-cols-3">
+					{/* Main Content */}
+					<div className="lg:col-span-2 space-y-6">
+						{permissions.canUpdateTeam && (
+							<div id="team-details">
+								<UpdateTeamNameForm team={team} />
+							</div>
+						)}
+
+						{/* Tags Section */}
+						{permissions.canUpdateTeam && (
+							<div id="team-tags">
+								<Card>
+									<CardHeader>
+										<CardTitle>Team Tags</CardTitle>
+										<CardDescription>Add tags to organize and categorize your team.</CardDescription>
+									</CardHeader>
+									<CardContent>
+										<form onSubmit={addTag} className="flex gap-2 mb-4">
+											<Input value={newTag} onChange={(e) => setNewTag(e.target.value)} placeholder="Enter a tag name" className="flex-1" disabled={isUpdatingTags} />
+											<Button type="submit" size="sm" disabled={isUpdatingTags || !newTag.trim()}>
+												<Plus className="mr-1 h-4 w-4" />
+												Add Tag
+											</Button>
+										</form>
+										{team.tags && team.tags.length > 0 ? (
+											<div className="flex flex-wrap gap-2">
+												{team.tags.map((tag) => (
+													<Badge key={tag.id} variant="secondary" className="flex items-center gap-1 pr-1">
+														<Tag className="h-3 w-3" />
+														{tag.name}
+														<button type="button" onClick={() => removeTag(tag.name)} disabled={isUpdatingTags} className="ml-1 rounded-full p-0.5 hover:bg-muted-foreground/20">
+															<X className="h-3 w-3" />
+														</button>
+													</Badge>
+												))}
+											</div>
+										) : (
+											<p className="text-muted-foreground text-sm">No tags yet. Add tags to help organize your teams.</p>
+										)}
+									</CardContent>
+								</Card>
+							</div>
+						)}
+
+						<div id="team-members">
+							<TeamMemberManager team={team} members={members} permissions={permissions} />
+						</div>
+
+						{showEnforcement && (
+							<div id="team-enforcement">
+								<Card>
+									<CardHeader>
+										<CardTitle className="flex items-center gap-2">
+											<ShieldCheck className="h-5 w-5" />
+											Sign-in Enforcement
+										</CardTitle>
+										<CardDescription>Require every member of {team.name} to sign in via a single identity provider.</CardDescription>
+									</CardHeader>
+									<CardContent className="flex items-center justify-between">
+										<div className="flex items-center gap-2 text-sm">
+											<span className="text-muted-foreground">Current policy:</span>
+											{team.enforcedProvider ? (
+												<Badge variant="default" className="gap-1">
+													<Lock className="h-3 w-3" />
+													{team.enforcedProvider} required
+												</Badge>
+											) : (
+												<Badge variant="secondary">No enforcement</Badge>
+											)}
+										</div>
+										<Link href={route("team.enforcement.show", { team_id: team.id })}>
+											<Button variant="outline" size="sm">
+												Manage
+											</Button>
+										</Link>
+									</CardContent>
+								</Card>
+							</div>
+						)}
+
+						{/* Pending Invitations Section */}
+						{permissions.canAddTeamMembers && (
+							<div id="pending-invitations">
+								<Card>
+									<CardHeader>
+										<div className="flex items-center justify-between">
+											<div>
+												<CardTitle>Pending Invitations</CardTitle>
+												<CardDescription>
+													{pendingInvitations.length === 0 ? "No pending invitations" : `${invitations.length} pending invitation${invitations.length !== 1 ? "s" : ""}`}
+												</CardDescription>
+											</div>
+											<Dialog open={showInviteDialog} onOpenChange={setShowInviteDialog}>
+												<DialogTrigger asChild>
+													<Button size="sm">
+														<UserPlus className="mr-2 h-4 w-4" />
+														Invite Member
+													</Button>
+												</DialogTrigger>
+												<DialogContent>
+													<form onSubmit={sendInvitation}>
+														<DialogHeader>
+															<DialogTitle>Invite Team Member</DialogTitle>
+															<DialogDescription>
+																Send an invitation email to add a new member to {team.name}.
+																{team.domain && (
+																	<>
+																		{" "}
+																		Only <code>@{team.domain}</code> email addresses can be invited.
+																	</>
+																)}
+															</DialogDescription>
+														</DialogHeader>
+														<div className="my-4 space-y-4">
+															<div>
+																<Label htmlFor="email">Email Address</Label>
+																<Input
+																	id="email"
+																	type="email"
+																	value={inviteForm.data.email}
+																	onChange={(e) => inviteForm.setData("email", e.target.value)}
+																	className="mt-1"
+																	placeholder={team.domain ? `member@${team.domain}` : "member@example.com"}
+																	autoFocus
+																/>
+																<InputError message={inviteForm.errors.email} className="mt-2" />
+															</div>
+															<div>
+																<Label htmlFor="role">Role</Label>
+																<Select value={inviteForm.data.role} onValueChange={(value) => inviteForm.setData("role", value)}>
+																	<SelectTrigger className="mt-1">
+																		<SelectValue />
+																	</SelectTrigger>
+																	<SelectContent>
+																		<SelectItem value="member">Member</SelectItem>
+																		<SelectItem value="admin">Admin</SelectItem>
+																	</SelectContent>
+																</Select>
+																<InputError message={inviteForm.errors.role} className="mt-2" />
+															</div>
+														</div>
+														<DialogFooter>
+															<Button type="button" variant="outline" onClick={() => setShowInviteDialog(false)}>
+																Cancel
+															</Button>
+															<Button type="submit" disabled={inviteForm.processing}>
+																<Send className="mr-2 h-4 w-4" />
+																Send Invitation
+															</Button>
+														</DialogFooter>
+													</form>
+												</DialogContent>
+											</Dialog>
+										</div>
+									</CardHeader>
+									<CardContent>
+										{invitations.length === 0 ? (
+											<div className="flex flex-col items-center justify-center py-6 text-center">
+												<Mail className="h-10 w-10 text-muted-foreground" />
+												<p className="mt-3 text-muted-foreground text-sm">No pending invitations. Invite team members to start collaborating.</p>
+											</div>
+										) : (
+											<div className="space-y-3">
+												{invitations.map((invitation) => (
+													<div key={invitation.id} className="flex items-center justify-between rounded-lg border p-3">
+														<div className="flex items-center gap-3">
+															<div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted">
+																<Mail className="h-4 w-4 text-muted-foreground" />
+															</div>
+															<div>
+																<div className="flex items-center gap-2">
+																	<span className="font-medium text-sm">{invitation.email}</span>
+																	<Badge variant="secondary" className="text-xs capitalize">
+																		{invitation.role}
+																	</Badge>
+																	<Badge variant="outline" className="text-xs">
+																		{invitation.inviteeExists ? "Existing user" : "Invite to sign up"}
+																	</Badge>
+																	{invitation.isExpired && (
+																		<Badge variant="destructive" className="text-xs">
+																			Expired
+																		</Badge>
+																	)}
+																</div>
+																<div className="flex items-center gap-1 text-muted-foreground text-xs">
+																	<Clock className="h-3 w-3" />
+																	<span>Sent {formatDistanceToNow(new Date(invitation.createdAt), { addSuffix: true })}</span>
+																</div>
+															</div>
+														</div>
+														{permissions.canRemoveTeamMembers && (
+															<AlertDialog open={invitationToCancel?.id === invitation.id} onOpenChange={(open) => !open && setInvitationToCancel(null)}>
+																<AlertDialogTrigger asChild>
+																	<Button
+																		variant="ghost"
+																		size="icon"
+																		className="h-8 w-8 text-muted-foreground hover:text-destructive"
+																		onClick={() => setInvitationToCancel(invitation)}
+																	>
+																		<Trash2 className="h-4 w-4" />
+																	</Button>
+																</AlertDialogTrigger>
+																<AlertDialogContent>
+																	<AlertDialogHeader>
+																		<AlertDialogTitle>Cancel Invitation</AlertDialogTitle>
+																		<AlertDialogDescription>
+																			Are you sure you want to cancel the invitation to {invitation.email}? They will no longer be able to join the team with this link.
+																		</AlertDialogDescription>
+																	</AlertDialogHeader>
+																	<AlertDialogFooter>
+																		<AlertDialogCancel>Keep Invitation</AlertDialogCancel>
+																		<AlertDialogAction
+																			onClick={cancelInvitation}
+																			disabled={cancelForm.processing}
+																			className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+																		>
+																			Cancel Invitation
+																		</AlertDialogAction>
+																	</AlertDialogFooter>
+																</AlertDialogContent>
+															</AlertDialog>
+														)}
+													</div>
+												))}
+											</div>
+										)}
+									</CardContent>
+								</Card>
+							</div>
+						)}
+
+						{permissions.canDeleteTeam && (
+							<div id="delete-team">
+								<DeleteTeamForm team={team} />
+							</div>
+						)}
+					</div>
+
+					{/* Sidebar */}
+					<div className="space-y-6">
+						<SettingsSidebar title="Settings" items={sidebarItems} activeId={activeSection} onItemClick={setActiveSection} />
+					</div>
+				</div>
+			</Container>
+		</>
+	)
+}
+
+TeamSettings.layout = (page: React.ReactNode) => <AppLayout>{page}</AppLayout>

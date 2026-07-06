@@ -1,0 +1,190 @@
+name: certora-risk-assessment
+
+services:
+  db:
+    image: postgres:18
+    ports:
+      - "5432:5432"
+    hostname: db
+    environment:
+      POSTGRES_PASSWORD: "app"
+      POSTGRES_USER: "app"
+      POSTGRES_DB: "app"
+    volumes:
+      - db-data:/var/lib/postgresql
+      - ./initdb:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    # Generate a self-signed cert on every start (cheap, idempotent —
+    # persists in the data volume) and run Postgres with SSL on. The
+    # initdb script `00-require-ssl.sh` rewrites pg_hba.conf to
+    # `hostssl` so plaintext TCP is rejected.
+    command:
+      - bash
+      - -c
+      - |
+        set -euo pipefail
+        CERT_DIR=/var/lib/postgresql/ssl
+        CERT="$$CERT_DIR/server.crt"
+        KEY="$$CERT_DIR/server.key"
+        mkdir -p "$$CERT_DIR"
+        if [ ! -s "$$CERT" ] || [ ! -s "$$KEY" ]; then
+          echo "[cert-ra] Generating self-signed TLS cert for dev Postgres..."
+          openssl req -new -x509 -days 3650 -nodes \
+            -out "$$CERT" \
+            -keyout "$$KEY" \
+            -subj "/CN=cert-ra-dev-postgres"
+        fi
+        chown -R postgres:postgres "$$CERT_DIR"
+        chmod 600 "$$KEY"
+        exec docker-entrypoint.sh postgres \
+          -c ssl=on \
+          -c "ssl_cert_file=$$CERT" \
+          -c "ssl_key_file=$$KEY"
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    healthcheck:
+      test:
+        - CMD
+        - pg_isready
+        - -U
+        - app
+      interval: 2s
+      timeout: 3s
+      retries: 40
+
+  temporal:
+    image: temporalio/auto-setup:1.27.2
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "7233:7233"
+    environment:
+      DB: postgres12
+      DB_PORT: "5432"
+      POSTGRES_USER: temporal
+      POSTGRES_PWD: temporal
+      POSTGRES_SEEDS: db
+      # Connect to Postgres over TLS but skip cert verification — the
+      # dev `db` service runs with a self-signed cert. The env var
+      # names here match the 1.27 `auto-setup` config template (the
+      # older `SQL_TLS` / `SQL_TLS_DISABLE_HOST_VERIFICATION` names
+      # are not interpolated by this image version).
+      SQL_TLS_ENABLED: "true"
+      SQL_HOST_VERIFICATION: "false"
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/docker.yaml
+      LOG_LEVEL: warn
+    volumes:
+      - ./temporal-dynamicconfig:/etc/temporal/config/dynamicconfig
+    restart: on-failure
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  temporal-ui:
+    image: temporalio/ui:2.37.3
+    depends_on:
+      - temporal
+    ports:
+      - "8080:8080"
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+      TEMPORAL_CORS_ORIGINS: http://localhost:8080
+    restart: unless-stopped
+
+  migrator:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ${IMAGE:-risk-assessment:latest}
+    restart: "no"
+    command: ["litestar", "database", "upgrade", "--no-prompt"]
+    env_file:
+      # Order matters: later files override earlier ones. `../.env` provides
+      # operator-specific secrets (RPC keys, Dune key, etc.). `.env.docker.example`
+      # is loaded last so its docker-network hostnames (db, temporal) override
+      # any `localhost` values an operator may have in their host-side `.env`.
+      - ../.env
+      - .env.docker.example
+    depends_on:
+      db:
+        condition: service_healthy
+
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ${IMAGE:-risk-assessment:latest}
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+    env_file:
+      # Order matters: later files override earlier ones. `../.env` provides
+      # operator-specific secrets (RPC keys, Dune key, etc.). `.env.docker.example`
+      # is loaded last so its docker-network hostnames (db, temporal) override
+      # any `localhost` values an operator may have in their host-side `.env`.
+      - ../.env
+      - .env.docker.example
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  metrics-worker:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ${IMAGE:-risk-assessment:latest}
+    restart: unless-stopped
+    command: ["certora-risk-metrics-worker"]
+    depends_on:
+      db:
+        condition: service_healthy
+      temporal:
+        condition: service_started
+    env_file:
+      # Order matters: later files override earlier ones. `../.env` provides
+      # operator-specific secrets (RPC keys, Dune key, etc.). `.env.docker.example`
+      # is loaded last so its docker-network hostnames (db, temporal) override
+      # any `localhost` values an operator may have in their host-side `.env`.
+      - ../.env
+      - .env.docker.example
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  alerts-worker:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ${IMAGE:-risk-assessment:latest}
+    restart: unless-stopped
+    command: ["certora-risk-alerts-worker"]
+    depends_on:
+      db:
+        condition: service_healthy
+      temporal:
+        condition: service_started
+    env_file:
+      # Order matters: later files override earlier ones. `../.env` provides
+      # operator-specific secrets (RPC keys, Dune key, etc.). `.env.docker.example`
+      # is loaded last so its docker-network hostnames (db, temporal) override
+      # any `localhost` values an operator may have in their host-side `.env`.
+      - ../.env
+      - .env.docker.example
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  db-data: {}

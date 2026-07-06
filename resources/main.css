@@ -1,0 +1,398 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;400;700&display=swap");
+@import "tailwindcss";
+
+/* shadcn/ui theme configuration */
+@theme {
+	/* Certora brand palette — see https://certora-risk-assessment-dev.certora.com */
+	--color-brand-green: hsl(142 82% 71%);
+	--color-brand-blue: hsl(191 100% 63%);
+	--color-brand-red: hsl(0 84% 63%);
+
+	--color-border: hsl(217.5 12.9% 87.8%);
+	--color-input: hsl(217.5 12.9% 87.8%);
+	--color-ring: hsl(142 82% 71%);
+	--color-background: hsl(0 0% 100%);
+	--color-foreground: hsl(234.3 24.7% 16.7%);
+	--color-primary: hsl(142 82% 71%);
+	--color-primary-foreground: hsl(0 0% 5%);
+	--color-secondary: hsl(217.5 12.9% 87.8%);
+	--color-secondary-foreground: hsl(234.3 24.7% 16.7%);
+	--color-destructive: hsl(0 84.2% 60.2%);
+	--color-destructive-foreground: hsl(0 0% 100%);
+	--color-muted: hsl(217.5 12.9% 87.8%);
+	--color-muted-foreground: hsl(234.3 24.7% 32%);
+	--color-accent: hsl(191 100% 63%);
+	--color-accent-foreground: hsl(0 0% 5%);
+	--color-popover: hsl(0 0% 100%);
+	--color-popover-foreground: hsl(234.3 24.7% 16.7%);
+	--color-card: hsl(0 0% 100%);
+	--color-card-foreground: hsl(234.3 24.7% 16.7%);
+	--color-chart-1: hsl(142 82% 71%);
+	--color-chart-2: hsl(191 100% 63%);
+	--color-chart-3: hsl(234.3 24.7% 16.7%);
+	--color-chart-4: hsl(217.5 12.9% 87.8%);
+	--color-chart-5: hsl(234.3 24.7% 32%);
+
+	/* Sidebar */
+	--color-sidebar: hsl(0 0% 100%);
+	--color-sidebar-foreground: hsl(234.3 24.7% 16.7%);
+	--color-sidebar-primary: hsl(142 82% 71%);
+	--color-sidebar-primary-foreground: hsl(0 0% 5%);
+	--color-sidebar-accent: hsl(217.5 12.9% 90%);
+	--color-sidebar-accent-foreground: hsl(234.3 24.7% 16.7%);
+	--color-sidebar-border: hsl(217.5 12.9% 87.8%);
+	--color-sidebar-ring: hsl(142 82% 71%);
+
+	--radius-lg: 0.75rem;
+	--radius-md: calc(0.75rem - 2px);
+	--radius-sm: calc(0.75rem - 4px);
+
+	/* Container configuration */
+	--container-padding: 2rem;
+	--container-2xl: 1400px;
+
+	/* Keyframes */
+	@keyframes accordion-down {
+		from {
+			height: 0;
+		}
+		to {
+			height: var(--radix-accordion-content-height);
+		}
+	}
+	@keyframes accordion-up {
+		from {
+			height: var(--radix-accordion-content-height);
+		}
+		to {
+			height: 0;
+		}
+	}
+
+	--animate-accordion-down: accordion-down 0.2s ease-out;
+	--animate-accordion-up: accordion-up 0.2s ease-out;
+
+	/* Retro grid animation */
+	@keyframes grid {
+		0% {
+			transform: translateY(-50%);
+		}
+		100% {
+			transform: translateY(0);
+		}
+	}
+
+	--animate-grid: grid 15s linear infinite;
+
+	@keyframes star-drift {
+		0% {
+			background-position: 0 0;
+		}
+		100% {
+			background-position: 140px -100px;
+		}
+	}
+
+	--animate-star-drift: star-drift 22s linear infinite;
+
+	@keyframes orbit {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes float-slow {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-12px);
+		}
+	}
+
+	@keyframes float-fast {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-18px);
+		}
+	}
+
+	@keyframes marquee {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+
+	@keyframes glow-pulse {
+		0%,
+		100% {
+			opacity: 0.6;
+		}
+		50% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes flow {
+		0% {
+			transform: translateX(0);
+			opacity: 0;
+		}
+		15% {
+			opacity: 1;
+		}
+		85% {
+			opacity: 1;
+		}
+		100% {
+			transform: translateX(100%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes starfield {
+		0% {
+			background-position: 0 0, 0 0, 0 0;
+		}
+		100% {
+			background-position: 0 280px, 0 180px, 0 120px;
+		}
+	}
+
+	@keyframes crawl {
+		0% {
+			transform: translateY(60%) scale(1);
+			opacity: 0;
+		}
+		15% {
+			opacity: 1;
+		}
+		100% {
+			transform: translateY(-140%) scale(0.7);
+			opacity: 0;
+		}
+	}
+
+	@keyframes twinkle {
+		0%,
+		100% {
+			opacity: 0.2;
+		}
+		50% {
+			opacity: 0.7;
+		}
+	}
+
+	@keyframes twinkle-fast {
+		0%,
+		100% {
+			opacity: 0.1;
+		}
+		50% {
+			opacity: 0.9;
+		}
+	}
+
+	--animate-orbit: orbit 28s linear infinite;
+	--animate-float-slow: float-slow 10s ease-in-out infinite;
+	--animate-float-fast: float-fast 7s ease-in-out infinite;
+	--animate-marquee: marquee 22s linear infinite;
+	--animate-glow-pulse: glow-pulse 4s ease-in-out infinite;
+	--animate-flow: flow 7s linear infinite;
+	--animate-starfield: starfield 22s linear infinite;
+	--animate-crawl: crawl 10s linear infinite;
+	--animate-twinkle: twinkle 6s ease-in-out infinite;
+	--animate-twinkle-fast: twinkle-fast 3.5s ease-in-out infinite;
+}
+
+/* Dark mode theme — mirrors https://certora-risk-assessment-dev.certora.com brand. */
+.dark {
+	/* Page sits at #0d0d0d, panels lift to #1a1a1a, inner cards to #222. */
+	--color-background: hsl(0 0% 5.1%);
+	--color-foreground: hsl(0 0% 100%);
+	--color-card: hsl(0 0% 13.3%);
+	--color-card-foreground: hsl(0 0% 100%);
+	--color-popover: hsl(0 0% 13.3%);
+	--color-popover-foreground: hsl(0 0% 100%);
+	--color-primary: hsl(142 82% 71%);
+	--color-primary-foreground: hsl(0 0% 5.1%);
+	--color-secondary: hsl(0 0% 10.2%);
+	--color-secondary-foreground: hsl(0 0% 100%);
+	--color-muted: hsl(0 0% 10.2%);
+	--color-muted-foreground: hsl(0 0% 55%);
+	--color-accent: hsl(191 100% 63%);
+	--color-accent-foreground: hsl(0 0% 5.1%);
+	--color-destructive: hsl(0 84% 63%);
+	--color-destructive-foreground: hsl(0 0% 100%);
+	/* rgba(255,255,255,0.08) on a #0d0d0d background ≈ hsl(0 0% 12%). */
+	--color-border: hsl(0 0% 12%);
+	--color-input: hsl(0 0% 12%);
+	--color-ring: hsl(142 82% 71%);
+	--color-chart-1: hsl(142 82% 71%);
+	--color-chart-2: hsl(191 100% 63%);
+	--color-chart-3: hsl(0 0% 100%);
+	--color-chart-4: hsl(0 0% 18%);
+	--color-chart-5: hsl(0 0% 55%);
+
+	/* Sidebar Dark — matches the chain-sidebar surface in the reference. */
+	--color-sidebar: hsl(0 0% 7%);
+	--color-sidebar-foreground: hsl(0 0% 100%);
+	--color-sidebar-primary: hsl(142 82% 71%);
+	--color-sidebar-primary-foreground: hsl(0 0% 5.1%);
+	--color-sidebar-accent: hsl(0 0% 12%);
+	--color-sidebar-accent-foreground: hsl(0 0% 100%);
+	--color-sidebar-border: hsl(0 0% 12%);
+	--color-sidebar-ring: hsl(142 82% 71%);
+
+	--grid-line: rgba(121, 242, 165, 0.1);
+	--grid-line-strong: rgba(121, 242, 165, 0.22);
+	--grid-glow: rgba(121, 242, 165, 0.45);
+	--grid-star: rgba(121, 242, 165, 0.4);
+	--grid-noise: rgba(121, 242, 165, 0.04);
+}
+
+/* Base layer styles */
+@layer base {
+	:root {
+		--font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+		--grid-line: rgba(32, 34, 53, 0.22);
+		--grid-line-strong: rgba(32, 34, 53, 0.35);
+		--grid-glow: rgba(121, 242, 165, 0.55);
+		--grid-star: rgba(121, 242, 165, 0.5);
+		--grid-noise: rgba(32, 34, 53, 0.08);
+		/* Certora signature gradient — green → blue, used on H1, active tabs, stat values. */
+		--certora-gradient: radial-gradient(95.06% 100% at 50% 0%, hsl(142 82% 71%) 0%, hsl(191 100% 63%) 100%);
+		--certora-gradient-linear: linear-gradient(90deg, hsl(142 82% 71%), hsl(191 100% 63%));
+	}
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+		font-family: var(--font-sans);
+		scrollbar-gutter: stable;
+	}
+
+	/* Custom scrollbar in dark mode — green accent like the reference dashboard. */
+	.dark ::-webkit-scrollbar {
+		width: 6px;
+		height: 6px;
+	}
+	.dark ::-webkit-scrollbar-track {
+		background: rgba(255, 255, 255, 0.03);
+		border-radius: 3px;
+	}
+	.dark ::-webkit-scrollbar-thumb {
+		background: rgba(121, 242, 165, 0.35);
+		border-radius: 3px;
+	}
+	.dark ::-webkit-scrollbar-thumb:hover {
+		background: rgba(121, 242, 165, 0.6);
+	}
+
+	/* Ambient green glow + subtle hex-style overlay, only in dark mode (matches
+	   the certora reference's body::after / body::before treatments). */
+	.dark body::before {
+		content: "";
+		position: fixed;
+		inset: 0;
+		background:
+			radial-gradient(circle at 0% 0%, rgba(121, 242, 165, 0.07) 0%, transparent 45%),
+			radial-gradient(circle at 100% 0%, rgba(64, 220, 255, 0.05) 0%, transparent 50%);
+		z-index: 0;
+		pointer-events: none;
+	}
+}
+
+/* Utility classes */
+@layer utilities {
+	.animate-grid {
+		animation: var(--animate-grid);
+	}
+	.animate-star-drift {
+		animation: var(--animate-star-drift);
+	}
+	.animate-orbit {
+		animation: var(--animate-orbit);
+	}
+	.animate-float-slow {
+		animation: var(--animate-float-slow);
+	}
+	.animate-float-fast {
+		animation: var(--animate-float-fast);
+	}
+	.animate-marquee {
+		animation: var(--animate-marquee);
+	}
+	.animate-glow-pulse {
+		animation: var(--animate-glow-pulse);
+	}
+	.animate-flow {
+		animation: var(--animate-flow);
+	}
+	.animate-starfield {
+		animation: var(--animate-starfield);
+	}
+	.animate-crawl {
+		animation: var(--animate-crawl);
+	}
+	.animate-twinkle {
+		animation: var(--animate-twinkle);
+	}
+	.animate-twinkle-fast {
+		animation: var(--animate-twinkle-fast);
+	}
+	.heading-uppercase {
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		font-weight: 700;
+	}
+
+	/* Brand gradient text — used on page titles and headline stat values. */
+	.text-brand-gradient {
+		background: var(--certora-gradient);
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		color: transparent;
+	}
+
+	/* Solid brand gradient fill — used on active tabs and primary CTAs. */
+	.bg-brand-gradient {
+		background-image: var(--certora-gradient);
+	}
+
+	/* Gradient hairline accent across the top edge of a card/panel. */
+	.card-gradient-accent {
+		position: relative;
+	}
+	.card-gradient-accent::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: var(--certora-gradient-linear);
+		opacity: 0.7;
+		border-top-left-radius: inherit;
+		border-top-right-radius: inherit;
+	}
+
+	/* Active tab glow — mirrors the green/blue shadow on .top-level-tab.active. */
+	.shadow-brand-glow {
+		box-shadow:
+			0 4px 20px rgba(121, 242, 165, 0.3),
+			0 0 8px rgba(64, 220, 255, 0.15);
+	}
+}

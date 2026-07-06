@@ -1,0 +1,160 @@
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches:
+      - main
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+
+permissions:
+  id-token: write
+  contents: write
+  actions: write
+  pull-requests: write
+  statuses: write
+
+jobs:
+  build_package:
+    runs-on: ubuntu-24.04-arm
+    outputs:
+      version: ${{ steps.build_package.outputs.VERSION }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v7
+      - id: build_package
+        run: |
+          make build
+          ls -1 dist/
+          echo "VERSION=$(cat .version)" >> $GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cert-ra-build
+          path: dist/
+          if-no-files-found: error
+
+  tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: actions/cache@v4
+        with:
+          path: .mypy_cache
+          key: python${{ hashFiles('.python-version') }}-mypy-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            python${{ hashFiles('.python-version') }}-mypy-
+      - run: |
+          make install
+          . .venv/bin/activate
+          echo "$PATH" >> $GITHUB_PATH
+          env >> $GITHUB_ENV
+
+      - name: Ruff
+        if: success() || failure()
+        run: make ruff
+
+      - name: Ruff Format
+        if: success() || failure()
+        run: make ruff-fmt-check
+
+      - name: Mypy
+        if: success() || failure()
+        run: make mypy
+
+      - name: Run Pytests
+        if: success() || failure()
+        run: |
+          make pytest
+          sed -i 's|/.*/cert_ra|src/cert_ra|g' .coverage.xml
+          sed -i 's|/.*/cert_ra|src/cert_ra|g' .coverage-junitxml.xml
+
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-xml-coverage-path: .coverage.xml
+          junitxml-path: .coverage-junitxml.xml
+
+  sec_check:
+    name: Python Packages Vulnerability Check & Outdated Packages
+    runs-on: ubuntu-24.04
+    needs: build_package
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+      - run: |
+          make install
+          . .venv/bin/activate
+          echo "$PATH" >> $GITHUB_PATH
+          env >> $GITHUB_ENV
+      - name: Check for outdated packages
+        if: success() || failure()
+        run: |
+          make list-outdated | sed -E 's/(^|\s+|$)/ \| /g' | tee .outdated-packages
+      - name: Add report comment
+        uses: mshick/add-pr-comment@v2
+        if: success() || failure()
+        with:
+          message-path: .outdated-packages
+          refresh-message-position: true
+          allow-repeats: false
+      - name: Run pip-audit
+        run: |
+          set -o pipefail
+          make sec-check | tee sec-report.md
+      - name: Add report comment
+        uses: mshick/add-pr-comment@v2
+        if: failure()
+        with:
+          message-path: sec-report.md
+          refresh-message-position: true
+          allow-repeats: false
+
+  docker_build:
+    needs: [build_package, tests, sec_check]
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
+        with:
+          name: cert-ra-build
+          path: dist
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+      - uses: docker/setup-buildx-action@v3
+      - run: |
+          if [[ "${GITHUB_REF}" == 'refs/heads/main' || "${GITHUB_REF}" == refs/tags/v* ]]; then
+            D_ACTION="--push"
+          else
+            D_ACTION="--load"
+          fi
+          ./rebuild.sh --set='*.platform=linux/arm64' "$D_ACTION"
+        timeout-minutes: 20
+        env:
+          USE_CACHE: 1
+          ADD_LATEST: "${{ github.ref == 'refs/heads/main' && '1' || '0' }}"
+          VERSION: "${{ needs.build_package.outputs.version }}"
+          CACHE_FROM: gha

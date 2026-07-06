@@ -1,0 +1,10 @@
+cdk.out/
+cdk.out.*/
+.cdk.staging/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.python-version.local

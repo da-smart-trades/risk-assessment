@@ -1,0 +1,261 @@
+{
+  "Name": "DRIFT_V2",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Accounting correctness",
+      "desc": "Protocol version,Drift Protocol V2.\nDeployment status,Open mainnet launched December 19, 2022.\nProduct scope,Perps, spot, cross-collateral deposits, yield, borrow/lend, single pool of capital.\nP&L types,Unrealized P&L, settled P&L, claimable/unsettled P&L.\nP&L settlement mechanism,`settlePNL` settles unrealized P&L into per-market P&L pool.\nPositive P&L withdrawal limitation,Positive realized P&L may be unavailable if the P&L pool lacks funds.\nuP&L margin guardrail,V2 introduced uP&L asset weight.\nSettled and realized P&L guardrail,V2 introduced settled and realized P&L controls.\nExchange auto-settlement,Introduced in V2.\nBorrow/lend accounting,Interest automatically accrues to accounts.\nKnown accounting exploit,Not found as primary root cause.\nCurrent impairment context,April 2026 exploit affected protocol deposits, but root cause was privileged-control compromise.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Accounting correctness",
+      "desc": "V2 improved V1's P&L and settlement controls materially.\nAccounting remains complex because perps, spot, borrow/lend, cross-collateral, unsettled P&L, and insurance interact.\nPositive P&L can be real but not immediately withdrawable if the P&L pool is insufficient.\nThe April 2026 loss is not scored here as a direct accounting bug.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Liquidation reliability",
+      "desc": "Liquidation scope,Perps and borrow/lend liquidation risk disclosed.\nLiquidation threshold,Collateral below maintenance margin creates liquidation risk.\nUntimely liquidation risk,Disclosed for large-scale liquidations and market turmoil.\nNegative-balance treatment,Shortfall treated as levered loss.\nInsurance fund role,First backstop to exchange solvency.\nPerp bankruptcy hierarchy,External Insurance Fund, internal insurance, socialized loss.\nInsurance limits,Perp losses covered up to per-market limits.\nSocialized loss condition,Losses beyond insurance limits may be socialized.\nLiquidator availability,Open-source example bots for liquidators and fillers.\nMarket-specific liquidity,Excluded.\nBorrower concentration,Excluded.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Liquidation reliability",
+      "desc": "V2 has a defined liquidation and bankruptcy-resolution hierarchy.\nInsurance and internal backstops reduce but do not eliminate deficit risk.\nSocialized loss remains an explicit terminal pathway.\nThis anchor excludes market-specific liquidity and borrower concentration.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Oracle integrity",
+      "desc": "Liquidity design,JIT auction liquidity, AMM liquidity, and orderbook liquidity.\nAMM risk,AMM is counterparty to trades against it and has delta risk.\nLong/short imbalance risk,Disclosed.\nOracle provider,Drift relies on Pyth price feeds for liquidations.\nOracle failure consequence,Incorrect prices can cause wrongful liquidations and loss of funds.\nMulti-step oracle validity checks,Implemented in V2.\nDynamic AMM bid/ask spread,Implemented in V2.\nAMM toxic-flow prevention,Implemented in V2.\nNo off-setting loss risk,Disclosed for unrealized AMM P&L.\n2026 exploit oracle component,Attacker reportedly changed oracle/collateral configuration via admin control.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Oracle integrity",
+      "desc": "V2 added meaningful oracle, P&L, spread, and toxic-flow guardrails.\nAMM delta risk, oracle dependence, and unbounded unrealized P&L remain protocol-level model risks.\nThe 2026 fake-oracle/collateral path is counted mainly under admin/control because it depended on privileged takeover.\nThe anchor remains medium risk rather than high because no standalone AMM-math exploit was identified from the reviewed sources.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Governance and upgrade safety",
+      "desc": "DAO structure,Realms DAO, Security Council, and Futarchy DAO described.\nSecurity Council role,Governs protocol upgrades.\nAttached prior governance evidence,2/5 multisig, zero timelock, no delay window, governance bypass noted.\nApril 1, 2026 incident,Unauthorized access to Security Council administrative powers reported.\nApril 1, 2026 loss amount,Approximately $285 million reported.\nAttack method,Durable nonce and social-engineering transaction approval attack reported.\nPrivileged effect,Full admin privileges used to create malicious collateral, change oracle, relax withdrawal protections, and drain assets.\nDrift official recovery status,Drift said it was investigating, designing recovery, and structuring a more secure relaunch after April 1.\nAffected products,Borrow/lend, vault deposits, and trading deposits reported affected.\nFull official postmortem,Not found.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Governance and upgrade safety",
+      "desc": "A recent severe privileged-control compromise caused protocol-level impairment.\nThe exploit path appears to have bypassed audited smart-contract logic through governance/admin execution.\nThe risk is protocol-level because admin authority could affect collateral listings, oracle configuration, withdrawals, and funds across products.\nThis is not double-counted as AMM math failure or ordinary liquidation failure.",
+      "value": "5",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Product and balance-sheet complexity",
+      "desc": "V2 product scope,Perps, spot, cross-collateral deposits, yield, borrow/lend.\nCapital model,Single pool of capital.\nCross-margining,Drift brings on-chain, cross-margined perpetual futures to Solana.\nInsurance pools,Separate pools by asset with USDC supporting perpetual liquidations.\nMarket-specific borrower concentration,Excluded.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Product and balance-sheet complexity",
+      "desc": "V2 is materially more complex than a single-product perp AMM.\nPerps, spot, lending, insurance, and P&L settlement create cross-module balance-sheet interactions.\nThis amplifies protocol-level risk without assigning any specific market risk.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Solana execution and infrastructure dependency",
+      "desc": "Chain,Solana.\nBlockchain risk,Solana uncertainty and security risks disclosed.\nKeeper/bot dependency,Example liquidator, maker, filler bots provided.\nRPC dependency,Liquidation-bot docs reference RPC checks and monitoring.\nDurable nonce incident,Solana durable nonce mechanism reportedly used in 2026 attack.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Solana execution and infrastructure dependency",
+      "desc": "Solana execution, RPC, and keeper liveness affect liquidation and settlement.\nDurable-nonce exposure was relevant to the 2026 admin compromise.\nThe multiplier is modest because Solana dependency is not itself a Drift accounting bug.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Dependency robustness",
+      "desc": "Oracle dependency,Pyth relied on for liquidations.\nJIT/orderbook dependency,Hybrid liquidity combines off-chain keepers and on-chain settlement.\nInsurance dependency,External Insurance Fund and internal insurance used before socialized loss.\nThird-party dependency diversification,Partial.\nOracle-provider diversification,Not found.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Dependency robustness",
+      "desc": "Pyth, keepers, liquidity providers, and insurance pools are important protocol dependencies.\nV2 has meaningful guardrails, but dependency concentration remains.\nOracle risk itself is scored in the oracle anchor, so this modifier is kept modest.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Trail of Bits audit,No high-severity flaws affecting confidentiality, integrity, or availability reported.\nTrail of Bits remediation review,January 23–25, 2023.\nOutstanding findings,Unresolved or partially resolved findings existed.\nNeodyme audit scope,protocol-v2.\nNeodyme timing,Authored May 10, 2024; last updated June 27, 2024.\nOtterSec scope,MetaMask Snap Connect, not core V2 protocol.\n2026 exploit relation,Reported as governance/admin and social-engineering path, not audited-code exploit.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "V2 had meaningful audit coverage from reputable firms.\nAudit coverage reduces smart-contract implementation risk.\nThe 2026 incident shows audits did not cover or prevent all control-plane failure modes.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification of V2 margin logic,Not found.\nFormal verification of V2 P&L accounting,Not found.\nFormal verification of V2 liquidation logic,Not found.\nFormal verification of V2 oracle/AMM logic,Not found.\nPublic formal-verification reports,Not found.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "V2 contains math-sensitive accounting, margin, liquidation, oracle, and AMM logic.\nNo public formal-verification evidence was found.\nThe penalty is modest because audits and testing exist.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Rust tests,Documented.\nJavaScript tests,Documented.\nAgent-based simulations,Used before V2 open mainnet.\nStress testing,Comprehensive simulations claimed.\nPublic full coverage report,Not found.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "Public tests and simulations provide real assurance.\nThe assurance is incomplete because coverage detail is not fully established.\nTesting did not prevent the governance/admin failure mode.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Liquidation bot monitoring,Docs encourage monitoring prices and running liquidation/RPC checks.\nIncident detection outcome,Deposits and withdrawals suspended during active April 2026 attack.\nAttack execution,Reported rapid takeover of Security Council administrative powers.\nRecovery status,Post-incident workstreams included investigation, recovery design, and more secure relaunch.\nReal-time admin-action timelock,Zero timelock reported in incident analyses.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Monitoring and execution controls failed to prevent or contain a severe privileged-action attack.\nZero-timelock fast execution materially reduced detection-and-response time.\nThis is scored as monitoring/control assurance, not as a separate protocol anchor.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incident history",
+      "desc": "April 1, 2026 incident,Confirmed by multiple sources.\nEstimated loss,Approximately $280–285 million.\nRoot-cause type,Durable nonce, social engineering, Security Council/admin takeover.\nDrift official recovery update,Published April 16, 2026.\nFull official postmortem,Not found.\nRepeated V2 exploit history,Not found.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incident history",
+      "desc": "A recent severe protocol-level incident is a strong negative assurance signal.\nThe incident caused direct user-claim impairment.\nThe multiplier is capped within the typical range because the same event is already scored under admin/control safety.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Operational changes history",
+      "desc": "V2 open mainnet,December 19, 2022.\nV2 product expansions,Spot, borrow/lend, cross-collateral, later markets and integrations.\nActive releases,protocol-v2 releases continuing into 2026.\nSecurity Council migration timing,Reported shortly before April 2026 incident.\nRelaunch/security restructuring,Officially stated after incident.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Operational changes history",
+      "desc": "Active change cadence and broad product expansion increase change-management risk.\nThe reported Security Council migration shortly before the exploit is a material operational-risk signal.\nOngoing relaunch work may reduce risk later, but does not remove the historical impairment.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "System maturity and production track record",
+      "desc": "V2 open mainnet date,December 19, 2022.\nProduction duration before incident,More than three years.\nPublic repository maturity,Active open-source protocol-v2 repository.\nProduction scale,Drift described as a major Solana perp exchange.\nCurrent status,Recovery and relaunch planning after April 2026 incident.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "System maturity and production track record",
+      "desc": "Multi-year production history and open-source maturity provide positive assurance.\nThe benefit is limited because the recent exploit materially weakens the track record.\nCurrent recovery status prevents stronger maturity credit.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ANCHOR",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nAccounting correctness,3,2.00%\nLiquidation reliability,3,2.00%\nOracle integrity,3,2.00%\nGovernance and upgrade safety,5,10.00%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "CONTROL",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nProduct and balance-sheet complexity,1.15\nSolana execution and infrastructure dependency,1.05\nDependency robustness,1.05",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ASSURANCE",
+      "name": "Assurance scoring",
+      "desc": "Multiplier,Score\nAudits,0.95\nFormal verification,1.05\nTesting,0.95\nMonitoring,1.15\nIncidents history,1.15\nOperational changes history,1.10\nSystem maturity and production track record,0.95",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "SUMMARY",
+      "name": "Probability of default",
+      "desc": "",
+      "value": "23.89%",
+      "notes": ""
+    }
+  ]
+}

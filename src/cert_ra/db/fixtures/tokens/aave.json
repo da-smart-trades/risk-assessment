@@ -1,0 +1,349 @@
+{
+  "Name": "AAVE",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Governance integrity & liveness",
+      "desc": "Price: $108.77\nMax supply: 16M AAVE\nTotal supply: 16M AAVE\nCirculating supply: ~15,182,427 AAVE\nDelegated voting power: Full supply (~16M AAVE)\nProposal threshold: 80,000 votes (Level 1) and 2,000,000 votes (Level 2)\nQuorum: 320,000 votes (Level 1) and 1,040,000 votes (Level 2)\nTop 5 delegate concentration: ~38.5%\nTop 10 delegate concentration: Unknown\nQuorum hit rate over last 20 proposals: 18\nVote duration: 3 days (Level 1) and 10 days (Level 2)\nProposal delay: 1 day before voting starts",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Governance integrity & liveness",
+      "desc": "Governance is clearly live: 18/20 recent proposals hit quorum.\nThresholds and quorum are meaningful in absolute terms, especially for Level 2 actions.\nA 1-day proposal delay and multi-day voting windows give some reaction time.\nMain weakness is concentration: top 5 delegates control ~38.5%, which is material.\nTop 10 concentration is unknown, so decentralization cannot be scored as best-in-class.",
+      "value": "0.001",
+      "notes": "Score: 1, PD: 0.1%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Control-plane integrity",
+      "desc": "Number of privileged roles: At least 8 named roles in ACLManager alone: DEFAULT_ADMIN, POOL_ADMIN, RISK_ADMIN, BRIDGE_ROLE, EMERGENCY_ADMIN, ASSET_LISTING_ADMIN, FLASH_BORROWER, plus one additional role ID shown by DeFiScan; there are also further privileged roles in treasury and related governance contracts.\nSeparation of duties: Yes. Aave Governance separates Level 1 vs Level 2 permissions, uses distinct executors, and docs describe a modular governance architecture across core, voting, and execution networks.\nPausable: Yes. EMERGENCY_ADMIN / POOL_ADMIN can pause reserves or the full pool and disable liquidation grace periods.\nUpgradeable: Yes. DeFiScan explicitly flags an upgradeable pool contract and notes governance-controlled upgrades, including governance contract upgrades protected by executor delays.\nTimelock delay: 1 day for Level 1 permissions; 7 days for Level 2 permissions.\nTimelock bypass allowed: Yes, for emergency actions. Critical permissions are controlled by governance and an Emergency Admin multisig; emergency roles can pause without going through normal proposal execution flow.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Control-plane integrity",
+      "desc": "There is solid structure: separation of duties, dual executors, and timelocks.\n7-day delay for higher-sensitivity actions is a strong safeguard.\nBut the control plane is broad and complex, with many privileged roles.\nThe system is upgradeable, which increases dependence on governance/security processes.\nEmergency roles can bypass normal governance flow for some actions, which weakens integrity.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Treasury custody integrity",
+      "desc": "Value under management: USD 129M\nGoverned by: Aave DAO governance, with treasury funds held in TreasuryCollector; FUNDS_ADMIN can approve, transfer, create streams, cancel streams, and withdraw from streams.\nTimelock delay: Generally 1 day when treasury actions flow through Level 1 / short executor governance.\nTimelock bypass allowed: Yes / partially. Treasury custody is not purely timelock-only because FUNDS_ADMIN is a live privileged role on the treasury contract, and emergency / steward-style privileged actors exist elsewhere in the system.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Treasury custody integrity",
+      "desc": "Treasury is governance-linked, not held by a single opaque operator.\nTreasury powers include direct fund movement capabilities via FUNDS_ADMIN.\nThe effective delay is only ~1 day for relevant actions, which is not a strong buffer for a $129M treasury.\nPartial bypass / live privileged access means custody is not protected purely by slow governance execution.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "SCORE",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nGovernance integrity & liveness,1,0.10%\nControl-plane integrity,3,2%\nTreasury custody integrity,3,2%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Jurisdictional clarity",
+      "desc": "Critical controllers that are identifiable entities: Yes. Aave governance includes identifiable multisig-controlled roles such as the Aave Governance V3 Guardian, Emergency Admin, and Risk Council; DeFiScan notes Emergency Admin signers are considered insiders of the Aave DAO.\nDocumented sanctions: None found in available sources.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Jurisdictional clarity",
+      "desc": "Identifiable controllers exist, which weakens pure decentralization.\nBut there is no evidence of sanctions or jurisdictional action affecting governance today.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance power distribution and participation",
+      "desc": "See anchor Governance integrity & liveness evidence. Key metrics: quorum hit rate 18/20, top 5 delegate concentration ~38.5%, top 10 concentration unknown.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance power distribution and participation",
+      "desc": "Participation is strong: quorum hit rate is 18/20.\nBut concentration is meaningful: top 5 delegates ~38.5%.\nThat supports a mild negative modifier, not a severe one.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Voting power integrity",
+      "desc": "Vote power source: AAVE, stkAAVE, and aAAVE balances on Ethereum mainnet; governance powers can be delegated jointly or separately.\nFlash-loan resistance: Strong by design. Voting balances remain on Ethereum mainnet and are validated on voting networks using storage proofs rather than by moving funds to the voting chain.\nKnown delegation/wrapper edge cases: Wrapper complexity exists because voting power aggregates across AAVE, stkAAVE, and aAAVE and can also use cross-chain representatives, but no exploit is documented in available sources.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Voting power integrity",
+      "desc": "Voting power is tied to tracked balances on Ethereum mainnet, a good integrity property.\nCross-chain voting uses proofs, reducing simple manipulation risk.\nMulti-wrapper and representative mechanics add some operational complexity.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Voting mechanism integrity",
+      "desc": "Mechanism: Snapshot for non-binding Temp Check / ARFC, then on-chain AIP voting through Governance v3.\nKnown past governance exploits or mitigations: No past governance exploit found; mitigations include quorum, vote differential, timelocks, modular governance, cross-chain validation through a.DI, and guardian cancellation during timelock.\nExecution lifecycle: Forum → Snapshot → ARFC → AIP → on-chain vote → timelocked execution; short executor 1-day delay, long executor 7-day delay.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Voting mechanism integrity",
+      "desc": "The mechanism is mature and layered, with clear stages and execution delays.\nGuardian cancellation and timelocks strengthen execution integrity.\nCross-chain governance adds complexity, so not best-in-class simplicity.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance parameters safeguards",
+      "desc": "Which path changes governance parameters: Governance executor path. DeFiScan states setVotingConfigs can change cooldown, voting duration, yes threshold, vote differential, and minimum proposition power.\nIs it harder than normal proposals: Yes. Aave separates Level 2 permissions for governance-system changes from Level 1 permissions for most other actions, and long-executor / governance-permission changes carry a 7-day timelock.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance parameters safeguards",
+      "desc": "Governance parameters are not changed through the easiest path.\nExtra separation and longer delay materially improve safety.\nStill ultimately governance-controlled, so not immune to capture.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Protocol parameters safeguards",
+      "desc": "Which path changes protocol parameters: Primarily Level 1 governance, with some scoped steward / council roles under guardrails for reserve and risk parameters.\nHighest-risk parameters: Reserve configuration items such as LTVs, liquidation thresholds/bonuses, interest-rate data, borrow caps, supply caps, reserve freeze/pause, and related pool settings.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Protocol parameters safeguards",
+      "desc": "Important protocol parameters can change through a relatively fast path.\nGuardrails help, but live multisig/steward intervention increases trust assumptions.\nThis deserves a mild negative modifier.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Protocol upgrades safeguards",
+      "desc": "Upgrade path: Governance-controlled upgradeable contracts and payload execution through Governance v3 / execution networks.\nWho can upgrade: Aave Governance controls upgrades for protected paths; DeFiScan notes critical permissions involve governance plus the Emergency Admin in some areas.\nTime-to-upgrade: Typically 1 day for short-executor proposals and 7 days for long-executor / governance-permission proposals.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Protocol upgrades safeguards",
+      "desc": "Upgrades are not instant and are embedded in governance flow.\nThe 7-day path for higher-sensitivity permissions is a real safeguard.\nThe system remains upgradeable and not fully immutable.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Emergency roles risk",
+      "desc": "See anchor Control-plane integrity evidence. Key detail: EMERGENCY_ADMIN / POOL_ADMIN can pause without going through normal proposal execution flow; DeFiScan explicitly flags this as a major centralization / exit-window weakness.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Emergency roles risk",
+      "desc": "Emergency roles can bypass normal governance flow for pause-related actions.\nDeFiScan explicitly flags this as a major centralization / exit-window weakness.\nThis is one of the clearest negative modifiers in the setup.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Protocol complexity",
+      "desc": "Number of chains: 21\nNumber of pools/markets (or major modules): 20\nNumber of executors / timelocks: Two main executor levels with 1-day and 7-day timelocks.\nNumber of privileged roles: At least 8 named ACL roles, plus treasury and related privileged roles.\nChange frequency: High; quorum hit rate 18/20 indicates active governance.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Protocol complexity",
+      "desc": "Aave governance is sophisticated, but complexity itself raises operational risk.\nCross-chain voting and execution, many roles, and multiple guarded paths make review harder.\nThis looks like a mild negative, not an extreme one.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Treasury custody risk",
+      "desc": "Treasury move friction: Moderate to low. FUNDS_ADMIN can approve, transfer, create streams, cancel streams, and withdraw from streams from the treasury collector.\nCan a single proposal drain treasury: Potentially yes in practice, because treasury movement powers exist and relevant governance actions can flow through the short path with about 1-day timelock; treasury control is not purely timelock-only.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Treasury custody risk",
+      "desc": "Treasury movement powers are broad.\nDelay is short relative to treasury value.\nThis is the strongest negative control modifier after emergency-role risk.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "SCORE",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nJurisdictional clarity,1.00\nGovernance power distribution and participation,1.05\nVoting power integrity,0.95\nVoting mechanism integrity,0.95\nGovernance parameters safeguards,0.95\nProtocol parameters safeguards,1.05\nProtocol upgrades safeguards,0.95\nEmergency roles risk,1.10\nProtocol complexity,1.05\nTreasury custody risk,1.15",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Number of independent audits: 20+\nIssues addressed: Yes\nContent unaudited: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "Very strong audit depth and independence.\nNo known unaudited in-scope surface.\nThis fits the strongest audit credit.",
+      "value": "0.88",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification performed: Yes, Certora Prover\nCoverage scope: Protocol",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "Formal verification is present.\nCoverage is described at protocol level, not just a narrow component.\nThis fits the strongest formal-methods credit.",
+      "value": "0.82",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Unit tests: Yes\nIntegration tests: Yes\nFork simulations: Yes\nInvariant tests: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "Testing appears broad across unit, integration, fork, and invariant layers.\nInvariant coverage is especially meaningful for protocol assurance.\nStrong, but not stronger-than-formal, credit.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Active monitoring/alerting vendor: Hypernative",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Active third-party monitoring is in place.\nThis improves detection and response, though it does not prevent bugs by itself.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incidents history",
+      "desc": "Major incidents affecting in-scope contracts in last 24 months: 0\nSeverity: None",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incidents history",
+      "desc": "No major recent incidents is a meaningful assurance signal.\nIt supports operational robustness, though absence of incidents is not proof of correctness.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Upgrades history",
+      "desc": "Upgrade cadence: Some upgrades recorded; precise cadence not fully classified.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Upgrades history",
+      "desc": "Upgrade cadence is too vague to support positive or negative credit.\nLeft neutral pending more precise cadence classification.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Smart contract maturity",
+      "desc": "Deployed on: 2022\nStability: High",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Smart contract maturity",
+      "desc": "Multi-year production history is a real maturity signal.\nGood, but not maximum Lindy relative to older systems.",
+      "value": "0.93",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "SCORE",
+      "name": "Assurance multipliers scoring",
+      "desc": "Multiplier,Score\nAudits,0.88\nFormal verification,0.82\nTesting,0.90\nMonitoring,0.90\nIncidents history,0.90\nUpgrades history,1.00\nSmart contract maturity,0.93",
+      "value": "",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+# Build + sign the cert-ra container image, once per env namespace.
+#
+# Triggered on push to the release branch (main) and via
+# workflow_dispatch. The build job runs once and pushes the same
+# image (one digest) to BOTH per-env ECR repos: `cert-ra-staging`
+# and `cert-ra-prod`. The sign job then signs the digest against
+# BOTH per-env signing CMKs so each env's upgrade.sh can `cosign
+# verify` against its own alias.
+#
+# Per-env split rationale: identity stacks (ECR repo, signing CMK,
+# GHA roles) are env-suffixed so staging + prod deploys can't trip
+# over each other. The image content is identical — staging and
+# prod just keep their own copy + signature.
+#
+# Requires the following GitHub Actions repo variables (see
+# deployment.config.example.json for the values they mirror):
+#   - vars.AWS_ACCOUNT_ID — the AWS account you deploy into.
+#   - vars.AWS_REGION — defaults to us-east-1 if absent.
+
+name: build-and-sign-image
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # required to mint the GH OIDC token
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+
+jobs:
+  build:
+    # Matrix expands to one build job per env. Each env-build assumes
+    # its own per-env `gha-cert-ra-build-<env>` role and pushes to its
+    # own `cert-ra-<env>` ECR repo. Each env still produces the same
+    # image content (same Dockerfile, same source tree) — the matrix
+    # gives us isolated ECR namespaces without a multi-push step.
+    strategy:
+      fail-fast: false
+      matrix:
+        env_name: [staging, prod]
+    runs-on: ubuntu-24.04-arm
+    # No job outputs: a matrix-strategy job's `outputs:` are scalar —
+    # last writer wins — so when staging + prod produce different digests
+    # (e.g., back-to-back pushes that share a sign job's needs.* read)
+    # the sign matrix ends up signing the wrong digest for one env. The
+    # sign job re-resolves IMAGE_TAG → digest from its own ECR repo
+    # instead. See "Resolve image digest" in the sign job below.
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/gha-cert-ra-build-${{ matrix.env_name }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: ecr-login
+
+      - name: Set up Docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      - id: push
+        name: Build and push image
+        env:
+          ECR_REPO: cert-ra-${{ matrix.env_name }}
+        run: |
+          set -euo pipefail
+          ECR_URI="${{ steps.ecr-login.outputs.registry }}/${ECR_REPO}"
+          IMAGE_TAG="sha-${GITHUB_SHA}"
+
+          # Skip the build+push if this tag already exists (ECR immutable
+          # tags would reject the push anyway). This lets re-runs proceed
+          # to the sign job without rebuilding an identical image.
+          if aws ecr describe-images \
+               --repository-name "${ECR_REPO}" \
+               --image-ids "imageTag=${IMAGE_TAG}" \
+               --query 'imageDetails[0].imageDigest' \
+               --output text 2>/dev/null | grep -q "sha256:"; then
+            echo "Image ${IMAGE_TAG} already exists in ${ECR_REPO} — skipping build."
+            # Still re-tag as :latest so a fresh initial-setup.sh deploy
+            # (whose AppStack service task def references :latest) can pull
+            # the image without requiring upgrade.sh to run first.
+            MANIFEST=$(aws ecr batch-get-image \
+              --repository-name "${ECR_REPO}" \
+              --image-ids "imageTag=${IMAGE_TAG}" \
+              --query 'images[0].imageManifest' --output text)
+            aws ecr put-image \
+              --repository-name "${ECR_REPO}" \
+              --image-tag latest \
+              --image-manifest "$MANIFEST" 2>/dev/null || true
+          else
+            echo "Pushing ${ECR_URI}:${IMAGE_TAG}"
+            docker buildx build \
+              --platform linux/arm64 \
+              --file docker/Dockerfile \
+              --build-arg "COMMIT_SHA=${GITHUB_SHA}" \
+              --tag "${ECR_URI}:${IMAGE_TAG}" \
+              --push \
+              .
+            # Re-tag as :latest via put-image (not --tag latest in buildx)
+            # because :latest is immutable and buildx --push would fail on
+            # re-runs if the tag already exists.
+            MANIFEST=$(aws ecr batch-get-image \
+              --repository-name "${ECR_REPO}" \
+              --image-ids "imageTag=${IMAGE_TAG}" \
+              --query 'images[0].imageManifest' --output text)
+            aws ecr put-image \
+              --repository-name "${ECR_REPO}" \
+              --image-tag latest \
+              --image-manifest "$MANIFEST" 2>/dev/null || true
+          fi
+
+  sign:
+    needs: build
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        env_name: [staging, prod]
+    # The sign role's IAM trust policy pins to this exact job's
+    # workflow + branch (build.yml@refs/heads/main) per
+    # `GitHubActionsOidcInfra.release_branch` in IdentityStack. A PR
+    # that modifies build.yml cannot assume the role until merged
+    # to the release branch.
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/gha-cert-ra-sign-${{ matrix.env_name }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: ecr-login
+
+      - uses: sigstore/cosign-installer@v3
+
+      # Re-resolve IMAGE_TAG → digest from THIS matrix instance's ECR
+      # repo. We can't use `needs.build.outputs.digest` because matrix
+      # job outputs are scalar (last writer wins across staging+prod),
+      # which causes the wrong digest to be signed when the two envs'
+      # builds produce different digests. IMAGE_TAG is deterministic
+      # (`sha-${GITHUB_SHA}`), so each sign job can look up its own
+      # repo's digest independently and correctly.
+      #
+      # Uses `ecr:BatchGetImage` (already granted to the sign role via
+      # EcrSignatureManifestWrite for cosign) rather than
+      # `ecr:DescribeImages` (build-role only) so this step doesn't
+      # require an IAM change.
+      - name: Resolve image digest from ECR
+        env:
+          ECR_REPO: cert-ra-${{ matrix.env_name }}
+        run: |
+          set -euo pipefail
+          IMAGE_TAG="sha-${GITHUB_SHA}"
+          DIGEST=$(aws ecr batch-get-image \
+            --repository-name "${ECR_REPO}" \
+            --image-ids "imageTag=${IMAGE_TAG}" \
+            --query 'images[0].imageId.imageDigest' --output text)
+          if [[ -z "$DIGEST" || "$DIGEST" == "None" ]]; then
+            echo "FATAL: could not resolve ${ECR_REPO}:${IMAGE_TAG} to a digest" >&2
+            exit 1
+          fi
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> "${GITHUB_ENV}"
+          echo "DIGEST=${DIGEST}"       >> "${GITHUB_ENV}"
+          echo "Resolved ${ECR_REPO}:${IMAGE_TAG} → ${DIGEST}"
+
+      - name: Sign image with per-env KMS key
+        env:
+          ECR_REPO: cert-ra-${{ matrix.env_name }}
+          ENV_NAME: ${{ matrix.env_name }}
+        run: |
+          set -euo pipefail
+          ECR_URI="${{ steps.ecr-login.outputs.registry }}/${ECR_REPO}"
+          # `--tlog-upload=false` disables the Rekor transparency log
+          # upload (which we don't operate). Signature lives entirely
+          # in ECR as a sibling `.sig` tag, which the AppStack
+          # BeforeAllowTraffic hook (and upgrade.sh's `cosign verify`)
+          # look up.
+          cosign sign \
+            --key "awskms:///alias/cert-ra-signing-${ENV_NAME}" \
+            --tlog-upload=false \
+            --yes \
+            "${ECR_URI}@${DIGEST}"
+
+      # Publish the signing CMK's public key to SSM so upgrade.sh and the
+      # BeforeAllowTraffic Lambda hook can `cosign verify` against it. The
+      # SSM parameter is created by IdentityStack with a placeholder value
+      # (`__placeholder__cosign_pubkey_pending_first_sign__`) — this step
+      # is what makes it usable. Idempotent: --overwrite handles re-runs
+      # and CMK rotation. Scoped IAM (CosignPubkeySsmWrite + kms:GetPublicKey)
+      # already in place on gha-cert-ra-sign-${ENV_NAME}.
+      - name: Publish cosign pubkey to SSM
+        env:
+          ENV_NAME: ${{ matrix.env_name }}
+          PARAM_NAME: /cert-ra/${{ matrix.env_name }}/signing/cosign-pubkey
+        run: |
+          set -euo pipefail
+          cosign public-key \
+            --key "awskms:///alias/cert-ra-signing-${ENV_NAME}" \
+            > /tmp/cosign-${ENV_NAME}.pub
+          aws ssm put-parameter \
+            --name "${PARAM_NAME}" \
+            --type String \
+            --overwrite \
+            --value "$(cat /tmp/cosign-${ENV_NAME}.pub)" \
+            >/dev/null
+          echo "Published pubkey to ${PARAM_NAME}"
+
+      - name: Emit signed-image summary
+        env:
+          ECR_REPO: cert-ra-${{ matrix.env_name }}
+          ENV_NAME: ${{ matrix.env_name }}
+        run: |
+          {
+            echo "## Signed image (${ENV_NAME})"
+            echo
+            echo "- **Tag**: \`${IMAGE_TAG}\`"
+            echo "- **Digest**: \`${DIGEST}\`"
+            echo "- **ECR repo**: \`${ECR_REPO}\`"
+            echo
+            echo "Deploy with:"
+            echo
+            echo "    IMAGE_SHA=${IMAGE_TAG} ENV=${ENV_NAME} ./infra/scripts/upgrade.sh"
+          } >> "${GITHUB_STEP_SUMMARY}"

@@ -1,0 +1,60 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=750"]
+        exclude: ^uv\.lock$
+      - id: check-toml
+      - id: check-yaml
+        args: [--unsafe]
+      - id: check-ast
+      - id: check-case-conflict
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff check
+        entry: uv run ruff check --force-exclude --fix --exit-non-zero-on-fix
+        require_serial: true
+        language: unsupported
+        types: [python]
+
+      - id: ruff-fmt
+        name: ruff format
+        entry: uv run ruff format --force-exclude --exit-non-zero-on-format
+        require_serial: true
+        language: unsupported
+        types: [python]
+
+      - id: mypy
+        name: mypy check
+        entry: uv run mypy src
+        require_serial: true
+        language: unsupported
+        pass_filenames: false
+
+      - id: codespell
+        name: codespell
+        entry: uv run codespell
+        require_serial: true
+        language: unsupported
+        pass_filenames: false
+
+      - id: biome
+        name: biome check
+        entry: bunx biome check --write --no-errors-on-unmatched
+        require_serial: true
+        language: unsupported
+        files: ^resources/.*\.(ts|tsx|js|jsx|json|jsonc)$
+        exclude: ^(node_modules/|src/cert_ra/api/domain/web/public/|resources/lib/generated/)
+
+      - id: uv-lock-check
+        name: uv lock check
+        entry: uv lock --check
+        files: "uv\\.lock|pyproject\\.toml"
+        language: unsupported
+        pass_filenames: false

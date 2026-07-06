@@ -1,0 +1,46 @@
+# Example ~/.aws/config for the infra/ deploy & upgrade scripts.
+#
+# The scripts (infra/scripts/*.sh) resolve their profile by name using the
+# pattern  cert-ra-${ENV}-<permission-set>  and call `aws sso login` for you
+# via require_sso_session (infra/scripts/_common.sh) when no valid session
+# exists.
+#
+# Copy the blocks you need into ~/.aws/config and replace every "<input>"
+# placeholder with the real value from your IAM Identity Center setup.
+
+[sso-session certora]
+sso_start_url = <input>
+sso_region = us-east-2
+sso_registration_scopes = sso:account:access
+
+# --- Installer permission set (initial-setup, cleanup-*, pending-fixes) ---
+
+[profile cert-ra-staging-installer]
+sso_session = certora
+sso_account_id = <input>
+sso_role_name = CertRaInstaller
+region = us-east-2
+output = json
+
+[profile cert-ra-prod-installer]
+sso_session = certora
+sso_account_id = <input>
+sso_role_name = CertRaInstaller
+region = us-east-2
+output = json
+
+# --- Upgrader permission set (upgrade.sh) ---
+
+[profile cert-ra-staging-upgrader]
+sso_session = certora
+sso_account_id = <input>
+sso_role_name = CertRaUpgrader
+region = us-east-2
+output = json
+
+[profile cert-ra-prod-upgrader]
+sso_session = certora
+sso_account_id = <input>
+sso_role_name = CertRaUpgrader
+region = us-east-2
+output = json

@@ -1,0 +1,365 @@
+{
+  "Name": "STETH",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Validator performance and slashing resilience",
+      "desc": "Validator count: 276,121 active validators\nValidator uptime / participation rate: Not found\nMissed attestation rate: Not found\nSlashing incidents count: 2 documented incidents\nSlashed validators count: 31\nSlashing loss as % of total staked ETH: ~0.00048%\nInactivity leak events: 0\nValidator performance vs network average: 97.35% vs 96.70%\nLido APR: 3.34%\nValidator client distribution: No client above ~28%\nOperator-level performance dispersion: ~98.47% to ~99.14%\nValidator exit/ejection mechanism: Yes\nLoss coverage/insurance mechanism: Cover fund and operator compensation",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Validator performance and slashing resilience",
+      "desc": "Validator effectiveness appears consistently above network baseline.\nDocumented slashing incidents were small relative to total stake and were compensated.\nMain residual risk is correlated failure at large scale.",
+      "value": "0.005",
+      "notes": "Score: 2, PD: 0.50%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Node operator set integrity",
+      "desc": "Total node operator entities: 35 curated + 317 CSM + 78 SimpleDVT clusters\nTop operator concentration: ~2.7% of Lido stake\nTop 5 operator concentration: ~13%\nTop 10 operator concentration: ~26%\nOperator onboarding criteria: Permissioned for curated set\nOperator performance monitoring process: Yes\nOperator bonding/collateral requirement: Curated bondless; CSM bonded\nOperator slashing accountability: Yes\nOperator client diversity: Yes\nCorrelated failure history: Yes\nOperator oversight body: LNOSG / NOM",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Node operator set integrity",
+      "desc": "Operator breadth across modules is large.\nThe curated module remains the most security-critical and still concentrated.\nPermissionless and DVT-based expansion improves decentralization but adds heterogeneity.",
+      "value": "0.0125",
+      "notes": "Score: 2.5, PD: 1.25%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Accounting and oracle correctness",
+      "desc": "Oracle committee size: 9\nOracle quorum threshold: 5 of 9\nOracle report frequency: ~daily\nAccounting update mechanism: Multi-step oracle-to-accounting flow\nRebasing trigger: Oracle report processing\nInputs included in accounting: Validator balance, validator count, withdrawal finalization data\nOn-chain sanity checks: Yes\nSanity checker scope: APR cap and staked ETH drop bound\nOracle fallback/missed report handling: Yes\nHistorical oracle missed reports: Yes\nHistorical oracle delayed reports: Yes\nOracle member independence: Yes\nSupply adjustment mechanism: Share-based rebase\nWithdrawal accounting linkage: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Accounting and oracle correctness",
+      "desc": "Oracle design has quorum and sanity checks.\nHistorical missed and delayed reports show non-zero operational risk.\nComplexity is high because accounting, rebasing, and withdrawals are linked.",
+      "value": "0.0125",
+      "notes": "Score: 2.5, PD: 1.25%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Smart contract and protocol integrity",
+      "desc": "Core contract set: Broad multi-contract architecture\nUpgradeable contracts present: Yes\nUpgrade authority: Lido DAO governance\nPause/stop authority: Yes\nDeposit flow contracts: Yes\nWithdrawal flow contracts: Yes\nStaking router/module contracts: Yes\nOracle-related contracts: Yes\nAccess-control architecture: Aragon ACL and DAO roles\nTimelock/execution delay: Yes\nEmergency shutdown/seal mechanisms: Yes\nCritical parameter mutability: Yes\nContract immutability boundaries: Partial ossification available\nKnown exploits/loss events: No catastrophic core exploit found\nBug bounty program: Yes, up to $2M",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Smart contract and protocol integrity",
+      "desc": "Security posture is strong but the system is highly upgradeable.\nProtocol complexity increases bug and misconfiguration surface.\nGovernance safeguards reduce but do not eliminate upgrade risk.",
+      "value": "0.0125",
+      "notes": "Score: 2.5, PD: 1.25%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "SCORE",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nValidator performance and slashing resilience,2,0.50%\nNode operator set integrity,2.5,1.25%\nAccounting and oracle correctness,2.5,1.25%\nSmart contract and protocol integrity,2.5,1.25%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Jurisdictional and regulatory exposure",
+      "desc": "Protocol-level regulatory disclosure: Yes\nRegulatory approval status: None\nNode operator regulatory exposure: Yes\nInfrastructure provider regulatory exposure: Yes\nKYC/permissioned access requirements: Not found\nRegulatory enforcement language: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Jurisdictional and regulatory exposure",
+      "desc": "Regulatory uncertainty is explicitly acknowledged.\nOperators and middleware create a broad jurisdictional surface.\nDiversification helps, but there is no protocol-level regulatory shield.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance power distribution and participation",
+      "desc": "Governance token: LDO\nTotal token supply: 1,000,000,000\nUnique token holders: 62,789\nDelegation enabled: Yes\nProposal creation threshold: 1,000 LDO\nOff-chain quorum requirement: 5% of total supply + majority\nOn-chain quorum requirement: 5% of total supply + majority\nGovernance stages: Forum → Snapshot → Aragon → Dual Governance\nQuorum hit rate: 18 of last 20 proposals\nTop 10 voting power: 4% (40M LDO)\nLargest voter: 0.92%\nSmall-holder participation path: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance power distribution and participation",
+      "desc": "Governance is accessible in structure.\nReasonable participation.\nDual Governance partially mitigates low-turnout capture.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Voting power integrity",
+      "desc": "Voting power snapshot mechanism: Yes\nSnapshot timing: 7 days\nFlash-loan/last-minute mitigation: Yes\nDelegation supported: Yes\nDelegation revocability: Yes\nTokenholder override of delegate: Yes\nVote counting logic: Not found\nBorrowed voting feasibility: Not found\nVote buying/bribery mitigation: Not found",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Voting power integrity",
+      "desc": "Snapshot-based voting improves resistance to last-minute manipulation.\nDelegation override improves voter control.\nResidual bribery and borrowed-vote risk remains typical of token voting.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance mechanism robustness",
+      "desc": "Proposal lifecycle phases: Multi-stage\nDiscussion duration: >=7 days\nOff-chain voting duration: 7 days\nOn-chain voting duration: 5 days\nObjection phase present: Yes\nObjection phase duration: 2 days\nExecution timelock: Yes\nDual governance delay: Yes\nStaker opposition threshold 1: 1% of stETH supply → 5-45 day delay\nStaker opposition threshold 2: 10% of stETH supply → governance pause / rage quit path\nEmergency track existence: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance mechanism robustness",
+      "desc": "Two-phase voting reduces hostile last-minute changes.\nDual Governance materially strengthens execution safety.\nThe mechanism is conservative and security-biased.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance control scope and safeguards",
+      "desc": "Governance-controlled domains: Broad\nCore pool parameters mutable: Yes\nOracle parameters mutable: Yes\nStaking module parameters mutable: Yes\nOperator registry control: Yes\nFee parameter control: Yes\nPause/resume capability: Yes\nUpgrade capability: Yes\nIndependent safeguard mechanisms: Yes\nGuardrails on governance actions: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance control scope and safeguards",
+      "desc": "Governance scope is broad and high impact.\nSafeguards are meaningful but do not eliminate governance-capture risk.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Emergency roles risk",
+      "desc": "Emergency roles list: Emergency Brakes, DSM guardians, GateSeal-style roles\nRole holder count: DSM guardians 6\nRole threshold/quorum: 4/6 for DSM deposits\nPowers per role: Pause deposits, co-sign deposits, bounded fast-track actions\nCan bypass governance: Partially\nCan pause protocol: Yes\nCan resume protocol: Governance-controlled\nCan fast-track proposals: Yes\nOne-time-use constraints: Yes, for some seals",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Emergency roles risk",
+      "desc": "Emergency roles improve response capacity.\nPrivileged committees still introduce discretionary control risk.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Operational complexity",
+      "desc": "Off-chain components: Many\nOn-chain components: Many\nOracle dependencies: Yes\nValidator exit dependencies: Yes\nKey management dependencies: Yes\nGovernance dependencies: Yes\nWithdrawal dependencies: Yes\nManual intervention requirements: Yes\nCross-component coordination: High\nSingle points of failure: No single explicit SPOF found, but critical coordination points exist",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Operational complexity",
+      "desc": "The protocol is operationally complex across modules, oracles, withdrawals, and governance.\nMature tooling helps, but coordination risk remains high.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Node operator management quality",
+      "desc": "Operator admission criteria: Yes\nOperator due diligence: Not found as a formal checklist\nOperator monitoring: Yes\nStake allocation methodology: Yes\nUnderperformance remediation: Yes\nOperator removal process: Not found as a single consolidated process\nOperator oversight body: LNOSG / NOM\nPermissionless module existence: Yes\nOperator bonding requirement: Curated bondless; CSM bonded\nDecentralization objective: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Node operator management quality",
+      "desc": "Curated onboarding and active oversight support quality.\nPenalty and allocation mechanisms provide concrete remediation tools.\nPermissionless expansion increases heterogeneity but overall management quality appears strong.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Oracle design and reporting robustness",
+      "desc": "Oracle member count: 9\nOracle quorum: 5 of 9\nReport cadence: ~daily\nIdentical report requirement: Yes\nSanity checker presence: Yes\nSanity checker scope: APR bound and stake-drop bound\nFallback if quorum not reached: Yes\nHistorical liveness incidents: Yes\nHistorical correctness incidents: Not found\nOracle operator requirements: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Oracle design and reporting robustness",
+      "desc": "Quorum and sanity checks reduce incorrect accounting risk.\nReal liveness incidents show operational fragility still matters.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Dependency diversification",
+      "desc": "Total node operators: 35 curated + 317 community + 78 SimpleDVT clusters\nDVT usage: Yes\nOracle participants: 9\nOracle quorum: 5 of 9\nDeposit security committee size: 6\nDeposit security committee quorum: 4 of 6\nClient diversity: No consensus client above 33%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Dependency diversification",
+      "desc": "Diversification across operators and modules materially reduces correlated failure risk.\nShared ecosystem dependencies still create meaningful residual systemic correlation.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "SCORE",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nJurisdictional and regulatory exposure,1.05\nGovernance power distribution and participation,0.95\nVoting power integrity,0.95\nGovernance mechanism robustness,0.90\nGovernance control scope and safeguards,1.05\nEmergency roles risk,1.05\nOperational complexity,1.10\nNode operator management quality,0.95\nOracle design and reporting robustness,1.05\nDependency diversification,0.95",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Number of audits: 93 reports listed\nAudit firms: Multiple top-tier firms\nComponents audited: Broad set including governance, oracle, router, withdrawals, CSM\nCoverage completeness: Not found as a single formal statement",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "Audit breadth is exceptionally strong.\nCoverage includes both protocol and oracle-related components.",
+      "value": "0.85",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification performed: Yes\nComponents covered: Dual Governance, Lido V3, other selected components\nCritical logic coverage: Not found as a complete aggregate statement",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "Formal verification materially improves assurance.\nBenefit is meaningful but bounded because coverage is not shown as complete.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Unit tests: Yes\nIntegration tests: Yes\nFork tests: Yes\nInvariant tests: Yes\nPublic repositories: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "Strong public engineering footprint suggests meaningful testing.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Validator monitoring dashboards: Yes\nStaking balance transparency: Yes\nOracle report visibility: Yes\nWithdrawal queue visibility: Yes\nReal-time monitoring tools: Yes\nOperator monitoring: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Monitoring infrastructure appears mature and multi-layered.\nExternal dashboard dependency slightly tempers the benefit.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incidents history",
+      "desc": "Smart contract exploits: Not found\nOracle incidents: Yes\nSlashing incidents: Yes\nPeg/liquidity stress events: Not found\nIncident response effectiveness: Strong",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incidents history",
+      "desc": "Real incidents increase the demonstrated operational risk baseline.\nPostmortems and remediation reduce but do not erase that signal.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Operational changes history",
+      "desc": "Major upgrades: Yes\nNode operator changes: Yes\nOracle configuration changes: Yes\nGovernance changes: Yes\nUpgrade frequency: High",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Operational changes history",
+      "desc": "Frequent change increases change-management risk.\nHigh audit cadence and governance safeguards mitigate part of that risk.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Smart contract and operational maturity",
+      "desc": "Initial deployment date: December 2020\nYears in production: ~5+\nTVL scale: ~8.836M ETH active stake\nStress events handled: Yes\nMaturity level: High",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Smart contract and operational maturity",
+      "desc": "Multi-year production history and scale support strong maturity.\nContinued major evolution slightly reduces full ossification benefit.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "SCORE",
+      "name": "Assurance multipliers scoring",
+      "desc": "Multiplier,Score\nAudits,0.85\nFormal verification,0.95\nTesting,0.95\nMonitoring,0.95\nIncidents history,1.05\nOperational changes history,1.05\nSmart contract and operational maturity,0.95",
+      "value": "",
+      "notes": ""
+    }
+  ]
+}

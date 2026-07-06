@@ -1,0 +1,149 @@
+{
+  "Name": "MORPHO_USDC_WSTETH",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Market solvency",
+      "desc": "Total supplied,189,589.1294 USDC ($189,538)\nTotal borrowed,170,028.2297 USDC ($169,983)\nAvailable cash / market liquidity,19,560.8996 USDC ($19,556)\nUtilization rate,89.68%\nDisplay reconciliation,borrow + liquidity = 189,589.1294 USDC; supplied = 189,589.1294 USDC\nDisplayed-dollar implied utilization,89.68%\nTotal reserves,0 USDC\nReserve factor,0.00%\nCollateral composition backing the market,wstETH only, 125.864 wstETH posted ($366,924)\nShare of debt by collateral,wstETH backs 100.00% of market debt\nConcentration in top collateral assets,100.00%\nExposure to correlated collateral,ETH-correlated; loan family: stablecoin; loan-correlated=no\nRisk classification per collateral,wstETH: Medium (LLTV is elevated; collateral has specialized risk tags: yield, lst; asset is listed, priced, and has recognized collateral tags)\nLiquidity profile of each collateral,wstETH: Moderate (listed and priced asset with recognized tags, but market collateral is below $1M)\nDependence on illiquid or long-tail collateral,Medium, because this is a single-collateral market and wstETH has medium heuristic risk\nDistribution of borrower sizes,3 borrowers shown\nTop borrower concentration,52.93%\nTop five borrower concentration,100.00%\nLiquidation thresholds / collateral factors by collateral,LLTV 86.00%\nLiquidation incentives,1.140000x collateral seized for repaid debt (14.00% bonus)\nClose factor,partial or full liquidation supported at protocol level\nExistence of caps, isolation, or equivalent constraints,isolated single-collateral market\nHistorical bad debt in the market,$0.00\nRealized liquidation volume,$0.00 repaid, $0.00 seized\nLiquidation history,0 liquidation events indexed\nHistorical utilization,avg 87.00%, peak 90.92%\nHistorical APYs,borrow 4.60% avg, supply 4.01% avg",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Market solvency",
+      "desc": "The market is highly utilized, with 89.68% current utilization and a 90.92% historical peak.\nSolvency depends entirely on one collateral asset: wstETH backs 100.00% of market debt.\nThe collateral setup is not weak, but it is not low-risk either: wstETH is classified as **Medium risk**, with specialized LST/yield risk tags.\nThe market uses an elevated 86.00% LLTV, leaving less margin for collateral price volatility than a lower-LLTV market.\nBorrower concentration is high: only 3 borrowers are shown, the top borrower accounts for 52.93% of debt, and the top five account for 100.00%.\nThe market has no reserves, so there is no reserve buffer to absorb losses before suppliers are affected.\nMitigants are meaningful: the market shows $0.00 historical bad debt, $0.00 realized liquidation volume, and 0 indexed liquidation events.\nOverall, the market is not showing current impairment, but high utilization, high LLTV, single-collateral dependency, and borrower concentration justify a mid-level solvency score rather than a low-risk score.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Withdrawal liquidity",
+      "desc": "Current utilization,89.68%\nHistorical average utilization,87.00%\nHistorical peak utilization,90.92%\nAvailable cash ratio,10.32%\nImmediate withdrawal capacity,19,560.8996 USDC ($19,556)\nBorrow concentration,top borrower 52.93%\nTop five borrower concentration,100.00%\nSupplier count,6 suppliers shown\nTop supplier concentration,51.29%\nTop five supplier concentration,100.00%\nLarge supplier withdrawal sensitivity,at least one visible supplier balance exceeds current cash\nDependence on repayments for withdrawals,high for withdrawals above current cash\nDependence on liquidations for withdrawals,material under collateral stress, limited in normal conditions\nEvidence of withdrawal friction during stress,no target-market incident identified in the queried window\nLiquidity management mechanisms,Adaptive Curve IRM\nTarget utilization,90.00%\nCurrent utilization versus target,below target by 0.32%\nEvidence of persistent liquidity shortages,not identified\nStrict on-market cash,19,560.8996 USDC\nReserve residual / reconciliation check,0 USDC",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Withdrawal liquidity",
+      "desc": "Immediate liquidity is limited: the market has only 19,560.8996 USDC available cash, equal to a 10.32% available cash ratio.\nCurrent utilization is 89.68%, only 0.32% below the 90.00% target utilization.\nHistorical utilization has also been elevated, with an 87.00% average and 90.92% peak.\nWithdrawals above current cash depend on borrower repayments, new supply, or other liquidity inflows.\nSupplier concentration is high: only 6 suppliers are shown, the top supplier holds 51.29%, and the top five hold 100.00%.\nAt least one supplier balance exceeds current available cash, meaning a large supplier withdrawal could not be fully met immediately from on-market cash.\nBorrower concentration also matters for liquidity because repayments are concentrated among a small number of borrowers.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral dependency robustness",
+      "desc": "Quality of admitted collateral assets,wstETH only\nLiquidity quality of admitted collateral,Strong relative to long-tail collateral\nShare of collateral in blue-chip assets,100% wstETH\nShare of collateral in long-tail or thinly traded assets,0%\nReliance on illiquid collateral for solvency,Low\nReliance on fragile collateral structures,Moderate, due to single LST collateral\nCollateral quality can materially impair solvency,Yes\nFallback protections,86% LLTV, 4.38% liquidation penalty, isolated market, liquidation mechanism\nHistorical evidence of collateral resilience during stress,Liquidation history shown with zero bad debt\nHistorical evidence of collateral-driven market impairment,None identified",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral dependency robustness",
+      "desc": "wstETH collateral quality improves solvency robustness versus long-tail collateral markets.\nZero realized and unrealized bad debt supports a mild risk reduction.\nThe reduction is limited because the market uses a high 86% LLTV and depends on one ETH-correlated LST.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral and liquidity diversification",
+      "desc": "Diversity of collateral backing the market,None\nConcentration in top collateral assets,100% wstETH\nExposure to correlated collateral,High\nDiversity of borrower base,37 borrowers shown\nBorrow concentration,Top borrower approximately 17%\nTop five borrower concentration,Approximately 50%–52%, screenshot-derived and approximate\nDiversity of liquidity exit paths,Cash, borrower repayments, and liquidations\nFailure of one collateral group materially disruptive,Yes\nFailure of one major borrower materially disruptive,Moderate\nPublic disclosure of concentration risks,Borrower and supplier tables visible\nHistorical evidence of concentration-driven stress,None identified",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral and liquidity diversification",
+      "desc": "The market has no collateral diversification because all debt is backed by wstETH.\nBorrower concentration is meaningful, especially among the visible top borrowers.\nLiquidity exit paths become less diversified under stress because repayment and liquidation both depend on the same borrower/collateral base.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market monitoring",
+      "desc": "Public dashboards available,Yes\nMonitoring of utilization and available cash,Yes\nMonitoring of liquidation activity,Yes\nMonitoring of reserves or bad debt,Bad debt shown; reserves not shown\nMonitoring of borrower concentration,Yes\nMonitoring of collateral concentration,Yes\nMonitoring of withdrawal conditions,Yes\nIncident response tooling disclosed,Not market-specific\nObservability documentation,Morpho API supports current and historical market, vault, utilization, fee, allocation, and user-position data\nMonitoring public, internal, or both,Public verified; internal not assessed\nEvidence of monitoring supporting market risk management,Collateral-at-risk, liquidation history, borrower, supplier, liquidity, and utilization views shown",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market monitoring",
+      "desc": "The public market page exposes the key fields needed to monitor solvency and withdrawal liquidity.\nBorrower concentration, supplier concentration, utilization, liquidity, liquidations, and bad debt are visible.\nThe reduction is limited because internal alerts and response tooling were not verified.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market incidents history",
+      "desc": "Major market-specific incidents identified,None identified\nHistoric bad debt events identified,None identified\nHistoric withdrawal or liquidity incidents identified,None identified\nPublic disclosure quality,Market-level dashboard data visible\nPost-mortems available,None found for this target market\nTime since last major incident,No target-market major incident identified\nEvidence of repeated market-specific risk pattern,None identified\nIncidents resulted in insolvency or contained disruption,No insolvency shown\nEvidence of effective remediation after incidents,Not applicable",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market incidents history",
+      "desc": "No realized bad debt, unrealized bad debt, or target-market insolvency was identified.\nThe visible liquidation history does not show bad debt.\nThe reduction is mild because this review did not reconstruct a full raw onchain incident history.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market configuration maturity",
+      "desc": "Initial deployment date of the market,2024-01-03\nTime in production under meaningful usage,More than two years\nCurrent configuration recent or long-lived,Long-lived\nMaterial changes to collateral framework,Not found\nMaterial changes to parameterization,Not found\nMaterial changes to collateral factors or liquidation settings,Not found\nNumber of market cycles survived,Multiple market cycles\nEvidence of stable operation under scale,Yes, approximately $44.56M market size\nEvidence of stable operation during severe volatility,Partial\nCurrent market configuration materially different from early versions,Not found",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market configuration maturity",
+      "desc": "The market has meaningful production history and current scale.\nNo configuration-driven impairment was identified for this exact market.\nThe reduction is mild because full historical stress-window and utilization data were not independently reconstructed.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ANCHOR",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nMarket solvency,3,2.00%\nWithdrawal liquidity,3,2.00%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "CONTROL",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nCollateral dependency robustness,0.95\nCollateral and liquidity diversification,1.10",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ASSURANCE",
+      "name": "Assurance scoring",
+      "desc": "Multiplier,Score\nMarket monitoring,0.90\nMarket incidents history,0.95\nMarket configuration maturity,0.95",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "SUMMARY",
+      "name": "Probability of default",
+      "desc": "",
+      "value": "3.70%",
+      "notes": ""
+    }
+  ]
+}

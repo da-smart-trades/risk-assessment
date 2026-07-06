@@ -1,0 +1,11 @@
+[cosmic-ray]
+module-path = "cert_ra.metrics"
+python-version = ""
+timeout = 30.0
+excluded-modules = []
+
+[cosmic-ray.test-command]
+command = "pytest tests/ -x -q"
+
+[cosmic-ray.distributor]
+name = "local"

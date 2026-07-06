@@ -1,0 +1,30 @@
+{
+  "_comment": "Bootstrap deployment configuration. Copy this file to 'deployment.config.json' (git-ignored) and replace every placeholder with your own AWS / GitHub / DNS values. It is consumed by the AWS CDK app in infra/ (via infra/cert_ra_infra/config.py) and documents the values also needed by docker-bake.hcl and the GitHub Actions workflows (see docs/deployment.md). The AWS account id is taken from your AWS credentials at CDK synth time, so it is only listed here for the container registry (ECR).",
+  "github": {
+    "owner": "Certora",
+    "repo": "risk-assessment"
+  },
+  "ecr": {
+    "accountId": "123456789012",
+    "region": "us-east-2",
+    "repository": "risk-assessment"
+  },
+  "environments": {
+    "staging": {
+      "region": "us-east-2",
+      "domain": "risk-staging.example.com",
+      "vpc_cidr": "10.0.0.0/16",
+      "max_azs": 2,
+      "nat_gateways": 1,
+      "dns_zone_id": "Z00000000000000STAGING"
+    },
+    "prod": {
+      "region": "us-east-2",
+      "domain": "risk.example.com",
+      "vpc_cidr": "10.1.0.0/16",
+      "max_azs": 3,
+      "nat_gateways": 3,
+      "dns_zone_id": "Z0000000000000000PROD"
+    }
+  }
+}

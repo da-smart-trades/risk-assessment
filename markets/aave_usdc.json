@@ -1,0 +1,149 @@
+{
+  "Name": "AAVE_USDC",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Market solvency",
+      "desc": "Total supplied,Approximately $1.86B USDC\nTotal borrowed,Approximately $1.73B USDC\nIdle liquidity,Approximately $130M USDC\nUtilization rate,93.25%\nCollateral composition,ETH-like, BTC-like, stablecoins, LSTs, LRTs, and other listed assets\nShare of debt by collateral,Historically concentrated in WETH and wstETH; current exposure broadened but still collateral-family concentrated\nConcentration in top collateral assets,High\nExposure to correlated collateral,High\nRisk classification per collateral,Mostly blue-chip assets, major stables, and selected higher-complexity LST/LRT collateral\nLiquidity profile of each collateral,Strong for blue-chip assets; weaker for LRT and structurally fragile collateral\nDependence on illiquid or long-tail collateral,Moderate\nDistribution of borrower sizes,Material large-borrower exposure but not single-borrower dominated\nLiquidation thresholds by collateral,Generally 75%–83% across major collateral assets\nMaximum LTV per collateral,Generally 73%–78.5% across major collateral assets, with recent defensive reductions on some assets\nLiquidation incentives,Generally 4.5%–7.5% across major collateral assets\nExistence of caps or isolation mechanisms,Yes\nHistorical bad debt in the market,No material Ethereum aUSDC-specific bad debt identified\nEvidence of solvency during prior stress events,Mixed-positive\nCollateral stress test evidence,Strong but recently concerning",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Market solvency",
+      "desc": "The USDC reserve remains backed mostly by high-quality collateral and Aave's over-collateralized lending/liquidation design.\nThe reserve has not shown evidence of material Ethereum aUSDC-specific bad debt.\nThe score is no longer a clean \"2\" because collateral dependencies have recently been stress-tested by the rsETH incident, WETH liquidity constraints, and defensive parameter changes.\nCurrent solvency risk is best viewed as moderate: not impaired, but materially more stressed than the old baseline.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Withdrawal liquidity",
+      "desc": "Current utilization,93.25%\nHistorical average utilization,Approximately 80%\nHistorical peak utilization,Approximately 100%\nIdle liquidity ratio,Approximately 6.75%\nImmediate withdrawal capacity,Approximately $130M USDC\nBorrow concentration,Material but not single-borrower dominated\nDependence on repayments for withdrawals,High\nDependence on liquidations for withdrawals,High during stress\nEvidence of withdrawal friction during stress,Yes\nLiquidity management mechanisms,Utilization-based interest rate curve\nEvidence of persistent liquidity shortages,No persistent long-term shortage",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Withdrawal liquidity",
+      "desc": "Withdrawal liquidity is the clearest current weakness.\nThe reserve recently reached near-full utilization with less than $3M available liquidity.\nCurrent liquidity is no longer critically depleted, but a roughly 93% utilization rate still means large aUSDC withdrawals depend heavily on borrower repayments, new supply, or market-rate repricing.",
+      "value": "4",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral dependency robustness",
+      "desc": "Quality of admitted collateral assets,Generally high\nLiquidity quality of admitted collateral,Strong for blue-chip assets; weaker for fragile LST/LRT collateral\nShare of collateral in blue-chip assets,High\nShare of collateral in long-tail or thinly traded assets,Moderate\nReliance on illiquid collateral for solvency,Moderate\nReliance on fragile collateral structures,Material\nCollateral quality can materially impair solvency,Yes\nFallback protections such as caps or isolation exist,Yes\nHistorical evidence of collateral resilience during stress,Partial\nHistorical evidence of collateral-driven market impairment,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral dependency robustness",
+      "desc": "Collateral quality remains above average, but the current risk state is worse than the old report.\nThe main risk is not ordinary USDC credit exposure, but correlated collateral, LST/LRT fragility, liquidation liquidity, and parameter response.\nA 1.20 multiplier captures a meaningful but not catastrophic upward adjustment.",
+      "value": "1.20",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral and liquidity diversification",
+      "desc": "Diversity of collateral backing the market,Moderate\nConcentration in top collateral assets,High\nExposure to correlated collateral,High\nDiversity of borrower base,Moderate\nBorrow concentration,Material but not single-borrower dominated\nDiversity of liquidity exit paths,Limited during high utilization\nFailure of one collateral group materially disruptive,Yes\nFailure of one major borrower materially disruptive,Moderately\nPublic disclosure of concentration risks,Partial\nHistorical evidence of concentration-driven stress,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral and liquidity diversification",
+      "desc": "The market is not narrowly dependent on one borrower or one collateral token.\nIt is still heavily dependent on a few correlated collateral families.\nLiquidity exit paths compress sharply at high utilization.\nA 1.15 multiplier reflects meaningful diversification weakness without treating the market as structurally undiversified.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market monitoring",
+      "desc": "Public dashboards available,Yes\nMonitoring of utilization and idle liquidity,Yes\nMonitoring of liquidation activity,Yes\nMonitoring of bad debt or reserve stress,Yes\nMonitoring of borrower concentration,Yes\nMonitoring of collateral concentration,Partial\nMonitoring of withdrawal conditions,Yes\nIncident response tooling disclosed,Partial\nObservability documentation,Moderate\nMonitoring public, internal, or both,Both\nEvidence of monitoring supporting market risk management,Strong",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market monitoring",
+      "desc": "Monitoring is materially better than average for DeFi lending markets.\nThe recent incident shows that the market is watched closely and that risk teams and governance can respond quickly.\nThe multiplier is not lower because some granular concentration and operational-response details remain only partially disclosed.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market incidents history",
+      "desc": "Major market-specific incidents identified,Yes\nHistoric bad debt events identified,No material Ethereum aUSDC-specific bad debt identified\nHistoric withdrawal or liquidity incidents identified,Yes\nPublic disclosure quality,High\nPost-mortems available,Yes\nTime since last major incident,Very short\nEvidence of repeated market-specific risk pattern,Yes\nIncidents resulted in insolvency or contained disruption,Contained disruption so far\nEvidence of effective remediation after incidents,Partial",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market incidents history",
+      "desc": "The market's incident history is now an upward-risk factor.\nThe recent aUSDC liquidity stress directly affects practical redeemability, even without confirmed aUSDC bad debt.\nPublic disclosure and response quality are positives, but the incident is too recent and material to assign a favorable multiplier.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market configuration maturity",
+      "desc": "Initial deployment date of market,January 27, 2023\nTime in production under meaningful usage,Approximately 3.25 years\nCurrent configuration recent or long-lived,Mixed\nMaterial changes to collateral framework,Yes\nMaterial changes to parameterization,Yes\nMaterial changes to caps or isolation settings,Likely yes\nNumber of market cycles survived,Multiple\nEvidence of stable operation under scale,Strong\nEvidence of stable operation during severe volatility,Mixed-positive\nCurrent market configuration materially different from early versions,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market configuration maturity",
+      "desc": "The market architecture is mature, which is favorable.\nThe present configuration is in active remediation after a recent stress event, which offsets the maturity benefit.\nThe net effect is neutral for now and should be revisited after utilization and incident-resolution outcomes stabilize.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ANCHOR",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nMarket solvency,3,2.00%\nWithdrawal liquidity,4,5.00%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "CONTROL",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nCollateral dependency robustness,1.20\nCollateral and liquidity diversification,1.15",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ASSURANCE",
+      "name": "Assurance scoring",
+      "desc": "Multiplier,Score\nMarket monitoring,0.90\nMarket incidents history,1.15\nMarket configuration maturity,1.00",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "SUMMARY",
+      "name": "Probability of default",
+      "desc": "",
+      "value": "8.93%",
+      "notes": ""
+    }
+  ]
+}

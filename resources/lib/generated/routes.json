@@ -1,0 +1,2610 @@
+{
+  "litestar_version": "Version(major=2, minor=21, patch=1, release_level='final', serial=0)",
+  "routes": {
+    "about": {
+      "component": "about",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/about"
+    },
+    "account.remove": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "uri": "/profile"
+    },
+    "admin.audit.list": {
+      "component": "admin/audit/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "searchIgnoreCase": "boolean | undefined",
+        "searchString": "string | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/admin/audit"
+    },
+    "admin.dashboard": {
+      "component": "admin/dashboard",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/admin"
+    },
+    "admin.market_config.create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/admin/market-config"
+    },
+    "admin.market_config.create_page": {
+      "component": "admin/market-config/create",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/admin/market-config/create"
+    },
+    "admin.market_config.delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "market_config_id": "UUID"
+      },
+      "parameters": [
+        "market_config_id"
+      ],
+      "uri": "/admin/market-config/{market_config_id}"
+    },
+    "admin.market_config.edit_page": {
+      "component": "admin/market-config/edit",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "market_config_id": "UUID"
+      },
+      "parameters": [
+        "market_config_id"
+      ],
+      "uri": "/admin/market-config/{market_config_id}"
+    },
+    "admin.market_config.list": {
+      "component": "admin/market-config/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "searchIgnoreCase": "boolean | undefined",
+        "searchString": "string | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/admin/market-config"
+    },
+    "admin.market_config.update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "market_config_id": "UUID"
+      },
+      "parameters": [
+        "market_config_id"
+      ],
+      "uri": "/admin/market-config/{market_config_id}"
+    },
+    "admin.operator.promote": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "member_id": "UUID"
+      },
+      "parameters": [
+        "member_id"
+      ],
+      "uri": "/admin/operator/members/{member_id}/promote"
+    },
+    "admin.operator.promotion.page": {
+      "component": "admin/operator/promotion",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/admin/operator/promotion"
+    },
+    "admin.teams.delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}"
+    },
+    "admin.teams.detail": {
+      "component": "admin/teams/detail",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}"
+    },
+    "admin.teams.list": {
+      "component": "admin/teams/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "searchIgnoreCase": "boolean | undefined",
+        "searchString": "string | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/admin/teams"
+    },
+    "admin.teams.members.add": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}/members"
+    },
+    "admin.teams.members.force_unlock": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "member_id": "UUID",
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "member_id",
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}/members/{member_id}/force-unlock"
+    },
+    "admin.teams.members.invite": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}/members/invite"
+    },
+    "admin.teams.members.make_owner": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "member_id": "UUID",
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "member_id",
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}/members/{member_id}/make-owner"
+    },
+    "admin.teams.members.remove": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "member_id": "UUID",
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "member_id",
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}/members/{member_id}"
+    },
+    "admin.teams.members.reset_mfa_only": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "member_id": "UUID",
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "member_id",
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}/members/{member_id}/reset-mfa"
+    },
+    "admin.teams.members.total_recovery": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "member_id": "UUID",
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "member_id",
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}/members/{member_id}/total-recovery"
+    },
+    "admin.teams.update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/admin/teams/{team_id}"
+    },
+    "admin.users.create": {
+      "component": "admin/users/create",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/admin/users/create"
+    },
+    "admin.users.delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/admin/users/{user_id}"
+    },
+    "admin.users.detail": {
+      "component": "admin/users/detail",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/admin/users/{user_id}"
+    },
+    "admin.users.list": {
+      "component": "admin/users/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "searchIgnoreCase": "boolean | undefined",
+        "searchString": "string | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/admin/users"
+    },
+    "admin.users.lock": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/admin/users/{user_id}/lock"
+    },
+    "admin.users.roles.assign": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/admin/users/{user_id}/roles"
+    },
+    "admin.users.roles.revoke": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID",
+        "user_role_id": "UUID"
+      },
+      "parameters": [
+        "user_id",
+        "user_role_id"
+      ],
+      "uri": "/admin/users/{user_id}/roles/{user_role_id}"
+    },
+    "admin.users.store": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/admin/users"
+    },
+    "admin.users.unlock": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/admin/users/{user_id}/unlock"
+    },
+    "admin.users.unverify": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/admin/users/{user_id}/unverify"
+    },
+    "admin.users.update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/admin/users/{user_id}"
+    },
+    "admin.users.verify": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/admin/users/{user_id}/verify"
+    },
+    "admin.weighting_profiles.create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/admin/weighting-profiles"
+    },
+    "admin.weighting_profiles.create_page": {
+      "component": "admin/weighting-profiles/create",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/admin/weighting-profiles/create"
+    },
+    "admin.weighting_profiles.delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "profile_id": "UUID"
+      },
+      "parameters": [
+        "profile_id"
+      ],
+      "uri": "/admin/weighting-profiles/{profile_id}"
+    },
+    "admin.weighting_profiles.edit_page": {
+      "component": "admin/weighting-profiles/edit",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "profile_id": "UUID"
+      },
+      "parameters": [
+        "profile_id"
+      ],
+      "uri": "/admin/weighting-profiles/{profile_id}"
+    },
+    "admin.weighting_profiles.list": {
+      "component": "admin/weighting-profiles/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "searchIgnoreCase": "boolean | undefined",
+        "searchString": "string | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/admin/weighting-profiles"
+    },
+    "admin.weighting_profiles.update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "profile_id": "UUID"
+      },
+      "parameters": [
+        "profile_id"
+      ],
+      "uri": "/admin/weighting-profiles/{profile_id}"
+    },
+    "alert_integrations:create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/api/alert-integrations"
+    },
+    "alert_integrations:delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "integration_id": "UUID"
+      },
+      "parameters": [
+        "integration_id"
+      ],
+      "uri": "/api/alert-integrations/{integration_id}"
+    },
+    "alert_integrations:get": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "integration_id": "UUID"
+      },
+      "parameters": [
+        "integration_id"
+      ],
+      "uri": "/api/alert-integrations/{integration_id}"
+    },
+    "alert_integrations:list": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/api/alert-integrations"
+    },
+    "alert_integrations:update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "integration_id": "UUID"
+      },
+      "parameters": [
+        "integration_id"
+      ],
+      "uri": "/api/alert-integrations/{integration_id}"
+    },
+    "alerts": {
+      "component": "alerts/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/alerts"
+    },
+    "alerts.create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/alerts"
+    },
+    "alerts.history": {
+      "component": "alerts/history",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "alert_id": "UUID"
+      },
+      "parameters": [
+        "alert_id"
+      ],
+      "uri": "/alerts/{alert_id}/history"
+    },
+    "alerts.integrations": {
+      "component": "alerts/integrations",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/alerts/integrations"
+    },
+    "alerts:create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/api/alerts"
+    },
+    "alerts:delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "alert_id": "UUID"
+      },
+      "parameters": [
+        "alert_id"
+      ],
+      "uri": "/api/alerts/{alert_id}"
+    },
+    "alerts:get": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "alert_id": "UUID"
+      },
+      "parameters": [
+        "alert_id"
+      ],
+      "uri": "/api/alerts/{alert_id}"
+    },
+    "alerts:history": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "alert_id": "UUID"
+      },
+      "parameters": [
+        "alert_id"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "status": "AlertHistoryStatus | undefined"
+      },
+      "uri": "/api/alerts/{alert_id}/history"
+    },
+    "alerts:list": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "is_enabled": "boolean | undefined",
+        "is_template": "boolean | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "rule_kind": "AlertRuleKind | undefined",
+        "severity": "AlertSeverity | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "target_kind": "AlertTargetKind | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/api/alerts"
+    },
+    "alerts:override": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "alert_id": "UUID"
+      },
+      "parameters": [
+        "alert_id"
+      ],
+      "uri": "/api/alerts/{alert_id}/override"
+    },
+    "alerts:update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "alert_id": "UUID"
+      },
+      "parameters": [
+        "alert_id"
+      ],
+      "uri": "/api/alerts/{alert_id}"
+    },
+    "auth.account-disabled": {
+      "component": "auth/account-disabled",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/account-disabled"
+    },
+    "auth.force-password-change": {
+      "component": "auth/force-password-change",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/force-password-change"
+    },
+    "auth.force-password-change.submit": {
+      "component": "auth/force-password-change",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/force-password-change"
+    },
+    "auth.idp-config-required": {
+      "component": "auth/idp-config-required",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/idp-config-required"
+    },
+    "auth.invitation-required": {
+      "component": "auth/invitation-required",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/invitation-required"
+    },
+    "auth.locked": {
+      "component": "auth/locked",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/locked"
+    },
+    "auth.no-team": {
+      "component": "auth/no-team",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/no-team"
+    },
+    "auth.operator-setup-required": {
+      "component": "auth/operator-setup-required",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/operator-setup-required"
+    },
+    "auth.reauth": {
+      "component": "auth/reauth",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/reauth"
+    },
+    "auth.reauth.password": {
+      "component": "auth/reauth",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/reauth/password"
+    },
+    "auth.switch-provider": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "provider": "string"
+      },
+      "parameters": [
+        "provider"
+      ],
+      "uri": "/profile/switch-provider/{provider}"
+    },
+    "auth.team-policy": {
+      "component": "auth/team-policy",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/team-policy"
+    },
+    "auth.unlock": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "token": "string"
+      },
+      "parameters": [
+        "token"
+      ],
+      "uri": "/auth/unlock/{token}"
+    },
+    "auth.wrong-provider": {
+      "component": "auth/wrong-provider",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/wrong-provider"
+    },
+    "certora-logo": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/certora-logo.svg"
+    },
+    "certora-logo-with-text-black": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/certora-logo-with-text-black.svg"
+    },
+    "certora-logo-with-text-white": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/certora-logo-with-text-white.svg"
+    },
+    "chains.list": {
+      "component": "chain/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/chains"
+    },
+    "chains.show": {
+      "component": "chain/show",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "chain_name": "cert_ra_types_ChainType"
+      },
+      "parameters": [
+        "chain_name"
+      ],
+      "uri": "/chains/{chain_name}"
+    },
+    "dashboard": {
+      "component": "dashboard",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "board": "UUID | undefined"
+      },
+      "uri": "/dashboard"
+    },
+    "dashboards:create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/api/dashboards"
+    },
+    "dashboards:create_auto_favorite": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "dashboard_id": "UUID"
+      },
+      "parameters": [
+        "dashboard_id"
+      ],
+      "uri": "/api/dashboards/{dashboard_id}/favorites/auto"
+    },
+    "dashboards:create_manual_favorite": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "dashboard_id": "UUID"
+      },
+      "parameters": [
+        "dashboard_id"
+      ],
+      "uri": "/api/dashboards/{dashboard_id}/favorites/manual"
+    },
+    "dashboards:create_market_favorite": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "dashboard_id": "UUID"
+      },
+      "parameters": [
+        "dashboard_id"
+      ],
+      "uri": "/api/dashboards/{dashboard_id}/favorites/market"
+    },
+    "dashboards:delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "dashboard_id": "UUID"
+      },
+      "parameters": [
+        "dashboard_id"
+      ],
+      "uri": "/api/dashboards/{dashboard_id}"
+    },
+    "dashboards:delete_favorite": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "dashboard_id": "UUID",
+        "favorite_id": "UUID"
+      },
+      "parameters": [
+        "dashboard_id",
+        "favorite_id"
+      ],
+      "uri": "/api/dashboards/{dashboard_id}/favorites/{favorite_id}"
+    },
+    "dashboards:list": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/api/dashboards"
+    },
+    "dashboards:list_favorites": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "dashboard_id": "UUID"
+      },
+      "parameters": [
+        "dashboard_id"
+      ],
+      "uri": "/api/dashboards/{dashboard_id}/favorites"
+    },
+    "dashboards:update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "dashboard_id": "UUID"
+      },
+      "parameters": [
+        "dashboard_id"
+      ],
+      "uri": "/api/dashboards/{dashboard_id}"
+    },
+    "favicon": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/favicon.ico"
+    },
+    "favicon-png": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/favicon.png"
+    },
+    "forgot-password": {
+      "component": "auth/forgot-password",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/forgot-password"
+    },
+    "forgot-password.send": {
+      "component": "auth/forgot-password",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/forgot-password"
+    },
+    "forgot-password.v2": {
+      "component": "auth/forgot-password",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/forgot-password"
+    },
+    "forgot-password.v2.send": {
+      "component": "auth/forgot-password",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/forgot-password"
+    },
+    "health_check": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/health"
+    },
+    "home": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/"
+    },
+    "invitation.accept": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "token": "string"
+      },
+      "parameters": [
+        "token"
+      ],
+      "uri": "/invitations/{token}/accept"
+    },
+    "invitation.accept.page": {
+      "component": "invitation/accept",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "token": "string"
+      },
+      "parameters": [
+        "token"
+      ],
+      "uri": "/invitations/{token}"
+    },
+    "invitation.decline": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "token": "string"
+      },
+      "parameters": [
+        "token"
+      ],
+      "uri": "/invitations/{token}/decline"
+    },
+    "invitation.set-password": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "token": "string"
+      },
+      "parameters": [
+        "token"
+      ],
+      "uri": "/invitations/{token}/set-password"
+    },
+    "invitations.list": {
+      "component": "invitation/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/invitations"
+    },
+    "landing": {
+      "component": "landing",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/landing"
+    },
+    "link-confirm.show": {
+      "component": "auth/link-confirm",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/link-confirm"
+    },
+    "link-confirm.submit": {
+      "component": "auth/link-confirm",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/link-confirm"
+    },
+    "login": {
+      "component": "auth/login",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/login"
+    },
+    "login.check": {
+      "component": "auth/login",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/login"
+    },
+    "logout": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/logout"
+    },
+    "manual_metrics.admin.create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/manual-metrics/admin"
+    },
+    "manual_metrics.admin.create_page": {
+      "component": "manual-metrics/admin/create",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/manual-metrics/admin/create"
+    },
+    "manual_metrics.admin.delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "metric_id": "UUID"
+      },
+      "parameters": [
+        "metric_id"
+      ],
+      "uri": "/manual-metrics/admin/{metric_id}"
+    },
+    "manual_metrics.admin.edit_page": {
+      "component": "manual-metrics/admin/edit",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "metric_id": "UUID"
+      },
+      "parameters": [
+        "metric_id"
+      ],
+      "uri": "/manual-metrics/admin/{metric_id}"
+    },
+    "manual_metrics.admin.list": {
+      "component": "manual-metrics/admin/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "team_slug": "string | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/manual-metrics/admin"
+    },
+    "manual_metrics.admin.publish": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "metric_id": "UUID"
+      },
+      "parameters": [
+        "metric_id"
+      ],
+      "uri": "/manual-metrics/admin/{metric_id}/publish"
+    },
+    "manual_metrics.admin.update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "metric_id": "UUID"
+      },
+      "parameters": [
+        "metric_id"
+      ],
+      "uri": "/manual-metrics/admin/{metric_id}"
+    },
+    "manual_metrics.list": {
+      "component": "manual-metrics/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "category": "MetricCategory | undefined",
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "protocol": "ProtocolType | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "sub_category": "string | undefined",
+        "team_slug": "string | undefined",
+        "token": "TokenType | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/manual-metrics"
+    },
+    "manual_metrics:create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/api/manual-metrics"
+    },
+    "manual_metrics:delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "metric_id": "UUID"
+      },
+      "parameters": [
+        "metric_id"
+      ],
+      "uri": "/api/manual-metrics/{metric_id}"
+    },
+    "manual_metrics:get": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "metric_id": "UUID"
+      },
+      "parameters": [
+        "metric_id"
+      ],
+      "uri": "/api/manual-metrics/{metric_id}"
+    },
+    "manual_metrics:list": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "category": "MetricCategory | undefined",
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "protocol": "ProtocolType | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "sub_category": "string | undefined",
+        "team_slug": "string | undefined",
+        "token": "TokenType | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/api/manual-metrics"
+    },
+    "manual_metrics:publish": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "metric_id": "UUID"
+      },
+      "parameters": [
+        "metric_id"
+      ],
+      "uri": "/api/manual-metrics/{metric_id}/publish"
+    },
+    "manual_metrics:update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "metric_id": "UUID"
+      },
+      "parameters": [
+        "metric_id"
+      ],
+      "uri": "/api/manual-metrics/{metric_id}"
+    },
+    "markets.list": {
+      "component": "market/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/markets"
+    },
+    "markets.show": {
+      "component": "market/show",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "chain_id": "number",
+        "market_id_hex": "string",
+        "protocol": "string"
+      },
+      "parameters": [
+        "chain_id",
+        "market_id_hex",
+        "protocol"
+      ],
+      "uri": "/markets/{protocol}/{chain_id}/{market_id_hex}"
+    },
+    "markets:alert_options": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/api/markets/alert-options"
+    },
+    "markets:alert_sub_categories": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "chain_id": "number",
+        "market_config_id": "UUID",
+        "market_id_hex": "string"
+      },
+      "parameters": [
+        "chain_id",
+        "market_config_id",
+        "market_id_hex"
+      ],
+      "uri": "/api/markets/{market_config_id}/{chain_id}/{market_id_hex}/alert-sub-categories"
+    },
+    "metrics:chains": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/metrics/chains"
+    },
+    "metrics:decentralization": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/decentralization"
+    },
+    "metrics:decentralization:canton": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/decentralization/canton"
+    },
+    "metrics:finality:canton": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/finality/canton"
+    },
+    "metrics:finality:ethereum": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/finality/ethereum"
+    },
+    "metrics:finality:evm-l2": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/finality/evm-l2"
+    },
+    "metrics:finality:op-stack": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/finality/op-stack"
+    },
+    "metrics:finality:polygon": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/finality/polygon"
+    },
+    "metrics:finality:solana": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/finality/solana"
+    },
+    "metrics:governance": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "event_type": "string | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/governance"
+    },
+    "metrics:operator-snapshots": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/decentralization/operators"
+    },
+    "metrics:throughput": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/throughput"
+    },
+    "metrics:time-to-finality": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined"
+      },
+      "uri": "/metrics/time-to-finality"
+    },
+    "metrics:token-activity": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "chain": "ChainType | undefined",
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "token": "TokenType | undefined"
+      },
+      "uri": "/metrics/token-activity"
+    },
+    "metrics:tokens": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/metrics/tokens"
+    },
+    "mfa-challenge": {
+      "component": "auth/mfa-challenge",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/mfa-challenge"
+    },
+    "mfa-challenge.verify": {
+      "component": "auth/mfa-challenge",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/mfa-challenge"
+    },
+    "mfa.confirm": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/mfa/confirm"
+    },
+    "mfa.disable": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "uri": "/mfa/disable"
+    },
+    "mfa.enable": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/mfa/enable"
+    },
+    "mfa.enroll.page": {
+      "component": "settings/security/mfa-enroll",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/settings/security/mfa/enroll"
+    },
+    "mfa.enroll.passkey.begin": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/settings/security/mfa/passkey/begin"
+    },
+    "mfa.enroll.passkey.finish": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/settings/security/mfa/passkey/finish"
+    },
+    "mfa.enroll.totp.begin": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/settings/security/mfa/totp/begin"
+    },
+    "mfa.enroll.totp.confirm": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/settings/security/mfa/totp/confirm"
+    },
+    "mfa.passkey.remove": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "passkey_id": "UUID"
+      },
+      "parameters": [
+        "passkey_id"
+      ],
+      "uri": "/settings/security/mfa/passkey/{passkey_id}"
+    },
+    "mfa.regenerate-codes": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/mfa/regenerate-codes"
+    },
+    "mfa.verify.page": {
+      "component": "auth/mfa",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/auth/mfa"
+    },
+    "mfa.verify.passkey": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/mfa/passkey"
+    },
+    "mfa.verify.passkey.options": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/mfa/passkey/options"
+    },
+    "mfa.verify.recovery": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/mfa/recovery"
+    },
+    "mfa.verify.totp": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/mfa/totp"
+    },
+    "oauth.link.complete": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "provider": "string"
+      },
+      "parameters": [
+        "provider"
+      ],
+      "uri": "/profile/oauth/{provider}/complete"
+    },
+    "oauth.link.start": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "provider": "string"
+      },
+      "parameters": [
+        "provider"
+      ],
+      "uri": "/profile/oauth/{provider}/link"
+    },
+    "oauth.unlink": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "provider": "string"
+      },
+      "parameters": [
+        "provider"
+      ],
+      "uri": "/profile/oauth/{provider}"
+    },
+    "oauth.upgrade_scopes": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "provider": "string"
+      },
+      "parameters": [
+        "provider"
+      ],
+      "uri": "/profile/oauth/{provider}/upgrade-scopes"
+    },
+    "oidc.callback": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "provider": "string"
+      },
+      "parameters": [
+        "provider"
+      ],
+      "queryParameters": {
+        "code": "string | undefined",
+        "error": "string | undefined",
+        "state": "string | undefined"
+      },
+      "uri": "/auth/{provider}/callback"
+    },
+    "oidc.login": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "provider": "string"
+      },
+      "parameters": [
+        "provider"
+      ],
+      "queryParameters": {
+        "redirect_to": "string | undefined"
+      },
+      "uri": "/auth/{provider}/login"
+    },
+    "openapi.json": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/schema/openapi.json"
+    },
+    "password.confirm": {
+      "component": "auth/confirm-password",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/confirm-password"
+    },
+    "password.confirm.page": {
+      "component": "auth/confirm-password",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/confirm-password"
+    },
+    "password.update": {
+      "component": "profile/edit",
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "uri": "/profile/password-update"
+    },
+    "privacy-policy": {
+      "component": "legal/privacy-policy",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/privacy-policy"
+    },
+    "profile.avatar.delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "uri": "/profile/avatar"
+    },
+    "profile.avatar.upload": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/profile/avatar"
+    },
+    "profile.show": {
+      "component": "profile/edit",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/profile"
+    },
+    "profile.update": {
+      "component": "profile/edit",
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "uri": "/profile"
+    },
+    "protocols.list": {
+      "component": "protocol/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/protocols"
+    },
+    "protocols.show": {
+      "component": "protocol/show",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "protocol_name": "cert_ra_types_ProtocolType"
+      },
+      "parameters": [
+        "protocol_name"
+      ],
+      "uri": "/protocols/{protocol_name}"
+    },
+    "reset-password": {
+      "component": "auth/reset-password",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "email": "string | undefined",
+        "token": "string | undefined"
+      },
+      "uri": "/reset-password"
+    },
+    "reset-password.update": {
+      "component": "auth/reset-password",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/reset-password"
+    },
+    "reset-password.v2": {
+      "component": "auth/reset-password",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "token": "string"
+      },
+      "parameters": [
+        "token"
+      ],
+      "uri": "/auth/reset/{token}"
+    },
+    "reset-password.v2.submit": {
+      "component": "auth/reset-password",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/auth/reset"
+    },
+    "security_reports.admin.delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "report_id": "UUID"
+      },
+      "parameters": [
+        "report_id"
+      ],
+      "uri": "/security-reports/admin/{report_id}"
+    },
+    "security_reports.admin.list": {
+      "component": "security-reports/admin/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/security-reports/admin"
+    },
+    "security_reports.admin.upload": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/security-reports/admin"
+    },
+    "security_reports.admin.upload_page": {
+      "component": "security-reports/admin/upload",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/security-reports/admin/upload"
+    },
+    "security_reports.list": {
+      "component": "security-reports/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/security-reports"
+    },
+    "security_reports:download": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "report_id": "UUID"
+      },
+      "parameters": [
+        "report_id"
+      ],
+      "uri": "/api/security-reports/{report_id}/download"
+    },
+    "security_reports:get": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "report_id": "UUID"
+      },
+      "parameters": [
+        "report_id"
+      ],
+      "uri": "/api/security-reports/{report_id}"
+    },
+    "security_reports:list": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/api/security-reports"
+    },
+    "security_reports:upload": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/api/security-reports"
+    },
+    "tags:create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/api/tags"
+    },
+    "tags:delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "tag_id": "UUID"
+      },
+      "parameters": [
+        "tag_id"
+      ],
+      "uri": "/api/tags/{tag_id}"
+    },
+    "tags:get": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "tag_id": "UUID"
+      },
+      "parameters": [
+        "tag_id"
+      ],
+      "uri": "/api/tags/{tag_id}"
+    },
+    "tags:list": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "searchIgnoreCase": "boolean | undefined",
+        "searchString": "string | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/api/tags"
+    },
+    "tags:update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "tag_id": "UUID"
+      },
+      "parameters": [
+        "tag_id"
+      ],
+      "uri": "/api/tags/{tag_id}"
+    },
+    "team.enforcement.remind": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/teams/{team_id}/enforcement/remind"
+    },
+    "team.enforcement.show": {
+      "component": "team/enforcement",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/teams/{team_id}/enforcement"
+    },
+    "team.enforcement.stuck": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/teams/{team_id}/enforcement/stuck"
+    },
+    "team.enforcement.update": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "team_id": "UUID"
+      },
+      "parameters": [
+        "team_id"
+      ],
+      "uri": "/teams/{team_id}/enforcement"
+    },
+    "teams.add": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/teams"
+    },
+    "teams.create": {
+      "component": "team/create",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/teams/create"
+    },
+    "teams.edit": {
+      "component": "team/edit",
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/teams/{team_slug}"
+    },
+    "teams.invitation.cancel": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "invitation_id": "UUID",
+        "team_slug": "string"
+      },
+      "parameters": [
+        "invitation_id",
+        "team_slug"
+      ],
+      "uri": "/teams/{team_slug}/invitations/{invitation_id}"
+    },
+    "teams.invitations": {
+      "component": "team/invitations",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/teams/{team_slug}/invitations"
+    },
+    "teams.invite": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/teams/{team_slug}/invitations"
+    },
+    "teams.list": {
+      "component": "team/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "searchIgnoreCase": "boolean | undefined",
+        "searchString": "string | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/teams"
+    },
+    "teams.remove": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/teams/{team_slug}"
+    },
+    "teams.settings": {
+      "component": "team/settings",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/teams/{team_slug}/settings"
+    },
+    "teams.show": {
+      "component": "team/show",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/teams/{team_slug}"
+    },
+    "teams:add-member": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/api/teams/{team_slug}/members/add"
+    },
+    "teams:change-member-role": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/api/teams/{team_slug}/members/role"
+    },
+    "teams:remove-member": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "team_slug": "string"
+      },
+      "parameters": [
+        "team_slug"
+      ],
+      "uri": "/api/teams/{team_slug}/members/remove"
+    },
+    "terms-of-service": {
+      "component": "legal/terms-of-service",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/terms-of-service"
+    },
+    "tokens.list": {
+      "component": "token/list",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "uri": "/tokens"
+    },
+    "tokens.show": {
+      "component": "token/show",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "token_name": "cert_ra_types_TokenType"
+      },
+      "parameters": [
+        "token_name"
+      ],
+      "uri": "/tokens/{token_name}"
+    },
+    "uploads": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "file_path": "any"
+      },
+      "parameters": [
+        "file_path"
+      ],
+      "uri": "/uploads/{file_path}"
+    },
+    "users:assign-role": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "role_slug": "string"
+      },
+      "parameters": [
+        "role_slug"
+      ],
+      "uri": "/api/roles/{role_slug}/assign"
+    },
+    "users:create": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/api/users"
+    },
+    "users:delete": {
+      "method": "delete",
+      "methods": [
+        "DELETE"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/api/users/{user_id}"
+    },
+    "users:get": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/api/users/{user_id}"
+    },
+    "users:list": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "createdAfter": "DateTime | undefined",
+        "createdBefore": "DateTime | undefined",
+        "currentPage": "number | undefined",
+        "ids": "string[] | undefined",
+        "orderBy": "string | undefined",
+        "pageSize": "number | undefined",
+        "searchIgnoreCase": "boolean | undefined",
+        "searchString": "string | undefined",
+        "sortOrder": "\"asc\" | \"desc\" | undefined",
+        "updatedAfter": "DateTime | undefined",
+        "updatedBefore": "DateTime | undefined"
+      },
+      "uri": "/api/users"
+    },
+    "users:revoke-role": {
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "parameterTypes": {
+        "role_slug": "string"
+      },
+      "parameters": [
+        "role_slug"
+      ],
+      "uri": "/api/roles/{role_slug}/revoke"
+    },
+    "users:update": {
+      "method": "patch",
+      "methods": [
+        "PATCH"
+      ],
+      "parameterTypes": {
+        "user_id": "UUID"
+      },
+      "parameters": [
+        "user_id"
+      ],
+      "uri": "/api/users/{user_id}"
+    },
+    "verification.send": {
+      "component": "auth/verify-email",
+      "method": "post",
+      "methods": [
+        "POST"
+      ],
+      "uri": "/verify-email/send"
+    },
+    "verify-email": {
+      "component": "auth/verify-email",
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "token": "string | undefined"
+      },
+      "uri": "/verify-email"
+    },
+    "vite": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "parameterTypes": {
+        "file_path": "any"
+      },
+      "parameters": [
+        "file_path"
+      ],
+      "uri": "/static/{file_path}"
+    },
+    "weighting_profiles:available_sub_categories": {
+      "method": "get",
+      "methods": [
+        "GET"
+      ],
+      "queryParameters": {
+        "category": "WeightingProfileEntryCategory",
+        "chain_id": "number | undefined",
+        "market_config_id": "UUID | undefined",
+        "market_id_hex": "string | undefined",
+        "protocol": "string | undefined"
+      },
+      "uri": "/api/weighting-profiles/available-sub-categories"
+    }
+  }
+}

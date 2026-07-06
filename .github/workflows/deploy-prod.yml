@@ -1,0 +1,48 @@
+# Manually-triggered deploy to the prod env.
+#
+# Identical input shape to deploy-staging.yml. The difference is the
+# `environment: prod` clause on the deploy job — this triggers
+# GitHub's environment protection rule which (configured in the repo
+# Settings → Environments → prod) requires a manual approval from a
+# designated reviewer before the job actually runs.
+#
+# Configure the `prod` environment in Settings to add reviewers + an
+# optional wait timer before deploys are released.
+
+name: deploy-prod
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_sha:
+        description: Image tag to deploy (e.g. sha-abc1234 — must be already deployed to staging).
+        required: true
+        type: string
+      run_migration:
+        description: Run the Alembic migration task before deploying.
+        required: false
+        default: false
+        type: boolean
+      ramp_workers:
+        description: Walk the Worker Deployments V3 ramp via maint container (recommended for prod).
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      env_name: prod
+      # Triggers the GitHub `prod` environment's protection rules.
+      # Configure reviewers + optional wait timer at Settings →
+      # Environments → prod.
+      gh_environment: prod
+      image_sha: ${{ inputs.image_sha }}
+      run_migration: ${{ inputs.run_migration }}
+      ramp_workers: ${{ inputs.ramp_workers }}

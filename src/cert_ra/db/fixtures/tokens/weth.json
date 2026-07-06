@@ -1,0 +1,205 @@
+{
+  "Name": "WETH",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Collateral integrity",
+      "desc": "Collateral mechanism: Contract ETH balance directly defines supply\nCustody mechanism: Fully on-chain in the wrapper contract",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Collateral integrity",
+      "desc": "Collateral backing is direct and on-chain.\nSupply is defined by contract ETH balance itself.",
+      "value": "0.001",
+      "notes": "Score: 1, PD: 0.10%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Redemption functionality",
+      "desc": "Withdraw mechanism: On-chain permissionless function",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Redemption functionality",
+      "desc": "The redemption path is direct and minimal.\nAnyone can access but unwrapping still depends on successful Ethereum transfer.",
+      "value": "0.003",
+      "notes": "Score: 1.5, PD: 0.30%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Contract accounting correctness",
+      "desc": "Accounting mechanism: Balances stored on-chain using simple mappings",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Contract accounting correctness",
+      "desc": "The accounting surface is extremely small and internally coherent.",
+      "value": "0.001",
+      "notes": "Score: 1, PD: 0.10%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "ERC-20 functionality integrity",
+      "desc": "ERC-20 compliant: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "ERC-20 functionality integrity",
+      "desc": "Core ERC-20 functionality is implemented in a minimal standard form.",
+      "value": "0.001",
+      "notes": "Score: 1, PD: 0.10%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "SCORE",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nCollateral integrity,1,0.10%\nRedemption functionality,1.5,0.30%\nContract accounting correctness,1,0.10%\nERC-20 functionality integrity,1,0.10%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Contract immutability",
+      "desc": "Upgradeable: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Contract immutability",
+      "desc": "Contract is fully immutable.",
+      "value": "0.85",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Code simplicity",
+      "desc": "Contract surface: 2 main functions (deposit + withdraw) besides ERC-20 functionality\nExternal dependencies: None",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Code simplicity",
+      "desc": "The contract is very small and narrowly scoped.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Integration complexity",
+      "desc": "Mechanism: ERC-20 compatible token\nAdoption: Widely integrated across DEXs, lending protocols, and infrastructure",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Integration complexity",
+      "desc": "WETH is extremely easy for external systems to integrate.\nIt behaves as a standard ERC-20 token and the wrapping/unwrapping interface is minimal.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "SCORE",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nContract immutability,0.85\nCode simplicity,0.90\nIntegration complexity,0.90",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Audited: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "No audit found — neutral credit.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification performed: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "No formal verification found — neutral credit.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Unit tests: Not found\nIntegration tests: Not found\nFork simulations: Not found\nInvariant tests: Not found",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "No testing evidence found — neutral credit.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Smart contract maturity",
+      "desc": "Deployed on: April 2017\nStability: High",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Smart contract maturity",
+      "desc": "The contract has very long visible production history.",
+      "value": "0.85",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "SCORE",
+      "name": "Assurance multipliers scoring",
+      "desc": "Multiplier,Score\nAudits,1.00\nFormal verification,1.00\nTesting,1.00\nSmart contract maturity,0.85",
+      "value": "",
+      "notes": ""
+    }
+  ]
+}

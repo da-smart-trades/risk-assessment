@@ -1,0 +1,57 @@
+{
+    "_doc": "Curated operator labels per chain. Keys are chain-specific identifiers, values are human-readable operator names. Used to override or supplement labels returned by native APIs. Keys prefixed with `_` are documentation and ignored by the loader.",
+    "_provenance": {
+        "SOLANA": "Validator identity pubkeys + names pulled from the stakewiz.com API on 2026-05-28. Coverage is the first 40 validators returned by that endpoint — top-stake operators (Helius, Coinbase, Triton, Jito, Marinade etc.) are not yet covered; add them manually as you encounter them in the panel.",
+        "AVALANCHE_C": "Tried Glacier and AvaScan APIs (2026-05-28) — neither exposes operator names on validator endpoints. Populate manually from the AvaScan UI's per-validator pages or community label lists as you identify big operators. Keys must include the 'P-' prefix to match what platform.getCurrentValidators returns.",
+        "POLYGON": "The Polygon Staking API names nearly every validator natively, so this file is reserved for fixing the small number of `Anonymous N` and empty-name entries returned by the API. None are currently overridden — anonymous validators show as their API-reported `Anonymous N` label."
+    },
+    "SOLANA": {
+        "_key_format": "Solana validator identity pubkey (the 'nodePubkey' from getVoteAccounts)",
+        "Diman2GphWLwECE3swjrAEAJniezpYLxK1edUydiDZau": "diman",
+        "bkpk9KVsDRfrArzzmkJ9mPEvbXfQxczzQYR3QMGiR8Z": "Backpack",
+        "Cu9Ls6dsTL6cxFHZdStHwVSh1uy2ynXz8qPJMS5FRq86": "Stardust Staking",
+        "BoNKmNCGvoHS4CkKvYRnF21iEpUP827pZjhFGdA4t5as": "BONK",
+        "WUNoB9YQXmXXRcJsjY1G8PfVag5aAfnyGmFd6YwJVwp": "StakeCraft",
+        "3s97yjq2MhoPVPC3U9VeE3Z5S643Pweovg88ysvrQPw5": "Starke Finance",
+        "qZMH9GWnnBkx7aM1h98iKSv2Lz5N78nwNSocAxDQrbP": "Spectrum Staking",
+        "2P9ZYA4vBoBBr56hrEFTmrd5ctuz3r7wtvRYmbgk6jRL": "Sunshine",
+        "EQhTjikb1L2jvxsCaSW2o2TuRXh4Do6HzBEWCxpeM44W": "JM",
+        "KoLibrJsbABbtmtFPc7nPvDxT81rc4UPM7mY9xSLjpo": "Kolibrio",
+        "BeSovDCzhEAfgwDyXBuhmCFKsu5WQ3PaX61GEfteNzXM": "Yonta Labs",
+        "2gDeeRa3mwPPtw1CMWPkEhRWo9v5izNBBfEXanr8uibX": "NuFi",
+        "AsMpvJ3DZ2Ydu1WTRMAyMH4QjSLiUG39rKzfzvtE1bWr": "Nordic Staking",
+        "cybi55ebub37HZW9YmRaLh59Lh3kqaLTsEBQwW6vFkC": "CyberAlex",
+        "9bkyxgYxRrysC1ijd6iByp9idn112CnYTw243fdH2Uvr": "Legends",
+        "G4GT8z4AKWNoy3x6nuzxW83UfFXLXzrwn7DZQt4GvWdU": "FREEZZ",
+        "A23LfQn6khffj2hGhGfXr6P52W2pxrVcCaHVQLYQgiX2": "vladika",
+        "CpuDNi3iVoHXbaT8gHpzKe6rqeBasoYjEKi21q7NRVJS": "val37",
+        "Ee8dX3qtwrDRnxYK6NGQfmMeKT3Qpp2QZHpxiAiw23W9": "StakeNode777",
+        "BR1aTt4ZZUCwWJDkSYf1hqkYJjo7Mb7Ar8iVTkeSwUB8": "Abacus",
+        "CTwsruptUccEtZGNxBDbuusHYxkBX3P6ndrxVjSG213y": "CryptoVik",
+        "2XmhZKHmfjku3T3nC9xKhgr5bm1CAmWXqNsNt49mo82C": "Soldea Kitchen",
+        "2zykwzzo1pd3H2oSj5j5SRLTvmpa9Nr2S2Bh8tTVd5Tq": "zim.one",
+        "nSGZ3tv2UhskkPqiB666yDVj7PTi9qKgDqvjHyw5JgM": "OranG3cluB",
+        "peNgUgnzs1jGogUPW8SThXMvzNpzKSNf3om78xVPAYx": "PENGU Validator",
+        "ADjyeNzWd8yhEjCVyAqT87eqoyGRbimERQsNhFQcXjop": "InfiniteSOL",
+        "4b1onMDEasBh4BuPekQWijx3BYR64hAE1z2jJyeZUkck": "4BLOCK",
+        "7Nu9ckgtjobZ3MkbadGFKEvRymYuah9HmcxiUJKMM9NB": "SoLyrae",
+        "Av8EnYrPBnSJHK5e2wmTdnCpSy7nzmBgyFaUKSyLnBfe": "AndrewInUA",
+        "7Nn8qBJey7vXtVFMNBbbuN8UkujU8Y6nWzbHVGuf49yV": "livechanger",
+        "uEhHSnCXvWgtgvVaYscPHjG13G3peMmngQQ2ghC54i3": "Satellite Staking",
+        "7CR6whiYULVf1Knj4J5PxUS37opdk8UAx2WnDzBQKiVe": "DataHive AI",
+        "8pyp3vfVPRziYdAYEyqkwytdBbdVbQmHqfQAVDcRV3w": "Rustiq Technology",
+        "LitxAVo3RnYXD2sX1TyRJxfnKy48amXgyGiysPZjZwE": "Litx",
+        "EdFUcP2f6j9iBg5BqsgJn3WDr1JieiKCo41hZ5Zrsk6w": "Bitget Wallet",
+        "8AkVj5aAtJ27tYXeq89cnSf68V43NarFHMx2iSDjZv7c": "Theta",
+        "FLwV8tm3pL8pZj6d927VASzPrgW51Gf4nRJuTewrfega": "Velox Validator",
+        "9Wmaz9VPpEnH67ZqrvYd9bcH66DtsGaEKcSQE1ac5wkf": "LumLabs",
+        "7PpXQgDb9eCHN1Uudgi77Wm89cRz4T85YgDw83qvaJXd": "Nodance",
+        "CjmXSapt1ouz3CZzgkRJckBEwMSo5fVdVrizLeRscwYD": "Mad Lads"
+    },
+    "AVALANCHE_C": {
+        "_key_format": "Avalanche P-Chain reward address as returned by platform.getCurrentValidators (e.g. 'P-avax1...' — note the 'P-' prefix is included)"
+    },
+    "POLYGON": {
+        "_key_format": "Polygon validator owner address, lowercase hex"
+    }
+}

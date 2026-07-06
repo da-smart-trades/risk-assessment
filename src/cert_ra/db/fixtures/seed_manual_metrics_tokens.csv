@@ -1,0 +1,75 @@
+name,desc,category,sub_category,chain,token,value,risk_score,notes
+Governance integrity & liveness,Governance integrity & liveness anchor risk score,TOKEN_RISK,anchor,,UNI,2.5,,PD: 1.25%
+Control-plane integrity,Control-plane integrity anchor risk score,TOKEN_RISK,anchor,,UNI,1,1,PD: 0.1%
+Treasury custody integrity,Treasury custody integrity anchor risk score,TOKEN_RISK,anchor,,UNI,1,1,PD: 0.1%
+Fee collection and distribution integrity,Fee collection and distribution integrity anchor risk score,TOKEN_RISK,anchor,,UNI,1,1,PD: 0.1%
+Jurisdictional clarity,Jurisdictional clarity control modifier,TOKEN_RISK,modifier,,UNI,1.00,,
+Governance power distribution and participation,Governance power distribution and participation control modifier,TOKEN_RISK,modifier,,UNI,1.05,,
+Voting power integrity,Voting power integrity control modifier,TOKEN_RISK,modifier,,UNI,0.95,,
+Voting mechanism integrity,Voting mechanism integrity control modifier,TOKEN_RISK,modifier,,UNI,0.95,,
+Governance parameters safeguards,Governance parameters safeguards control modifier,TOKEN_RISK,modifier,,UNI,1.05,,
+Protocol parameters safeguards,Protocol parameters safeguards control modifier,TOKEN_RISK,modifier,,UNI,0.95,,
+Protocol upgrades safeguards,Protocol upgrades safeguards control modifier,TOKEN_RISK,modifier,,UNI,0.95,,
+Emergency roles risk,Emergency roles risk control modifier,TOKEN_RISK,modifier,,UNI,0.97,,
+Protocol complexity,Protocol complexity control modifier,TOKEN_RISK,modifier,,UNI,1.05,,
+Treasury custody risk,Treasury custody risk control modifier,TOKEN_RISK,modifier,,UNI,1.15,,
+Fee-related logic risk,Fee-related logic risk control modifier,TOKEN_RISK,modifier,,UNI,1.00,,
+Audits,Audits assurance multiplier,TOKEN_RISK,multiplier,,UNI,0.90,,
+Formal verification,Formal verification assurance multiplier,TOKEN_RISK,multiplier,,UNI,0.92,,
+Testing,Testing assurance multiplier,TOKEN_RISK,multiplier,,UNI,0.95,,
+Monitoring,Monitoring assurance multiplier,TOKEN_RISK,multiplier,,UNI,0.95,,
+Incidents history,Incidents history assurance multiplier,TOKEN_RISK,multiplier,,UNI,0.95,,
+Upgrades history,Upgrades history assurance multiplier,TOKEN_RISK,multiplier,,UNI,1.00,,
+Smart contract maturity,Smart contract maturity assurance multiplier,TOKEN_RISK,multiplier,,UNI,0.95,,
+Governance integrity & liveness,Governance integrity & liveness anchor risk score,TOKEN_RISK,anchor,,AAVE,1,1,PD: 0.1%
+Control-plane integrity,Control-plane integrity anchor risk score,TOKEN_RISK,anchor,,AAVE,3,3,PD: 2%
+Treasury custody integrity,Treasury custody integrity anchor risk score,TOKEN_RISK,anchor,,AAVE,3,3,PD: 2%
+Jurisdictional clarity,Jurisdictional clarity control modifier,TOKEN_RISK,modifier,,AAVE,1.00,,
+Governance power distribution and participation,Governance power distribution and participation control modifier,TOKEN_RISK,modifier,,AAVE,1.05,,
+Voting power integrity,Voting power integrity control modifier,TOKEN_RISK,modifier,,AAVE,0.95,,
+Voting mechanism integrity,Voting mechanism integrity control modifier,TOKEN_RISK,modifier,,AAVE,0.95,,
+Governance parameters safeguards,Governance parameters safeguards control modifier,TOKEN_RISK,modifier,,AAVE,0.95,,
+Protocol parameters safeguards,Protocol parameters safeguards control modifier,TOKEN_RISK,modifier,,AAVE,1.05,,
+Protocol upgrades safeguards,Protocol upgrades safeguards control modifier,TOKEN_RISK,modifier,,AAVE,0.95,,
+Emergency roles risk,Emergency roles risk control modifier,TOKEN_RISK,modifier,,AAVE,1.10,,
+Protocol complexity,Protocol complexity control modifier,TOKEN_RISK,modifier,,AAVE,1.05,,
+Treasury custody risk,Treasury custody risk control modifier,TOKEN_RISK,modifier,,AAVE,1.15,,
+Audits,Audits assurance multiplier,TOKEN_RISK,multiplier,,AAVE,0.88,,
+Formal verification,Formal verification assurance multiplier,TOKEN_RISK,multiplier,,AAVE,0.82,,
+Testing,Testing assurance multiplier,TOKEN_RISK,multiplier,,AAVE,0.90,,
+Monitoring,Monitoring assurance multiplier,TOKEN_RISK,multiplier,,AAVE,0.90,,
+Incidents history,Incidents history assurance multiplier,TOKEN_RISK,multiplier,,AAVE,0.90,,
+Upgrades history,Upgrades history assurance multiplier,TOKEN_RISK,multiplier,,AAVE,1.00,,
+Smart contract maturity,Smart contract maturity assurance multiplier,TOKEN_RISK,multiplier,,AAVE,0.93,,
+Hedge integrity,Hedge integrity anchor risk score,TOKEN_RISK,anchor,,USDE,3,3,PD: 2.00%
+Collateral custody integrity,Collateral custody integrity anchor risk score,TOKEN_RISK,anchor,,USDE,2.5,,PD: 1.25%
+Exchange and counterparty integrity,Exchange and counterparty integrity anchor risk score,TOKEN_RISK,anchor,,USDE,3,3,PD: 2.00%
+Operational risk management,Operational risk management anchor risk score,TOKEN_RISK,anchor,,USDE,3,3,PD: 2.00%
+Jurisdictional clarity,Jurisdictional clarity control modifier,TOKEN_RISK,modifier,,USDE,1.05,,
+Governance power distribution and participation,Governance power distribution and participation control modifier,TOKEN_RISK,modifier,,USDE,1.05,,
+Transparency of reserves and hedge positions,Transparency of reserves and hedge positions control modifier,TOKEN_RISK,modifier,,USDE,1.10,,
+Hedge design robustness,Hedge design robustness control modifier,TOKEN_RISK,modifier,,USDE,0.95,,
+Collateral quality safeguards,Collateral quality safeguards control modifier,TOKEN_RISK,modifier,,USDE,0.97,,
+Counterparty diversification safeguards,Counterparty diversification safeguards control modifier,TOKEN_RISK,modifier,,USDE,0.95,,
+Margin and liquidation safeguards,Margin and liquidation safeguards control modifier,TOKEN_RISK,modifier,,USDE,1.05,,
+Redemption and liquidity safeguards,Redemption and liquidity safeguards control modifier,TOKEN_RISK,modifier,,USDE,1.05,,
+Operational complexity,Operational complexity control modifier,TOKEN_RISK,modifier,,USDE,1.10,,
+Emergency roles risk,Emergency roles risk control modifier,TOKEN_RISK,modifier,,USDE,1.03,,
+Audits,Audits assurance multiplier,TOKEN_RISK,multiplier,,USDE,0.90,,
+Formal verification,Formal verification assurance multiplier,TOKEN_RISK,multiplier,,USDE,1.00,,
+Testing,Testing assurance multiplier,TOKEN_RISK,multiplier,,USDE,0.97,,
+Monitoring,Monitoring assurance multiplier,TOKEN_RISK,multiplier,,USDE,0.95,,
+Incidents history,Incidents history assurance multiplier,TOKEN_RISK,multiplier,,USDE,1.00,,
+Upgrades history,Upgrades history assurance multiplier,TOKEN_RISK,multiplier,,USDE,0.98,,
+Smart contract maturity,Smart contract maturity assurance multiplier,TOKEN_RISK,multiplier,,USDE,0.98,,
+Collateral integrity,Collateral integrity anchor risk score,TOKEN_RISK,anchor,,WETH,1,1,PD: 0.10%
+Redemption functionality,Redemption functionality anchor risk score,TOKEN_RISK,anchor,,WETH,1.5,,PD: 0.30%
+Contract accounting correctness,Contract accounting correctness anchor risk score,TOKEN_RISK,anchor,,WETH,1,1,PD: 0.10%
+ERC-20 functionality integrity,ERC-20 functionality integrity anchor risk score,TOKEN_RISK,anchor,,WETH,1,1,PD: 0.10%
+Contract immutability,Contract immutability control modifier,TOKEN_RISK,modifier,,WETH,0.85,,
+Code simplicity,Code simplicity control modifier,TOKEN_RISK,modifier,,WETH,0.90,,
+Integration complexity,Integration complexity control modifier,TOKEN_RISK,modifier,,WETH,0.90,,
+Audits,Audits assurance multiplier,TOKEN_RISK,multiplier,,WETH,1.00,,
+Formal verification,Formal verification assurance multiplier,TOKEN_RISK,multiplier,,WETH,1.00,,
+Testing,Testing assurance multiplier,TOKEN_RISK,multiplier,,WETH,1.00,,
+Smart contract maturity,Smart contract maturity assurance multiplier,TOKEN_RISK,multiplier,,WETH,0.85,,

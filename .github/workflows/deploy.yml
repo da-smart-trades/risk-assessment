@@ -1,0 +1,80 @@
+# Reusable deploy workflow — assumes gha-cert-ra-deploy, verifies the
+# image signature via cosign, and runs upgrade.sh against the chosen env.
+#
+# Called by deploy-staging.yml and deploy-prod.yml — those add the
+# `environment:` protection rule that gates prod on a manual approval.
+
+name: deploy
+
+on:
+  workflow_call:
+    inputs:
+      env_name:
+        description: Target env (staging or prod).
+        required: true
+        type: string
+      gh_environment:
+        description: |
+          GitHub environment name to gate the job under (e.g. `prod`).
+          Set to the same value as env_name to pick up the repo's
+          per-environment protection rules + reviewers configured in
+          Settings → Environments. Pass an empty string to skip.
+        required: false
+        default: ""
+        type: string
+      image_sha:
+        description: Image tag to deploy (e.g. sha-abc1234).
+        required: true
+        type: string
+      run_migration:
+        description: Run the Alembic migration task before deploying.
+        required: false
+        default: false
+        type: boolean
+      ramp_workers:
+        description: Walk the Worker Deployments V3 ramp via maint container after the app shift.
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    # GitHub evaluates `environment:` before the job starts and gates
+    # on the protection rules configured at Settings → Environments.
+    # Prod sets this to "prod" via deploy-prod.yml so the manual-
+    # approval reviewer requirement applies. Staging passes empty
+    # to skip gating.
+    environment: ${{ inputs.gh_environment }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/gha-cert-ra-deploy-${{ inputs.env_name }}
+          aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
+
+      - uses: astral-sh/setup-uv@v7
+
+      - uses: oven-sh/setup-bun@v2
+
+      - uses: sigstore/cosign-installer@v3
+
+      # upgrade.sh's `read -r -p "Proceed?"` prompt would hang forever
+      # in CI. We disable the interactive confirmation by piping `y`
+      # in; the workflow_dispatch (or environment protection rule)
+      # is the human-in-the-loop instead.
+      - name: Run upgrade.sh
+        env:
+          ENV: ${{ inputs.env_name }}
+          IMAGE_SHA: ${{ inputs.image_sha }}
+          RUN_MIGRATION: ${{ inputs.run_migration && '1' || '0' }}
+          RAMP: ${{ inputs.ramp_workers && 'worker' || '' }}
+        run: |
+          set -euo pipefail
+          # The "Proceed?" prompt in upgrade.sh expects stdin; auto-confirm.
+          yes y | ./infra/scripts/upgrade.sh

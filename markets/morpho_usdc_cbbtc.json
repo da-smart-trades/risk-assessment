@@ -1,0 +1,149 @@
+{
+  "Name": "MORPHO_USDC_CBBTC",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Market solvency",
+      "desc": "Total supplied,$1,309,071,758\nTotal borrowed,$1,161,760,648\nAvailable cash / market liquidity,$147,311,111\nUtilization rate,88.75%\nDisplay reconciliation,Borrow plus liquidity equals $1,309,071,758; supplied equals $1,309,071,758\nDisplayed-dollar implied utilization,88.75%\nTotal reserves,$0.00\nReserve factor,0.00%\nCollateral composition backing the market,cbBTC only\nShare of debt by collateral,cbBTC backs 100.00% of market debt\nConcentration in top collateral assets,100.00%\nExposure to correlated collateral,BTC-correlated collateral; stablecoin loan; loan-correlated no\nCollateral family,BTC-correlated\nLiquidity profile of collateral,Listed and priced asset; price approximately $80,116; tagged BTC\nRisk classification per collateral,cbBTC treated as market-relevant BTC collateral; issuer/custody risk excluded\nDependence on illiquid or long-tail collateral,Low to moderate\nDistribution of borrower sizes,10 borrowers\nTop borrower concentration,Not provided directly\nTop five borrower concentration,2.78%\nTop ten borrower concentration,4.76%\nBorrower HHI,0.0003\nLiquidation thresholds / collateral factors by collateral,LLTV 86.00%\nLiquidation incentives,14.00%\nClose factor,Partial or full liquidation supported at protocol level\nExistence of caps, isolation, or equivalent constraints,Isolated single-collateral market\nHistorical bad debt in the market,$0.00\nHistorical liquidation events indexed,9,845\nHistorical liquidation repaid,$142.77\nHistorical liquidation seized,$149.35\nHistorical liquidation bad debt,$0.00\nEvidence of solvency during prior stress events,9,845 liquidation events indexed with $0.00 historical bad debt\nHistorical utilization,Average 88.80%, peak 91.91%\nCollateral stress test evidence,$0.00 liquidatable after 5% collateral shock; $4.83M liquidatable after 10% shock; $9.80M liquidatable after 20% shock\nBad-debt stress evidence,$0.00 bad-debt-zone debt after 10% shock; $0.00 after 20% shock; $9.80M after 30% shock",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Market solvency",
+      "desc": "The market is large and highly utilized, but borrower concentration is very low, with top five borrowers at only 2.78% of debt and top ten at 4.76%.\nHistorical bad debt is $0.00 despite 9,845 indexed liquidation events, which supports strong realized solvency performance.\nThe score is not 1 because the market has 0 reserves, 86.00% LLTV, high utilization, and 100.00% dependence on one BTC-correlated collateral asset.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Withdrawal liquidity",
+      "desc": "Current utilization,88.75%\nHistorical average utilization,88.80%\nHistorical peak utilization,91.91%\nAvailable cash ratio,11.25%\nImmediate withdrawal capacity,$147,311,111\nBorrow concentration,Top five borrowers 2.78%; top ten borrowers 4.76%\nBorrower count,10\nBorrower HHI,0.0003\nSupplier count,10\nTop supplier concentration,34.95%\nTop five supplier concentration,91.44%\nTop ten supplier concentration,97.17%\nSupplier HHI,0.2379\nLargest supplier balance / strict cash,3.1056x\nBorrow assets / strict cash,7.8864x\nStrict on-market cash,$147,311,111\nReserve residual / reconciliation check,$0.00\nDependence on repayments for withdrawals,High for withdrawals above current cash\nDependence on liquidations for withdrawals,Material under collateral stress\nEvidence of withdrawal friction during stress,Not identified in provided evidence\nLiquidity management mechanisms,Adaptive Curve IRM assumed from prior market framework\nEvidence of persistent liquidity shortages,Not identified\nHistorical utilization profile,Persistently close to target utilization",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Withdrawal liquidity",
+      "desc": "Immediate liquidity is large in dollar terms but only 11.25% of supplied assets.\nSupplier concentration is high, with top five suppliers holding 91.44% and the largest supplier balance equal to 3.11x strict cash.\nThe score is not 4 because there is no identified persistent withdrawal shortage or market-specific withdrawal incident, and borrower concentration is very low.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral dependency robustness",
+      "desc": "Oracle address,`0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9`\nCollateral asset,cbBTC\nCollateral listing and pricing evidence,Listed yes; price approximately $80,115.92; tagged BTC\nCollateral family,BTC-correlated\nCollateral share in market,100.00%\nLLTV,86.00%\nLiquidation penalty,14.00%\nCollateral asset count,1\nHistorical liquidation bad debt,$0.00\nHistorical liquidation repaid,$142.77\nHistorical liquidation seized,$149.35\nHistorical utilization,Average 88.80%, peak 91.91%\nDebt liquidatable after 5% collateral shock,$0.00\nDebt liquidatable after 10% collateral shock,$4,830,151\nDebt liquidatable after 20% collateral shock,$9,803,560\nDebt entering bad-debt zone after 10% collateral shock,$0.00\nDebt entering bad-debt zone after 20% collateral shock,$0.00\nDebt entering bad-debt zone after 30% collateral shock,$9,803,560",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral dependency robustness",
+      "desc": "cbBTC is listed, priced, and BTC-correlated, so it is materially stronger collateral than long-tail collateral.\nHistorical bad debt is $0.00, and stress evidence shows no bad-debt-zone debt under 10% or 20% collateral shocks.\nThe reduction is limited because the market is 100.00% dependent on one collateral asset, has 0 reserves, and uses an elevated 86.00% LLTV.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral and liquidity diversification",
+      "desc": "Oracle address,`0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9`\nCollateral asset count,1\nConcentration in top collateral assets,100.00%\nExposure to correlated collateral,BTC-correlated collateral; stablecoin loan; loan-correlated no\nBorrower count,10\nBorrow concentration,Top five borrowers 2.78%\nTop ten borrower concentration,4.76%\nBorrower HHI,0.0003\nDebt near LLTV within 2.00%,$0.00\nDebt near LLTV within 5.00%,$0.00\nDebt near LLTV within 10.00%,$4,830,151\nSupplier count,10\nTop supplier concentration,34.95%\nTop five supplier concentration,91.44%\nTop ten supplier concentration,97.17%\nSupplier HHI,0.2379\nLargest supplier balance versus strict cash,3.1056x\nDebt liquidatable after 5% collateral shock,$0.00\nDebt liquidatable after 10% collateral shock,$4,830,151\nDebt liquidatable after 20% collateral shock,$9,803,560\nDebt entering bad-debt zone after 10% collateral shock,$0.00\nDebt entering bad-debt zone after 20% collateral shock,$0.00\nDebt entering bad-debt zone after 30% collateral shock,$9,803,560\nHistorical liquidation events indexed,9,845\nHistorical liquidation bad debt,$0.00",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral and liquidity diversification",
+      "desc": "Collateral diversification is weak because the market is backed by one asset only.\nBorrower diversification is strong, with top five borrowers at only 2.78% and borrower HHI of 0.0003.\nSupplier concentration is high, so the net diversification effect is mildly negative rather than neutral or strongly negative.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market monitoring",
+      "desc": "Public dashboards available,Assumed same as prior evidence\nMonitoring of utilization and available cash,Assumed same as prior evidence\nMonitoring of liquidation activity,Assumed same as prior evidence\nMonitoring of reserves or bad debt,Assumed same as prior evidence\nMonitoring of borrower concentration,Assumed same as prior evidence\nMonitoring of collateral concentration,Assumed same as prior evidence\nMonitoring of withdrawal conditions,Assumed same as prior evidence\nIncident response tooling disclosed,Not market-specific\nObservability documentation,Assumed same as prior evidence\nMonitoring public, internal, or both,Public verified in prior evidence; internal not assessed\nEvidence of monitoring supporting market risk management,Assumed same as prior evidence",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market monitoring",
+      "desc": "The same assurance evidence is assumed to support live monitoring of market liquidity, utilization, borrowers, suppliers, liquidations, and bad debt.\nPublic observability reduces risk because market participants can identify liquidity and solvency deterioration.\nThe reduction is limited because internal alerting and response tooling are not verified.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market incidents history",
+      "desc": "Major market-specific incidents identified,None identified\nHistoric bad debt events identified,None identified\nHistoric withdrawal or liquidity incidents identified,None identified\nPublic disclosure quality,Assumed same as prior evidence\nPost-mortems available,None identified for this target market\nTime since last major incident,No target-market major incident identified\nEvidence of repeated market-specific risk pattern,None identified\nIncidents resulted in insolvency or contained disruption,No insolvency shown\nEvidence of effective remediation after incidents,Not applicable",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market incidents history",
+      "desc": "No historical bad debt is identified for this market.\nThe provided evidence shows extensive indexed liquidation history without bad debt.\nThe reduction is mild because absence of identified incidents is not the same as full incident-history certification.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market configuration maturity",
+      "desc": "Initial deployment date of the market,Not provided\nTime in production under meaningful usage,Not provided\nCurrent configuration recent or long-lived,Not verified\nMaterial changes to collateral framework,Not found in provided evidence\nMaterial changes to parameterization,Not found in provided evidence\nMaterial changes to collateral factors or liquidation settings,Not found in provided evidence\nNumber of market cycles survived,Partial evidence from historical utilization and liquidation records\nEvidence of stable operation under scale,Yes, $1.31B total supplied\nEvidence of stable operation during severe volatility,Partial, based on liquidation history and bad-debt evidence\nCurrent market configuration materially different from early versions,Not found",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market configuration maturity",
+      "desc": "The market operates at very large scale and has indexed liquidation history without bad debt.\nStable operation under large current supply and borrow supports a mild assurance benefit.\nThe reduction is mild because deployment date and full configuration-change history were not provided.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ANCHOR",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nMarket solvency,2,0.50%\nWithdrawal liquidity,3,2.00%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "CONTROL",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nCollateral dependency robustness,0.95\nCollateral and liquidity diversification,1.05",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ASSURANCE",
+      "name": "Assurance scoring",
+      "desc": "Multiplier,Score\nMarket monitoring,0.90\nMarket incidents history,0.95\nMarket configuration maturity,0.95",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "SUMMARY",
+      "name": "Probability of default",
+      "desc": "",
+      "value": "2.02%",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+{
+  "Name": "UNI",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Governance integrity & liveness",
+      "desc": "Price: ~$4.00\nMax supply: 1,000,000,000\nTotal supply: 898,378,420 (90%)\nCirculating supply: 633,561,603 (63%)\nDelegated voting power: 222M (24% of total supply)\nProposal threshold: 1M UNI ($4M)\nQuorum: 40M UNI (18% of delegated voting power)\nTop 5 delegate concentration: 57M (6.3% of TS, 25% of DVP)\nTop 10 delegate concentration: 95M (10.5% of TS, 43% of DVP)\nQuorum hit rate over last 20 proposals: 18\nVote duration: 6 days\nProposal delay: 2 days",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Governance integrity & liveness",
+      "desc": "Liveness looks strong: quorum hit 18/20 is excellent.\nQuorum is non-trivial: ~18% of delegated voting power.\nVote timelock parameters give time for delegates to react.\nDelegated voting power is low: 24% of total supply — low participation can make governance more political and easier to swing.\nConcentration is meaningful at top 10: 43% of delegated voting power. A relatively small coalition can decide outcomes if they coordinate.",
+      "value": "0.0125",
+      "notes": "Score: 2.5, PD: 1.25%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Control-plane integrity",
+      "desc": "Number of privileged roles: 0\nSeparation of duties: The DAO handles everything\nPausable: No\nUpgradeable: No\nTimelock delay: 2 to 30 days\nTimelock bypass allowed: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Control-plane integrity",
+      "desc": "No privileged roles, no timelock bypass.\nNot pausable.\nNot upgradeable.",
+      "value": "0.001",
+      "notes": "Score: 1, PD: 0.1%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Treasury custody integrity",
+      "desc": "Value under management: USD 1,057M (99% UNI)\nGoverned by: DAO\nTimelock delay: 2 to 30 days\nTimelock bypass allowed: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Treasury custody integrity",
+      "desc": "No privileged roles, no timelock bypass.",
+      "value": "0.001",
+      "notes": "Score: 1, PD: 0.1%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Fee collection and distribution integrity",
+      "desc": "Protocol fees enabled: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Fee collection and distribution integrity",
+      "desc": "Protocol fees are not currently enabled, so there is no active fee collection or distribution mechanism to fail.",
+      "value": "0.001",
+      "notes": "Score: 1, PD: 0.1%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "SCORE",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nGovernance integrity & liveness,2.5,1.25%\nControl-plane integrity,1,0.10%\nTreasury custody integrity,1,0.10%\nFee collection and distribution integrity,1,0.10%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Jurisdictional clarity",
+      "desc": "Critical controllers that are identifiable entities: No — no privileged roles exist.\nDocumented sanctions: No.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Jurisdictional clarity",
+      "desc": "No privileged roles means no identifiable entity concentration.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance power distribution and participation",
+      "desc": "See anchor Governance integrity & liveness evidence. Key metrics: quorum hit rate 18/20, delegated voting power 24% of total supply, top 10 concentration 43% of DVP.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance power distribution and participation",
+      "desc": "Delegated voting power is low (24% of total supply).\nConcentration is meaningful at the top 10 (43% of DVP).",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Voting power integrity",
+      "desc": "Vote power source: UNI token\nFlash-loan resistance: Yes — checkpointed token balances\nKnown delegation/wrapper edge cases: None",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Voting power integrity",
+      "desc": "Checkpointed balances make flash-loan voting materially harder.\nNo known delegation/wrapper edge cases.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Voting mechanism integrity",
+      "desc": "Mechanism: Governor Bravo\nKnown past governance exploits or mitigations: None. Audited by OpenZeppelin.\nExecution lifecycle: proposal → voting → queue → execute",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Voting mechanism integrity",
+      "desc": "Governor Bravo is audited (OpenZeppelin) and no known past governance exploits.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance parameters safeguards",
+      "desc": "Which path changes governance parameters: Timelock contract only.\nIs it harder than normal proposals: No — all proposals go through the same path.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance parameters safeguards",
+      "desc": "Governance parameter changes are not harder than normal proposals — a captured governance can more easily entrench itself.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Protocol parameters safeguards",
+      "desc": "Which path changes protocol parameters: Timelock contract only.\nHighest-risk parameters: None identified.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Protocol parameters safeguards",
+      "desc": "No high-risk parameters.\nSettings limited by reasonable timelock delays.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Protocol upgrades safeguards",
+      "desc": "Upgrade path: None\nWho can upgrade: No one\nTime-to-upgrade: 0",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Protocol upgrades safeguards",
+      "desc": "No possible upgrade paths — fully immutable.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Emergency roles risk",
+      "desc": "See anchor Control-plane integrity evidence. No privileged roles, not pausable.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Emergency roles risk",
+      "desc": "No privileged roles, no emergency capability.",
+      "value": "0.97",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Protocol complexity",
+      "desc": "Number of chains: 16\nNumber of pools/markets (or major modules): 3\nNumber of executors / timelocks: 1\nNumber of privileged roles: 0\nChange frequency: Low",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Protocol complexity",
+      "desc": "High number of chains increases configuration surface.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Treasury custody risk",
+      "desc": "Treasury move friction: Only timelock contract.\nCan a single proposal drain treasury: Yes.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Treasury custody risk",
+      "desc": "Captured governance implies large expropriation capability.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Fee-related logic risk",
+      "desc": "Enabled: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Fee-related logic risk",
+      "desc": "Fee switch is not enabled — no active fee logic to introduce risk.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "SCORE",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nJurisdictional clarity,1.00\nGovernance power distribution and participation,1.05\nVoting power integrity,0.95\nVoting mechanism integrity,0.95\nGovernance parameters safeguards,1.05\nProtocol parameters safeguards,0.95\nProtocol upgrades safeguards,0.95\nEmergency roles risk,0.97\nProtocol complexity,1.05\nTreasury custody risk,1.15\nFee-related logic risk,1.00",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Number of independent audits: 6\nIssues addressed: Yes\nContent unaudited: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "High number of independent audits materially reduces unknown technical risk.\nMultiple audits lowers the probability of latent vulnerabilities affecting anchor failure.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification performed: Yes\nCoverage scope: Protocol",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "Formal verification provides stronger-than-audit assurance for core invariants.\nProtocol-level scope suggests coverage beyond a narrow component.",
+      "value": "0.92",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Unit tests: Yes\nIntegration tests: Yes\nFork simulations: Yes\nInvariant tests: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "Broad test surface reduces the probability of regressions and edge-case failures.\nDirectly reduces technical routes to anchor failure.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Active monitoring/alerting vendors: Hypernative and Hexagate",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Active monitoring reduces time-to-detection and increases probability of intervention before an issue becomes irreversible.\nMultiple vendors suggests redundancy and broader coverage.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incidents history",
+      "desc": "Major incidents affecting in-scope contracts in last 24 months: 0\nSeverity: None",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incidents history",
+      "desc": "No recent major incidents is a strong empirical signal that critical paths are stable.\nReduces probability of near-term anchor failure driven by known fragility.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Upgrades history",
+      "desc": "Upgradeable: No — contract is immutable.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Upgrades history",
+      "desc": "Not upgradeable — no upgrade history to assess, neutral credit.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Smart contract maturity",
+      "desc": "Deployed on: April 2020\nStability: High",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Smart contract maturity",
+      "desc": "Long time in production with high stability is strong evidence against latent critical failure modes.\nMaturity lowers the probability that a new, undiscovered structural flaw causes anchor failure.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "SCORE",
+      "name": "Assurance multipliers scoring",
+      "desc": "Multiplier,Score\nAudits,0.90\nFormal verification,0.92\nTesting,0.95\nMonitoring,0.95\nIncidents history,0.95\nUpgrades history,1.00\nSmart contract maturity,0.95",
+      "value": "",
+      "notes": ""
+    }
+  ]
+}

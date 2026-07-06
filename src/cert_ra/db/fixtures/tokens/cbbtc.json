@@ -1,0 +1,237 @@
+{
+  "Name": "CBBTC",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Reserve backing sufficiency",
+      "desc": "Backing claim: 1 cbBTC backed 1:1 by native BTC held by Coinbase\nReserve custody: Coinbase custodial solution including cold storage\nCurrent cbBTC total supply: ~80,538.75 cbBTC\nProof of Reserve feed: Chainlink cbBTC Reserves PoR on Base\nPoR proxy address: 0x0F8E057D1D7b282EF968D26E9cB432617dF52519\nPoR product type: Cross-chain / Bitcoin Network Proof of Reserve\nPoR heartbeat: 86,400 seconds\nPoR deviation threshold: 0.5%\nPoR data source: Wallet Address Manager\nPoR address ownership: project self-attested addresses",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Reserve backing sufficiency",
+      "desc": "The backing design is simple and direct: cbBTC is explicitly intended to be 1:1 backed by BTC.\nChainlink PoR materially improves reserve observability versus a purely opaque wrapper.\nScore is not 1 because reserve addresses are self-attested, custody is centralized, and full liability/reserve reconciliation still depends on Coinbase reporting and operations.",
+      "value": "0.005",
+      "notes": "Score: 2, PD: 0.50%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Issuance and burn accounting integrity",
+      "desc": "Mint trigger: user withdrawal of BTC from Coinbase to Ethereum, Base, or Solana mints equivalent cbBTC\nBurn trigger: cbBTC deposit to user-specific Coinbase address burns cbBTC and releases BTC\nMinting roles: MasterMinter and Minter\nMinter limits: mintingAllowance limits per minter\nBurn authority: burn restricted to minter addresses\nSolana model: SPL token with Coinbase-managed mint and burn authority\nReconciliation process: Coinbase internal reconciliations between Coinbase wallets and third-party blockchain data",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Issuance and burn accounting integrity",
+      "desc": "Mint/burn mechanics are clearly specified and use role-limited issuance rather than unrestricted token creation.\nMinter allowances limit damage from a single minter compromise.\nScore is not 1 because issuance and burn reconciliation remain Coinbase-operated and multi-network, with no fully permissionless external liability reconciliation.",
+      "value": "0.005",
+      "notes": "Score: 2, PD: 0.50%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Redemption enforceability",
+      "desc": "Redemption method: deposit cbBTC into Coinbase account to unwrap into native BTC\nRedeemer eligibility: Coinbase customers\nKYC/AML requirement: yes, per Coinbase compliance model\nMinting/wrapping fee: no Coinbase fee disclosed\nBurning/unwrapping fee: no Coinbase fee disclosed\nNetwork fees: charged for withdrawals\nRedemption rights reference: Coinbase User Agreement\nTransfer/contract pause can affect redemption flow: yes\nBlacklist controls can affect addresses: yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Redemption enforceability",
+      "desc": "Redemption exists and is operationally straightforward for eligible Coinbase customers.\nThe redemption path is not permissionless and depends on Coinbase account access, compliance status, and legal/operational availability.\nThis creates a meaningful structural failure path under account restriction, jurisdictional disruption, Coinbase outage, or paused/blacklisted token conditions.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2.00%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "On-chain token-control integrity",
+      "desc": "Ethereum contract: 0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\nBase contract: 0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\nArbitrum contract: 0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\nSolana mint: cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij\nEVM upgradeability: proxy upgradeable by Admin role\nOwner role: can assign all roles except Admin\nBlacklister role: can blacklist addresses from transferring, minting, and burning\nPauser role: can pause transfers, mints, and burns\nMasterMinter role: can assign minters and limits\nSolana authorities: Mint Authority, Freeze Authority, Update Authority\nRole controller: Coinbase-controlled roles",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "On-chain token-control integrity",
+      "desc": "The contract model is mature and role-separated, which reduces implementation risk.\nHowever, the token is explicitly upgradeable, pausable, blacklistable, and centrally role-controlled by Coinbase.\nThose powers are legitimate controls, but they also create direct paths by which the holder claim can become non-transferable, non-redeemable, or administratively altered.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2.00%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "SCORE",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nReserve backing sufficiency,2,0.50%\nIssuance and burn accounting integrity,2,0.50%\nRedemption enforceability,3,2.00%\nOn-chain token-control integrity,3,2.00%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Custody and issuer concentration",
+      "desc": "Reserve custodian: Coinbase\nIssuer/operator: Coinbase\nSub-custodians for digital asset storage: None (Coinbase states it does not use sub-custodians)\nPrivate key control: No single individual has control of Coinbase wallet private keys\nCritical token roles controlled by: Coinbase\nRedemption operator: Coinbase",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Custody and issuer concentration",
+      "desc": "The design is highly centralized around Coinbase for custody, issuance, redemption, and admin control.\nCoinbase operational maturity mitigates this, but concentration remains structurally important.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Access and jurisdictional constraints",
+      "desc": "KYC/AML requirement: yes\nRedemption access: Coinbase customer account required\nLegal terms dependency: Coinbase User Agreement applies\nLicensing footprint: Coinbase cites licenses/registrations in multiple jurisdictions\nSanctions/compliance screening: implied by Coinbase compliance framework",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Access and jurisdictional constraints",
+      "desc": "Regulated Coinbase infrastructure improves legitimacy but makes redemption dependent on access, eligibility, and compliance constraints.\nMild negative modifier because it affects practical redemption rather than reserve economics directly.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Deployment and integration surface",
+      "desc": "Supported networks: Ethereum, Base, Solana (whitepaper); also Arbitrum One, Monad (CoinGecko)\nToken purpose: DeFi compatibility and use as collateral/liquidity/payment asset\nCross-network supply reconciliation requirement: yes\nExternal DeFi integration exposure: yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Deployment and integration surface",
+      "desc": "Multi-network deployment and broad DeFi use increase operational and accounting surface.\nThe modifier is mild because the core claim still depends primarily on Coinbase reserve and redemption controls.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Admin role scope",
+      "desc": "Upgradeable: yes\nPausable: yes\nBlacklist capability: yes\nMinter management: yes\nRole reassignment: yes\nSolana freeze authority: yes\nAdmin and role holders: Coinbase-controlled",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Admin role scope",
+      "desc": "Administrative powers are broad enough to affect transferability, minting, burning, and contract logic.\nThese controls are security-relevant, but they increase dependence on correct centralized role management.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "SCORE",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nCustody and issuer concentration,1.15\nAccess and jurisdictional constraints,1.05\nDeployment and integration surface,1.05\nAdmin role scope,1.10",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Reserve transparency and proof of reserves",
+      "desc": "PoR provider: Chainlink\nPoR feed: cbBTC Reserves\nPoR network: Base\nPoR proxy address: 0x0F8E057D1D7b282EF968D26E9cB432617dF52519\nMinimum oracle responses: 3\nHeartbeat: 86,400 seconds\nDeviation threshold: 0.5%\nAddress ownership disclosure model: project self-attested\nPublic reserve address disclosure completeness: partial",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Reserve transparency and proof of reserves",
+      "desc": "Chainlink PoR provides meaningful recurring reserve visibility.\nCredit is limited because the feed depends on self-attested reserve addresses and does not prove all liabilities or legal enforceability.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Contract security assurance",
+      "desc": "Codebase: Coinbase wrapped-tokens-os\nUnderlying token architecture: Centre fiat-token based wrapped token contracts\ncbBTC-specific audit: Coinbase states cbETH Solidity contract audited by OpenZeppelin and no material contract code modified for cbBTC\nThird-party audit: OpenZeppelin\nUpgradeable proxy pattern: yes\nOpen-source repository: yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Contract security assurance",
+      "desc": "Reused audited code and a public repository reduce implementation risk.\nCredit is not stronger because cbBTC-specific deployed configuration, roles, and operations are still centralized and upgradeable.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing and repository transparency",
+      "desc": "Public repository: yes\nDocumented tests: yarn test\nCoverage command documented: yarn coverage\nStatic analysis command documented: yarn slither\nLinting/typecheck commands documented: yes\nFormal verification found: no",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing and repository transparency",
+      "desc": "Public testing and static-analysis workflow is positive evidence.\nOnly a small credit because no formal verification or cbBTC-specific coverage depth was identified.",
+      "value": "0.97",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Coinbase custody and operational maturity",
+      "desc": "Custody model: Coinbase hot and cold wallets\nCold key storage geography: United States and Europe\nPrivate key plaintext storage: Coinbase states keys are not stored in plaintext\nKey decryption control: cryptographic consensus of multiple human operators required\nSingle-person key control: no\nInternal audits of private key management: yes\nWallet/blockchain reconciliation: yes\nSub-custodians: none disclosed for digital asset storage",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Coinbase custody and operational maturity",
+      "desc": "Coinbase custody controls and operational maturity are meaningful positive assurance.\nCredit is not maximum because the reserve and redemption model still depends on a centralized custodian/operator.",
+      "value": "0.92",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incidents history",
+      "desc": "Major cbBTC reserve shortfall found in reviewed sources: no\nMajor cbBTC redemption failure found in reviewed sources: no\nMajor cbBTC smart-contract exploit found in reviewed sources: no\nLaunch period: 2024\nTrack record length: limited",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incidents history",
+      "desc": "No major cbBTC-specific incident was identified in reviewed sources.\nThe track record is still relatively short, so absence of incidents does not justify a strong positive credit.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "SCORE",
+      "name": "Assurance multipliers scoring",
+      "desc": "Multiplier,Score\nReserve transparency and proof of reserves,0.90\nContract security assurance,0.90\nTesting and repository transparency,0.97\nCoinbase custody and operational maturity,0.92\nIncidents history,1.00",
+      "value": "",
+      "notes": ""
+    }
+  ]
+}

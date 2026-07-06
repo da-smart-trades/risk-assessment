@@ -1,0 +1,35 @@
+{
+  "name": "lending-markets-rating",
+  "version": "1.0.0",
+  "type": "module",
+  "packageManager": "yarn@1.22.19",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Lending Markets Rating",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "aave": "node --import tsx src/index.ts aave",
+    "morpho": "node --import tsx src/index.ts morpho",
+    "maple": "node --import tsx src/index.ts maple",
+    "spark": "node --import tsx src/index.ts spark",
+    "test": "yarn lint && yarn typecheck",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "eslint": "^10.3.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.59.2"
+  },
+  "dependencies": {
+    "@morpho-org/morpho-ts": "^2.5.1",
+    "commander": "^14.0.3",
+    "dotenv": "^17.4.2",
+    "ethers": "^6.16.0",
+    "ethers-types": "^3.18.1",
+    "viem": "^2.48.8"
+  }
+}

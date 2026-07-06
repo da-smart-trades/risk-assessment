@@ -1,0 +1,293 @@
+{
+  "Name": "COMPOUND_V3",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Accounting correctness",
+      "desc": "Accounting model type,Pooled cToken market accounting\nDeposits represented as,EIP-20 cTokens\nBorrows represented as,Borrow balances tracked per account\nInterest accrual mechanism,Market interest accrual through cToken exchange rate\nExchange-rate mechanism,cToken exchange rate increases relative to underlying asset\nReserve accounting model,Market-level reserves through cToken accounting\nFee accrual mechanism,Borrow interest split through reserve factor and supplier yield\nBad debt accounting,Market-level shortfall through undercollateralized account risk\nShared accounting logic across markets,Yes\nMarket accounting customizations,Interest model and risk parameters vary by market\nUse math-sensitive logic,Yes\nUpgradeable,Yes for Comptroller through Unitroller proxy\nKnown historical bugs,No unresolved core cToken solvency accounting bug found\nKnown historical reward-accounting bugs,Yes, COMP distribution bug in Proposal 62\nOperation evidence at scale,Strong\nPublic documentation,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Accounting correctness",
+      "desc": "Compound v3 uses a mature and well-documented cToken accounting model.\ncToken exchange-rate accounting is simple at the user level but math-sensitive internally.\nThe architecture has operated at scale for years.\nThe Proposal 62 COMP distribution bug was serious, but it affected rewards rather than direct supplied-asset solvency.\nUpgradeability and shared accounting logic keep residual protocol-level risk above the lowest category.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Liquidation reliability",
+      "desc": "Liquidation model type,Cross-collateral pooled lending liquidation\nLiquidation trigger mechanism,Account liquidity below collateral requirement\nRisk-management contract,Comptroller\nCollateral valuation dependency,Price Oracle\nClose factor,Governance-configured protocol parameter\nLiquidation incentive,Governance-configured protocol parameter\nLiquidation execution path,Repay borrower debt and seize collateral\nPermissionless liquidation,Yes\nCollateral seizure mechanism,cToken collateral seizure\nMarket-level collateral factors,Yes\nShared liquidation logic across markets,Yes\nDependence on external liquidators,Yes\nDependence on oracle freshness,Yes\nKnown liquidation bugs,Historical MoneyMarket liquidation vulnerability disclosed by Certora as pre-v3 / early Compound context\nHistorical stress evidence,Long production history without identified direct v3 user-deposit insolvency\nPublic documentation,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Liquidation reliability",
+      "desc": "The Comptroller liquidation model is mature and central to Compound v3's design.\nLiquidation logic is shared and documented, reducing idiosyncratic implementation variance.\nThe mechanism depends on external liquidators and correct oracle prices.\nThe pooled cross-collateral design has broader contagion potential than isolated-market designs.\nNo material unresolved v3 liquidation failure was found.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Oracle integrity",
+      "desc": "Oracle model type,Chainlink-based Compound v3 Price Feed\nOracle contract used by Comptroller,PriceOracle / Price Feed\nPrimary price source,Chainlink Price Feeds\nAnchor or validation mechanism,Earlier Open Price Feed used Uniswap anchor; current docs describe direct Chainlink feed usage\nFixed-price support,Yes\nOracle configuration controller,Compound community multisig\nPrice feed update authority,Compound community multisig\nPrice scale / normalization,Prices scaled into Comptroller-expected format\nStale-price protections,Not clearly consolidated in current v3 docs\nFallback mechanisms,Fixed prices and governance / multisig configuration changes\nDependence on Chainlink,High\nDependence on multisig,High for feed configuration\nKnown oracle incidents,Proposal 117 oracle bug caused ETH markets to be paused\nPublic documentation,Yes\nAudit / verification coverage,Open Price Feed audit and Certora verification history",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Oracle integrity",
+      "desc": "Chainlink is a high-quality oracle dependency, but it is still a concentrated external dependency.\nOracle configuration is mutable through the community multisig.\nOracle errors can directly affect collateral valuation and liquidation correctness.\nThe Proposal 117 oracle bug is relevant protocol-level evidence.\nDocumentation is clear, but stale-price and fallback behavior are not fully consolidated in one public assurance artifact.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Governance and upgrade safety",
+      "desc": "Governance model,COMP token-holder governance\nGovernance module,Governor Bravo\nVoting token,COMP\nProposal threshold,25,000 COMP\nQuorum,400,000 votes\nVoting period,3 days\nTimelock delay,2 days\nTimelock scope,Protocol parameter, logic, and contract changes\nUpgradeable contracts,Yes\nAdmin-controlled parameters,Yes\nPause Guardian exists,Yes\nPause Guardian scope,Mint, borrow, transfer, and liquidate pause\nCommunity multisig role,Pause Guardian and oracle configuration role\nKnown execution bugs,Proposal 62 COMP distribution bug; Proposal 117 oracle bug\nKnown governance attack / capture concerns,Proposal 289 governance controversy\nPublic governance documentation,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Governance and upgrade safety",
+      "desc": "Compound governance is transparent, documented, and time-delayed.\nGovernance has broad power over protocol logic, parameters, markets, and risk controls.\nHistorical governance execution bugs show real operational risk.\nProposal 289 shows governance concentration / capture risk is not theoretical.\nTimelock and Pause Guardian reduce risk, but do not eliminate governance failure as a protocol-level default path.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Upgradeability and admin control",
+      "desc": "Upgradeable core contracts,Yes\nUpgrade mechanism,Timelock-controlled protocol changes\nTimelock controls,Yes\nMultisig controls,Yes\nConfigurable risk parameters,Yes\nConfigurable oracle parameters,Yes\nConfigurable market listings,Yes\nEmergency pause controls,Yes\nUser exit preserved under pause,Redeem and repay cannot be paused by Pause Guardian\nAdmin blast radius,High\nUpgrade review process,Public governance process",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Upgradeability and admin control",
+      "desc": "Upgradeability is necessary for a live lending protocol, but it creates mutable-code risk.\nTimelock improves safety by creating an opt-out window.\nMultisig-controlled oracle configuration is a meaningful admin surface.\nPause Guardian design is narrower than many emergency roles because it cannot block redeem or repay.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance execution integrity",
+      "desc": "Proposal process documented,Yes\nProposal execution path,Governor Bravo to Timelock\nTimelock queue required,Yes\nMinimum delay,2 days\nReview window,Yes\nProposal simulations,Used by security providers and community processes\nKnown proposal execution bugs,Yes\nAbility to fix quickly,Limited by Timelock\nPublic proposal transparency,Yes\nExecution tooling maturity,High but not flawless",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance execution integrity",
+      "desc": "The governance execution path is transparent and mature.\nThe Timelock helps users and reviewers react before execution.\nHistorical proposal bugs show that governance execution is a real failure surface.\nThe Timelock also slows remediation when an unsafe proposal executes.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance power concentration",
+      "desc": "Voting token distribution,Concentrated enough to matter\nDelegate concentration,Material\nQuorum size,400,000 votes\nProposal threshold,25,000 COMP\nActive voter participation,Variable\nWhale / bloc influence evidence,Proposal 289 controversy\nMultisig influence,Yes\nGuardian influence,Yes\nMitigating review delays,Timelock\nPublic visibility,High",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance power concentration",
+      "desc": "Token governance is open, but effective governance power can concentrate.\nProposal 289 is direct evidence that governance capture concerns are live.\nPublic visibility and Timelock reduce surprise risk.\nConcentrated governance remains material because governance controls critical protocol surfaces.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Operational complexity",
+      "desc": "Core protocol components,cTokens, Comptroller, Unitroller, interest-rate models, Price Oracle\nMarket contracts,Multiple cToken markets\nRisk-management components,Comptroller and market parameters\nOracle components,Chainlink feeds and Price Feed configuration\nGovernance components,COMP, Governor Bravo, Timelock\nMultisig components,Community multisig\nLiquidator dependency,Yes\nExternal oracle dependency,Yes\nHuman intervention required,Yes\nCross-market dependency,Yes through Comptroller and shared collateral model\nOperational actor count,High",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Operational complexity",
+      "desc": "Compound v3 is simpler than many newer systems in accounting design.\nIt is still operationally complex because accounting, collateral, liquidation, oracle, governance, and multisig paths interact.\nCross-market collateralization increases dependency between markets.\nHuman review is needed for safe upgrades and parameter changes.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Privileged roles scope",
+      "desc": "Timelock role,Queues and executes passed governance actions\nGovernor role,Proposal and voting control\nCommunity multisig role,Pause Guardian and oracle configuration\nPause Guardian role,Can pause selected functions\nOracle config role,Community multisig\nMarket listing role,Governance\nRisk parameter role,Governance\nUpgrade role,Governance / Timelock\nPause role,Pause Guardian\nUnpause restrictions,Pause Guardian cannot unpause\nAbility to affect user exits,Pause Guardian cannot pause redeem or repay\nRole breadth,Broad but partially constrained",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Privileged roles scope",
+      "desc": "Privileged roles can materially affect protocol safety.\nThe oracle multisig is especially relevant because pricing affects solvency.\nThe Pause Guardian is intentionally constrained and cannot block core exit actions.\nOverall role scope is broad enough to increase protocol-level risk.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Public audits available,Yes\nAudit coverage breadth,Broad\nCore cToken audits,Yes\nComptroller audits,Yes\nGovernance audits,Yes\nTimelock / Pause Guardian audits,Yes\nOracle audits,Yes\nCOMP distribution audits,Yes\nFindings remediated,Generally yes\nReports public,Yes\nAudit freshness,Mixed; v3 core audits are older",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "Compound v3 has unusually strong historical audit coverage.\nCore, governance, oracle, and reward surfaces have been reviewed.\nAudit coverage materially reduces unknown technical risk.\nThe main caveat is age: many v3 core audits are old relative to current protocol operation.",
+      "value": "0.85",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification disclosed,Yes\nVerification provider,Certora\nVerified scope,Compound protocol, v3 code, Open Oracle, and related rules\nVerified accounting properties,Yes / partial\nVerified liquidation properties,Yes / partial\nVerified oracle properties,Yes\nVerified governance properties,Partial\nContinuous verification,Yes, described as CI-integrated\nPublic verification artifacts,Partial\nKnown bugs found through verification,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "Formal verification is a real Compound strength.\nCertora's work covered important protocol properties and found issues.\nCI-integrated verification improves upgrade safety.\nIt does not fully cover governance behavior, multisig execution, or all operational failure modes.",
+      "value": "0.85",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Public repository tests,Yes\nUnit tests,Yes\nIntegration tests,Yes\nScenario tests,Yes\nFuzzing,Yes, disclosed in forum evidence\nProposal simulation,Yes / partial\nCI integration,Yes\nAccounting coverage,Yes\nLiquidation coverage,Yes / partial\nOracle coverage,Yes / partial\nGovernance coverage,Partial\nCoverage consolidation,Not fully consolidated publicly",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "Testing culture appears strong.\nScenario testing and fuzzing are explicitly referenced.\nFormal verification and tests complement each other.\nPublic coverage detail is not consolidated enough to justify a stronger reduction.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Public protocol dashboards,Yes\nPublic governance monitoring,Yes\nPublic market monitoring,Yes\nOracle monitoring,Partial\nLiquidation monitoring,Partial\nIncident response monitoring,Yes / partial\nSecurity provider involvement,Yes\nGovernance proposal review,Yes\nMonitoring transparency,Moderate to high\nMonitoring limitations,Some operational monitoring is not public",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Compound is more observable than many DeFi protocols.\nGovernance and market states are public.\nSecurity review processes are active.\nMonitoring reduces detection risk but does not remove execution or governance risk.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incident history",
+      "desc": "Direct protocol insolvency incidents,None found\nDirect user-deposit loss incidents,None found\nAccounting incidents,COMP reward-accounting bug\nLiquidation incidents,Historical liquidation vulnerability context disclosed by Certora\nOracle incidents,Proposal 117 buggy oracle caused ETH markets to be paused\nGovernance execution incidents,Proposal 62 and Proposal 117\nGovernance capture / attack incidents,Proposal 289 controversy\nReward distribution incidents,Yes\nPauses caused by incidents,Yes\nDisclosure quality,Moderate to high\nResolution quality,Generally strong\nRecency,Governance controversy in 2024",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incident history",
+      "desc": "No direct supplied-asset insolvency incident was found.\nHowever, Compound has had real governance and oracle execution incidents.\nThe COMP reward bug was not a user-deposit loss, but it shows proposal-risk severity.\nProposal 289 keeps governance capture risk relevant.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Operational changes history",
+      "desc": "Major accounting changes,Limited for v3 core\nMajor liquidation changes,Limited for v3 core\nMajor oracle changes,Yes\nMajor governance changes,Yes\nMajor admin changes,Yes\nMarket deprecations,Yes\nParameter updates,Yes\nUpgrade frequency,Moderate\nReview quality,Strong\nChange-induced incidents,Yes\nOverall churn,Moderate",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Operational changes history",
+      "desc": "Compound v3 core architecture is mature.\nOracle, governance, and parameter surfaces have changed materially over time.\nChanges are public and reviewed.\nPrior change-induced bugs offset the benefit of mature process.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "System maturity and production track record",
+      "desc": "Initial v3 deployment period,2019-era Compound v3 architecture\nTime in production,Long\nUsage at scale,High\nMarket cycles survived,Multiple\nArchitecture stability,High\nKnown unresolved critical issues,None found\nPublic documentation maturity,High\nSecurity process maturity,High\nGovernance maturity,High but imperfect\nContinued relevance,Yes, though Compound III is newer",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "System maturity and production track record",
+      "desc": "Compound v3 has one of the longest production histories in DeFi lending.\nThe cToken architecture has survived multiple market cycles.\nDocumentation, audits, verification, and governance infrastructure are mature.\nMaturity reduces uncertainty, but does not eliminate governance or oracle risk.",
+      "value": "0.85",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ANCHOR",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nAccounting correctness,2,0.50%\nLiquidation reliability,2,0.50%\nOracle integrity,3,2.00%\nGovernance and upgrade safety,3,2.00%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "CONTROL",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nUpgradeability and admin control,1.10\nGovernance execution integrity,1.15\nGovernance power concentration,1.15\nOperational complexity,1.10\nPrivileged roles scope,1.10",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ASSURANCE",
+      "name": "Assurance scoring",
+      "desc": "Multiplier,Score\nAudits,0.85\nFormal verification,0.85\nTesting,0.90\nMonitoring,0.95\nIncidents history,1.05\nOperational changes history,1.00\nSystem maturity and production track record,0.85",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "SUMMARY",
+      "name": "Probability of default",
+      "desc": "",
+      "value": "4.6107%",
+      "notes": ""
+    }
+  ]
+}

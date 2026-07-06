@@ -1,0 +1,293 @@
+{
+  "Name": "AAVE_V3",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Accounting correctness",
+      "desc": "Accounting model type,Pooled reserve accounting\nDeposits represented as,aTokens with balances increasing as yield accrues\nBorrows represented as,Non-transferable debt tokens representing accrued debt\nInterest accrual mechanism,Index-based accounting\nReserve accounting model,Shared Aave v3 reserve logic\nFee accrual mechanism,Borrower interest is split between suppliers and protocol reserves\nBad debt accounting,Bad debt is handled through reserve deficit / coverage mechanisms\nShared accounting logic across markets,Yes\nMarket-specific accounting customizations,Yes\nUse math-sensitive logic,Yes\nUpgradeable,Yes\nKnown historical accounting bugs,No\nOperation evidence at scale,Strong\nPublic documentation,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Accounting correctness",
+      "desc": "Accounting architecture is mature, public, and heavily reviewed.\naToken/debt-token accounting is well understood and battle-tested.\nNo current evidence points to a live Aave v3 core accounting exploit.\nScore is not 1 because the system is upgradeable, index-based, multi-market, and highly configurable.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Liquidation reliability",
+      "desc": "Liquidation trigger mechanism,Health Factor below 1\nSolvency threshold definition,HF ≥ 1 is solvent, HF < 1 is liquidatable\nLiquidations permissionless,Yes\nLiquidation type,Partial or full\nClose factor design,Dynamic close factor\nLiquidation incentive structure,Debt repayment in exchange for collateral plus liquidation bonus\nMaximum liquidation size per transaction,Up to 50% normally, up to 100% under deeper stress or small positions\nLiquidation logic uniform or asset-specific,Shared core logic with asset-specific parameters\nDependence on third-party liquidators,Yes\nDependence on external liquidity venues for unwind,Yes\nRobustness under high volatility,Moderate\nRobustness under correlated collateral stress,Moderate\nRobustness under high gas or congestion,Moderate\nPresence of caps, isolation modes, or circuit breakers,Yes\nHistorical liquidation performance during stress events,Mixed\nHistorical bad debt attributable to liquidation failure,No clear core liquidation-code failure\nDocumentation describing liquidation mechanism and edge cases,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Liquidation reliability",
+      "desc": "The liquidation design is mature, permissionless, and economically incentivized.\nLiquidation logic itself was not shown to have failed in the rsETH/Kelp event.\nThe rsETH/Kelp event should not be counted as direct evidence of liquidation-mechanism failure.\nResidual risk remains because liquidations depend on oracle correctness, liquidator capacity, gas, repay-asset liquidity, and collateral exit liquidity.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Oracle integrity",
+      "desc": "Oracle providers used,Chainlink, CAPO, and asset-specific oracle sources\nOracle type by asset,Direct feeds for standard assets, custom or capped logic for correlated assets\nPricing model type,Direct, derived, capped, or custom\nHeartbeat or update frequency,Feed-specific\nDeviation thresholds,Feed-specific\nFallback oracle mechanisms,Yes\nStale-price protections,Partial\nOracle pause or sentinel logic,Yes\nAssets requiring custom pricing logic,Yes\nDependence on a small number of oracle providers,Yes\nComplexity of oracle stack,Moderate to high\nGovernance ability to change oracle paths,Yes\nHistorical oracle incidents or misconfigurations,Yes\nEvidence of oracle performance during prior stress events,Mixed\nPublic documentation describing oracle architecture,Yes\nOracle assumptions simple or model-dependent,Model-dependent for correlated assets and LRTs",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Oracle integrity",
+      "desc": "Oracle infrastructure is strong relative to most DeFi protocols.\nChainlink, CAPO, fallback oracle, and sentinel logic are meaningful mitigants.\nMain weakness is model/configuration risk for correlated assets, LSTs, LRTs, and bridged assets.\nThe rsETH/Kelp event is most appropriately reflected here because it exposed collateral accounting and oracle/model assumptions rather than core accounting failure.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Governance and upgrade safety",
+      "desc": "Core contracts upgradeable,Yes\nEntities able to upgrade contracts,Aave governance / governed admin paths\nEntities able to change risk parameters,Risk Admin and Pool Admin\nEntities able to list or remove collateral,Asset Listing Admin and Pool Admin\nEntities able to change oracle configuration,Asset Listing Admin and Pool Admin\nEntities able to pause or freeze protocol activity,Emergency Admin and Pool Admin\nSeparation of powers across roles,Yes\nRoles multisig-controlled,Yes\nTimelocks in place,Yes\nEmergency paths bypass normal governance delays,Yes\nGovernance changes transparent and documented,Yes\nReview, veto, or guardian mechanisms,Yes\nHistorical major governance actions,Yes\nHistorical governance or configuration incidents,Yes\nScope of privileged roles over solvency-critical functions,Broad\nEase with which governance can introduce system-breaking changes,Moderate",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Governance and upgrade safety",
+      "desc": "Governance is mature, public, and structured.\nTimelocks, guardians, service providers, and public execution reduce governance and upgrade risk.\nPrivileged roles are broad, but they are also part of the protocol’s risk-management process.\nThe rsETH response showed governance/emergency mechanisms working, not failing, so this anchor should not be scored as medium-risk solely because privileged controls exist.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Upgradeability and admin control",
+      "desc": "Core contracts upgradeable,Yes\nUpgrade mechanism,Proxy/address-provider model\nEntities able to upgrade core contracts,Aave governance / governed admin paths\nTimelocks apply to upgrades,Yes\nEmergency upgrade paths exist,No unrestricted emergency upgrade path identified\nEmergency pause/freeze paths exist,Yes\nUpgrade authority multisig-controlled,Partially\nUpgrade authority concentrated or distributed,Distributed at governance layer, more concentrated at guardian/admin layer\nUpgrade scope narrow or broad,Broad\nUpgrades can affect solvency-critical functions,Yes\nHistorical use of upgrade powers,Yes\nUpgrade process publicly documented,Yes\nReview requirements before execution,Yes\nGovernance can block or veto upgrades,Yes\nAbility to execute urgent changes outside standard process,Yes, for emergency/risk actions",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Upgradeability and admin control",
+      "desc": "Upgradeability is broad enough to affect core protocol behavior.\nGovernance and timelocks reduce risk.\nEmergency powers are useful, but add discretionary trust.\nNet effect is a moderate negative modifier.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance execution integrity",
+      "desc": "Governance model,Aave Governance v3\nProposal process publicly documented,Yes\nReview process for major changes,Yes\nIndependent risk or security review involved,Yes\nOnchain and offchain governance responsibilities separated,Yes\nGovernance actions transparent and publicly visible,Yes\nReview or veto mechanisms exist,Yes\nMinimum delay before execution,Yes\nEmergency governance path exists,Yes\nGovernance has made solvency-critical changes historically,Yes\nHistorical evidence of prudent governance under stress,Yes\nHistorical governance execution errors or reversals,No major recent governance execution exploit found\nGovernance process stable or ad hoc,Stable\nOperational responsibility for approved changes clearly defined,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance execution integrity",
+      "desc": "Governance execution is stronger than average.\nPublic process, timelocks, and veto mechanisms reduce risk.\nCross-chain execution and emergency overlays add complexity.\nNet effect is a mild positive modifier.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance power concentration",
+      "desc": "Governance bodies involved,Aave DAO, delegates, tokenholders, executors, guardians, service providers, and admin roles\nTokenholders govern critical protocol surfaces,Yes\nEffective decision power concentrated or distributed,Mixed\nDelegation concentration,Meaningful\nVoting participation level,Strong\nSmall group can determine outcomes,Partially\nSmall group controls execution layer,Partially\nGovernance participation open or restricted,Open at voting layer, restricted at emergency/admin layer\nCritical roles shared across independent actors,Yes\nTimelocks or review delays reduce concentration risk,Yes\nPublic visibility into governance concentration,Partial\nHistorical evidence of coordinated malicious control,No\nHistorical evidence of coordinated emergency action,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance power concentration",
+      "desc": "Aave is meaningfully decentralized at the governance layer.\nEffective control is still partly concentrated through delegates, guardians, and admin roles.\nThe concentration risk is moderate, not severe.\nMild negative modifier is appropriate.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Operational complexity",
+      "desc": "Major onchain components required for normal operation,Many\nMajor offchain components required for normal operation,Many\nOracle dependencies,Yes\nDependence on external liquidators or keepers,Yes\nCross-market dependencies,Yes\nCross-chain dependencies,Yes\nCross-module dependencies,Yes\nHuman operational intervention required,Yes\nMonitoring and reconciliation requirements,High\nNumber of distinct actors needed for safe operation,High\nOperational workflows simple or multi-step,Multi-step\nManual execution required for critical actions,Yes\nFailure in one component materially disrupts protocol operation,Yes\nHistorical incidents linked to operational coordination failure,Yes\nOperational architecture publicly documented,Yes\nInternal escalation playbooks fully public,No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Operational complexity",
+      "desc": "This is one of the strongest upward modifiers.\nAave v3 is mature, but operationally complex.\nMulti-chain markets, custom oracle paths, external liquidators, and collateral issuers expand the failure surface.\nThe rsETH incident makes this risk concrete rather than theoretical.",
+      "value": "1.2",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Privileged roles scope",
+      "desc": "Admin roles identified,Yes\nEmergency roles identified,Yes\nOracle roles identified,Yes\nRisk parameter roles identified,Yes\nAsset listing roles identified,Yes\nRoles affecting pause or freeze behavior,Yes\nRoles affecting liquidation-critical parameters,Yes\nRoles affecting solvency-critical configuration,Yes\nRoles affecting token implementations,Yes\nRoles multisig-controlled,Yes\nTimelocks apply to role actions,Partially\nRole permissions narrow or broad,Broad\nRoles can override standard protocol behavior,Yes\nSeparation of duties across privileged roles,Yes\nHistorical use of privileged powers,Yes\nPrivileged actions transparent and publicly traceable,Generally yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Privileged roles scope",
+      "desc": "Role separation is a positive.\nBut privileged roles can materially affect solvency-critical behavior.\nPool Admin and emergency/risk roles are especially important.\nThis creates a meaningful trust/configuration risk.",
+      "value": "1.15",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Public audits available,Yes\nAudit coverage breadth,Broad\nAudit firms,Multiple independent firms\nCore protocol contracts audited,Yes\nAccounting-critical logic audited,Yes\nLiquidation logic audited,Yes\nOracle-related integrations audited,Partially\nGovernance or upgrade paths audited,Partially\nFindings remediated,Generally yes\nReports public,Yes\nAudits recent or outdated,Recent and historical\nImportant unaudited protocol surfaces,Market liquidity, external collateral backing, live oracle assumptions, and emergency operations\nRe-audits performed after major upgrades,Yes\nAudit scope covers current architecture,Broadly yes\nAudit scope covers all live market configurations,No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "Audit depth is a major strength.\nRecent v3.x reviews improve confidence.\nAudit coverage mostly reduces smart-contract implementation risk.\nIt does not fully cover oracle-model, collateral, governance, and operational risks.",
+      "value": "0.85",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification disclosed,Yes\nVerified contract scope,Core Aave v3 and later v3.x components\nVerified properties,Core accounting, reserve, token, and implementation properties\nCore accounting invariants formally verified,Yes\nLiquidation-critical logic formally verified,Partially\nGovernance or upgrade invariants formally verified,Partially\nPublic verification reports,Yes\nVerification covers current deployed architecture,Meaningfully, but not fully\nVerification limited to narrow components or broad core system,Broad core system\nFull end-to-end economic verification,No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "Formal verification is a real assurance strength.\nIt meaningfully reduces core-code and accounting uncertainty.\nIt does not fully cover liquidator behavior, collateral backing, oracle economics, or governance operations.\nStrong but not maximum credit.",
+      "value": "0.9",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Public test repositories,Yes\nUnit tests,Yes\nIntegration tests,Yes\nInvariant tests,Yes\nFuzzing,Yes / partially evidenced\nFork simulations,Yes / used in practice\nStress or adversarial simulations,Yes / through risk-provider analysis\nCoverage of accounting logic,Strong\nCoverage of liquidation logic,Strong at contract level\nCoverage of oracle integrations,Partial\nCoverage of governance or upgrade flows,Partial\nCoverage publicly consolidated,No\nTesting updated after major protocol changes,Yes\nEvidence of realistic production-like testing,Yes\nFull coverage of live collateral failure modes,No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "Testing appears strong and multi-layered.\nRelease-specific reviews and invariant testing add confidence.\nTesting cannot fully reproduce live market liquidity, collateral failure, or governance response.\nStrong positive modifier, but not maximum.",
+      "value": "0.9",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Public dashboards available,Yes\nMonitoring of protocol solvency metrics,Yes\nMonitoring of liquidation activity,Partial\nMonitoring of oracle behavior,Partial\nMonitoring of bad debt or reserve stress,Partial\nMonitoring of governance actions,Yes\nMonitoring of privileged role actions,Onchain traceable\nIncident detection tooling disclosed,Yes\nObservability documentation,Partial\nMonitoring public, internal, or both,Both\nEvidence of monitoring supporting incident response,Yes\nCoverage across critical protocol surfaces,Good\nInternal alerting thresholds fully public,No\nInternal escalation playbooks fully public,No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Monitoring is a clear positive.\nPublic dashboards and governance visibility reduce blind spots.\nrsETH response shows active monitoring and operational response.\nInternal alerting thresholds are not fully public, so credit is moderate rather than maximum.",
+      "value": "0.9",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incident history",
+      "desc": "Major protocol-wide incidents identified,No recent Aave v3 core smart-contract compromise found\nMajor market-specific incidents identified,Yes\nMain recent incident,April 2026 rsETH/Kelp event\nHistoric vulnerabilities identified and resolved,Yes\nConsolidated official incident log,No\nPublic disclosure quality,High\nPost-mortems published,Yes\nRepeated incident pattern exists,External collateral, oracle/model, and configuration risk\nTime since last major incident,Very short\nIncidents resulted in insolvency or contained disruption,Material modeled bad-debt scenarios\nCore Aave contracts compromised in recent incident,No\nEvidence of effective remediation after incidents,Yes\nEvidence that lessons changed controls or design,Likely, still evolving",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incident history",
+      "desc": "Aave’s core-contract incident history is strong relative to DeFi.\nThe recent rsETH event prevents a favorable incident-history credit.\nModeled bad debt was material even though the issue was external to Aave contracts.\nUntil final remediation is clear, a mild negative modifier is appropriate.",
+      "value": "1.1",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Operational changes history",
+      "desc": "Material protocol upgrades historically,Yes\nMaterial changes to liquidation design,Limited\nMaterial changes to oracle design,Yes\nMaterial changes to governance structure,Yes\nMaterial changes to privileged role design,Yes\nMaterial changes to market configuration,Yes\nChanges orderly and documented,Generally yes\nChanges audited or independently reviewed,Yes\nChanges introduced incidents,Not clearly from code upgrades\nConfiguration changes introduced exposure,Yes\nRollback or mitigation mechanisms exist,Yes\nUpgrade playbooks or execution procedures documented,Partially\nOverall change history stable or high-churn,Moderate to high churn\nEvidence of disciplined rollout of critical changes,Yes\nLive configuration risk remains,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Operational changes history",
+      "desc": "Aave’s change process is disciplined and public.\nThe protocol still changes frequently across assets, chains, parameters, and oracle paths.\nFrequent change creates configuration risk.\nSmall upward modifier is justified.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "System maturity and production track record",
+      "desc": "Initial deployment date of protocol,Multi-year production history\nInitial deployment date of current architecture,Aave v3 live since 2022 / Ethereum Core since 2023\nTime in production under meaningful usage,Long\nNumber of market cycles survived,Multiple\nCurrent architecture recent or long-lived,Long-lived core model, actively upgraded\nAccounting model maturity,High\nLiquidation model maturity,High\nGovernance model maturity,High\nProduction usage substantial,Yes\nLong-term operational stability evidence,Strong\nEvidence of safe operation during severe market stress,Mixed\nCurrent architecture materially different from early versions,Yes\nMaturity eliminates collateral/oracle/governance risk,No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "System maturity and production track record",
+      "desc": "Aave v3 has meaningful production maturity.\nCore accounting and liquidation models are widely used and well understood.\nMaturity lowers unknown-unknown risk.\nIt does not eliminate collateral, oracle, governance, and cross-chain operational risk.",
+      "value": "0.9",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ANCHOR",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nAccounting correctness,2,0.50%\nLiquidation reliability,2,0.50%\nOracle integrity,3,2.00%\nGovernance & upgrade safety,2,0.50%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "CONTROL",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nUpgradeability and admin control,1.15\nGovernance execution integrity,0.95\nGovernance power concentration,1.10\nOperational complexity,1.20\nPrivileged roles scope,1.15",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ASSURANCE",
+      "name": "Assurance scoring",
+      "desc": "Multiplier,Score\nAudits,0.85\nFormal verification,0.90\nTesting,0.90\nMonitoring,0.90\nIncidents history,1.10\nOperational changes history,1.05\nSystem maturity and production track record,0.90",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "SUMMARY",
+      "name": "Probability of default",
+      "desc": "",
+      "value": "3.25%",
+      "notes": ""
+    }
+  ]
+}

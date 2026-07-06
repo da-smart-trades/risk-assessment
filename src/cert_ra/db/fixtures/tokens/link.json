@@ -1,0 +1,333 @@
+{
+  "Name": "LINK",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Native payment token",
+      "desc": "Services requiring token payment: Functions, VRF, and Automation in multiple configurations\nPayment abstraction exists: Yes\nNon-native payments supported: Yes\nNon-native payments converted into LINK demand: Partially\nOperators compensated in LINK: Yes\nRewards reinforce payment relevance: Yes\nPublic breakdown of usage settled in LINK: Not found\nDocumentation describing payment role: Yes\nRoadmap changes affecting payment role: Expansion of payment abstraction and native-token payment options",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Native payment token",
+      "desc": "LINK remains important in multiple core payment paths.\nNative-token and non-LINK payment options create bypass risk.\nPublic revenue settlement data is not fully transparent.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2.00%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Oracle services continuity",
+      "desc": "Core services currently documented: Data Feeds, Data Streams, Functions, Automation, VRF, CCIP, Proof of Reserve\nMain demand drivers: DeFi, cross-chain messaging, automation, and onchain data needs\nServices actively used in production: Yes\nBreadth of use across protocols and chains: Broad\nDependency on specific verticals: Significant exposure to DeFi and onchain finance\nEvidence of continued adoption: Yes\nServices mission-critical or replaceable: Often mission-critical\nPublic metrics on usage and service status: Yes\nAny documented contraction in service relevance: Feed and stream deprecations exist",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Oracle services continuity",
+      "desc": "There is strong evidence of broad and sustained production usage.\nService relevance appears durable across major onchain sectors.\nSome product deprecations create localized continuity risk.",
+      "value": "0.005",
+      "notes": "Score: 2, PD: 0.50%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Security integrity",
+      "desc": "Existence of staking mechanism: Yes\nScope of services secured by staking: Limited and evolving\nWhether staking is slashable: Yes, for node operators\nCommunity stakers slashable: No\nSlashing conditions documented: Yes\nReward design for honest participation: Yes\nSecurity enforced on-chain, off-chain, or hybrid: Hybrid\nSecurity depends on reputation in addition to stake: Yes\nStaking active in production: Yes\nDocumentation describing cryptoeconomic assumptions: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Security integrity",
+      "desc": "Staking adds explicit cryptoeconomic security to parts of the network.\nCoverage is still limited and evolving by service.\nSecurity still depends partly on off-chain operations and reputation.",
+      "value": "0.02",
+      "notes": "Score: 3, PD: 2.00%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Token integrity",
+      "desc": "Canonical token contract: Long-lived and source-verified\nToken standard: ERC20 / ERC677\nSupply fixed or mutable: Fixed\nMinting rights exist: Not found\nPrivileged roles on token contract: Not found\nPause / blacklist / seize functionality: Not found\nUpgradeability of token contract: Not indicated\nBridged or wrapped variants: Yes\nEcosystem-level transfer or settlement risks: Bridge wrappers and ERC20/ERC677 compatibility\nDocumentation describing token behavior: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Token integrity",
+      "desc": "The canonical token contract appears simple, fixed, and mature.\nNo obvious admin controls or mutability risks were identified.\nRemaining risks are mostly ecosystem-level, not token-core risks.",
+      "value": "0.0025",
+      "notes": "Score: 1.5, PD: 0.25%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Governance integrity",
+      "desc": "Governance model: Hybrid multisig and timelock model\nData Feed upgrades: Multisig-coordinated\nStaking upgrades: Timelocked\nReserve withdrawals: Timelocked\nGovernance affects token economics: Yes\nGovernance affects staking and payment systems: Yes\nEmergency controls exist: Yes\nGovernance can materially alter token role: Yes\nReview or veto mechanisms: Timelocks and unstake windows\nMajor governance processes documented: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Governance integrity",
+      "desc": "Governance is concentrated in operational roles rather than open tokenholder control.\nTimelocks and process constraints mitigate some of this risk.\nAdmin discretion still creates meaningful governance risk.",
+      "value": "0.03",
+      "notes": "Score: 3.5, PD: 3.00%"
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "SCORE",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nNative payment token,3,2.00%\nOracle services continuity,2,0.50%\nSecurity integrity,3,2.00%\nToken integrity,1.5,0.25%\nGovernance integrity,3.5,3.00%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Jurisdictional and regulatory exposure",
+      "desc": "Relevant issuing or controlling entities: Chainlink Foundation, Chainlink Labs\nRelevant jurisdictions disclosed: Partial\nStaking terms reference governing law: Yes\nSanctions restrictions exist: Yes\nServices subject to terms-based access controls: Yes\nKey dependencies exposed to jurisdiction-specific action: Yes\nLegal structure comprehensively disclosed: No\nKYC requirements identified: Not found\nLegal constraints affecting token utility: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Jurisdictional and regulatory exposure",
+      "desc": "Terms restrictions and sanctions compliance create regulatory surface.\nCentralized service operators and interfaces can be affected by enforcement.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance power concentration",
+      "desc": "Governance bodies involved: Multisigs and timelock role holders\nTokenholders govern critical surfaces: Not found\nConcentration of effective decision power: High\nScope of parameters controlled by small group: High\nParticipation open or restricted: Restricted\nGovernance can alter payment, staking, or token logic: Yes\nPublic visibility into governance structure: Partial",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance power concentration",
+      "desc": "Effective decision-making power is concentrated.\nTimelocks reduce but do not remove governance concentration risk.",
+      "value": "1.07",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Operational complexity",
+      "desc": "Major system components supporting token utility: Many\nOn-chain components involved: Multiple\nOff-chain components involved: Multiple\nNode operational dependencies: Yes\nPayment settlement complexity: High\nCross-chain dependencies: Yes\nHuman operational intervention required: Yes\nMonitoring and reconciliation dependencies: Yes\nNumber of distinct actors needed for normal operation: High",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Operational complexity",
+      "desc": "The system has many interdependent components.\nHigh coordination and execution complexity increases failure surface.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Privileged roles",
+      "desc": "Admin roles identified: Yes\nUpgrade roles identified: Yes\nEmergency roles identified: Yes\nTreasury or rewards control roles identified: Yes\nRoles affecting staking parameters: Yes\nRoles affecting payment flows: Yes\nRoles multisig-controlled: Partially\nTimelocks apply: Yes\nRole powers narrow or broad: Broad\nRoles can override standard behavior: Partially",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Privileged roles",
+      "desc": "Privileged roles exist across several critical surfaces.\nTimelocks help, but discretionary control remains meaningful.",
+      "value": "1.06",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Mechanism robustness",
+      "desc": "Mechanism tying token to network usage: Service payments and payment conversion into LINK\nMechanism tying token to security: Staking\nStaking incentives clearly specified: Yes\nSlashing conditions clearly defined: Partially\nPayment abstraction strengthens or weakens token demand: Both\nDesign depends on optimistic assumptions: Yes\nDesign robust under reduced demand: Weaker\nDesign robust under operator concentration: Partially\nStress handling documented: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Mechanism robustness",
+      "desc": "The mechanism is broadly coherent across usage and security.\nOptional payment paths and conversion dependencies add fragility.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Input quality and dependency robustness",
+      "desc": "Data sources used by services: Multiple CEXs, DEXs, and aggregators\nQuality controls on oracle inputs: Multi-layer filtering and aggregation\nDiversity and reliability of node operators: Strong\nDependence on off-chain reporting systems: Yes\nKey dependencies high-quality and resilient: Yes\nFallback mechanisms exist: Yes\nPoor-quality inputs can materially impair utility: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Input quality and dependency robustness",
+      "desc": "Input quality and redundancy appear strong.\nMulti-layer aggregation and fallback design improve robustness.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Dependency diversification",
+      "desc": "Diversity of node operators: High\nDiversity of data providers: High\nDiversity of supported chains: High\nDiversity of service consumers: High\nDiversity of operational infrastructure: Moderate\nConcentration in any critical subsystem: Yes\nGovernance depends on narrow set of actors: Yes\nFailure of one dependency materially disruptive: Sometimes\nFallback options across dependencies: Yes\nPublic disclosure of concentration risks: Partial",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Dependency diversification",
+      "desc": "Broad diversification reduces single-point-of-failure risk.\nSome concentrated governance and routing dependencies remain.",
+      "value": "0.93",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "SCORE",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nJurisdictional and regulatory exposure,1.05\nGovernance power concentration,1.07\nOperational complexity,1.10\nPrivileged roles,1.06\nMechanism robustness,1.05\nInput quality and dependency robustness,0.95\nDependency diversification,0.93",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Public audits available: Yes\nAudit coverage breadth: Broad\nAudit firms: Quantstamp, Sigma Prime, Trail of Bits, Dedaub, Nick Johnson, Code4rena\nStaking contracts audited: Yes\nPayment abstraction audited: Yes\nVRF audited: Yes\nFindings remediated: Yes\nReports public: Yes\nAudits recent or outdated: Mixed\nImportant unaudited surfaces: Off-chain oracle operations and coordination",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "On-chain audit coverage is broad across critical modules.\nOff-chain operational dependencies limit full-system assurance.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Formal verification disclosed: Not found\nVerified contract scope: Not found\nVerified properties: Not found\nPublic verification reports: Not found",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "No evidence of formal verification disclosure — neutral credit.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Public test repositories: Yes\nUnit tests: Yes\nIntegration tests: Not found\nInvariant tests: Not found\nFuzzing: Not found\nFork simulations: Not found\nCoverage publicly consolidated: No",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "There is visible evidence of real testing practices.\nPublic testing coverage is not fully comprehensive or consolidated.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Public dashboards available: Yes\nMonitoring of major services: Yes\nNode-level monitoring described: Yes\nFailover practices described: Yes\nMonitoring of economically relevant metrics: Yes\nIncident response tooling disclosed: Not found\nObservability documentation: Yes\nMonitoring public, internal, or both: Both",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Monitoring and observability appear strong across major services.\nPublic and internal monitoring reduce operational blind spots.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incidents history",
+      "desc": "Major token-specific incidents identified: Not found\nMajor oracle-service incidents identified: Yes, at integration level\nHistoric vulnerabilities identified and resolved: Yes\nConsolidated official incident log: Not found\nPublic disclosure quality: Variable",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incidents history",
+      "desc": "Incident reporting is not fully consolidated.\nSome integration-level history modestly increases uncertainty.",
+      "value": "1.02",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Operational changes history",
+      "desc": "Material changes to staking design: Yes\nMaterial changes to payment flows: Yes\nMaterial changes to governance structure: Yes\nMaterial changes to token-related infrastructure: Yes\nUpgrades orderly and documented: Yes\nChanges audited or reviewed: Yes\nChanges introduced incidents: Not found\nOverall change history stable or high-churn: Moderate churn",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Operational changes history",
+      "desc": "Change activity has been meaningful across key economic layers.\nDocumentation and audits help, but change complexity remains relevant.",
+      "value": "1.03",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Smart contract and operational maturity",
+      "desc": "Initial deployment date of token: 2017\nInitial deployment date of core services: 2019\nInitial deployment date of staking system: 2022\nTime in production under meaningful usage: Long\nNumber of market cycles survived: Multiple\nCurrent architecture recent or long-lived: Mixed\nStaking and payment model maturity: Moderate\nProduction usage substantial: Yes\nLong-term operational stability evidence: Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Smart contract and operational maturity",
+      "desc": "The token and core oracle services are mature and long-lived.\nNewer economic layers still reduce average system maturity.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "SCORE",
+      "name": "Assurance multipliers scoring",
+      "desc": "Multiplier,Score\nAudits,0.90\nFormal verification,1.00\nTesting,0.95\nMonitoring,0.95\nIncidents history,1.02\nOperational changes history,1.03\nSmart contract and operational maturity,0.95",
+      "value": "",
+      "notes": ""
+    }
+  ]
+}

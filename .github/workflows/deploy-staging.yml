@@ -1,0 +1,42 @@
+# Manually-triggered deploy to the staging env.
+#
+# Default flow: pick an image tag (sha-<commit> from a successful
+# build.yml run), optionally request a migration and/or worker ramp,
+# and click Run. The actual deploy logic lives in deploy.yml.
+#
+# Staging has no GitHub environment protection rule — the click on
+# Run is the gate.
+
+name: deploy-staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_sha:
+        description: Image tag to deploy (e.g. sha-abc1234 — the build.yml summary lists this).
+        required: true
+        type: string
+      run_migration:
+        description: Run the Alembic migration task before deploying.
+        required: false
+        default: false
+        type: boolean
+      ramp_workers:
+        description: Walk the Worker Deployments V3 ramp via maint container.
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      env_name: staging
+      image_sha: ${{ inputs.image_sha }}
+      run_migration: ${{ inputs.run_migration }}
+      ramp_workers: ${{ inputs.ramp_workers }}

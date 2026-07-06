@@ -1,0 +1,262 @@
+[project]
+name = "cert-ra"
+dynamic = ["version"]
+description = "Certora Blockchain Risk Assessment"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
+authors = [{ name = "Cloud Team", email = "cloudteam@certora.com" }]
+requires-python = ">=3.12, <3.15"
+readme = "README.md"
+dependencies = [
+  "influxdb3-python>=0.16.0",
+  "niquests>=3.15.2",
+  "polars>=1.34.0",
+  "python-dotenv>=1.0.0",
+  "pydantic-settings>=2.11.0",
+  "structlog>=25.5.0",
+  "sentry-sdk>=2.43.0",
+  "aiolimiter>=1.2.1",
+  "async-lru>=2.0.5",
+  "tenacity>=9.1.2",
+  "web3>=7.14.1",
+  "solders>=0.27.1",
+  "solana>=0.36.11",
+  # Database drivers and utilities
+  "asyncpg>=0.28.0",
+  "advanced-alchemy[uuid,pwdlib,obstore]",
+  "aiosqlite>=0.19.0",
+  # API
+  "litestar[brotli,cryptography,jwt,standard,jinja]>=2.19.0",
+  "authlib>=1.6.6",
+  "litestar-vite>=0.15.0",
+  "litestar-granian[uvloop]",
+  "httptools",
+  "pwdlib[argon2]>=0.2.0",
+  "httpx-oauth>=0.15.0",
+  "pyotp>=2.9.0",
+  "qrcode[pil]>=7.4",
+  "webauthn>=2.5.0",
+  "litestar-email[resend]>=0.2.0",
+  "temporalio>=1.26.0",
+  "alembic-postgresql-enum>=1.10.0",
+]
+
+[project.optional-dependencies]
+
+
+[dependency-groups]
+dev = [
+  "ruff>=0.6.0",
+  "mypy>=1.11.0",
+  "pytest>=8.3.2",
+  "pytest-instafail>=0.5.0",
+  "pytest-cov>=5.0.0",
+  "pytest-timeout>=2.3.1",
+  "hatch>=1.14.1",
+  "pip-audit>=2.9.0",
+  "ipython>=9.6.0",
+  "jupyter>=1.1.1",
+  "ipykernel>=7.1.0",
+  "cosmic-ray>=8.3",
+  "plotext>=5.3.2",
+  "pytest-env>=1.5.0",
+  "pytest-xdist>=3.0.0",
+  "pytest-mock>=3.0.0",
+  "pyright>=1.1.0",
+  "slotscheck>=0.17.0",
+  "codespell>=2.4.0",
+  "asyncpg-stubs>=0.29.0",
+  "pytest-databases>=0.17.0",
+  "psycopg[binary]>=3.3.3",
+  "asgi-lifespan>=2.1.0",
+  "prek>=0.3.9",
+]
+
+[project.scripts]
+certora-risk-dashboard = "cert_ra.dashboard.app:app"
+certora-risk-ingester = "cert_ra.ingester.cli:main"
+certora-risk-alerts-worker = "cert_ra.alerts.worker:main"
+certora-risk-metrics-worker = "cert_ra.metrics.worker:main"
+certora-risk-seed-metrics = "cert_ra.db.seed_manual_metrics:main"
+certora-risk-seed-governance = "cert_ra.db.seed_manual_metrics_governance:main"
+certora-risk-seed-tokens = "cert_ra.db.seed_manual_metrics_tokens:main"
+certora-risk-seed-token-metrics = "cert_ra.db.seed_manual_metrics_token_metrics:main"
+
+certora-risk-api = "cert_ra.api.cli:run_cli"
+
+[tool.uv]
+
+[tool.ruff]
+target-version = "py312"
+src = ["src"]
+extend-exclude = [
+  "src/cert_ra/_version.py",
+  "src/cert_ra/plugins/influx_types.py",
+  "src/cert_ra/db/migrations",
+]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "S310",
+  "S101",
+  "ISC001",
+  "COM812",
+  "D100",
+  "D101",
+  "D104",
+  "E501",
+  "TD002",
+  "TD003",
+  "FIX002",
+  "PLC0415", # import should be at top-level - intentional lazy imports for performance
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D103", "PLR2004"]
+# Established pattern in the OIDC + MFA controllers: short user-facing
+# error strings live in the raise call, not as named constants.
+"src/cert_ra/api/domain/accounts/controllers/_oidc.py" = ["EM101", "EM102", "TRY003"]
+"src/cert_ra/api/domain/accounts/controllers/enforcement_migration.py" = ["EM101", "TRY003"]
+"src/cert_ra/api/domain/admin/controllers/operator_promotion.py" = ["EM101", "TRY003"]
+"src/cert_ra/api/domain/accounts/controllers/_mfa_v2.py" = ["EM101", "EM102", "TRY003"]
+"src/cert_ra/api/domain/admin/controllers/enforcement.py" = ["EM101", "TRY003"]
+"src/cert_ra/api/lib/mfa/passkey.py" = ["EM101", "TRY003"]
+"src/cert_ra/api/lib/mfa_attempts.py" = ["EM101", "TRY003"]
+# scoring.py uses mathematically meaningful unicode (× and −) in docstrings
+# and the breakdown explanation; the alternatives (* and -) are less clear.
+"src/cert_ra/metrics/market/scoring.py" = ["RUF002"]
+"tests/unit/metrics/market/test_scoring.py" = ["RUF002", "RUF003"]
+"tests/unit/metrics/market/test_activities.py" = ["SIM105", "ARG002"]
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-first-party = ["cert_ra", "cert_log"]
+
+[tool.ruff.lint.pylint]
+max-args = 10
+
+[tool.ruff.lint.mccabe]
+max-complexity = 20
+
+[tool.ruff.format]
+# Use `\n` line endings for all files
+line-ending = "lf"
+
+[tool.mypy]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+strict_equality = true
+disallow_any_generics = false
+warn_unreachable = true
+sqlite_cache = true
+disallow_untyped_decorators = true
+python_version = "3.14"
+exclude = '''(?x)(
+^build/
+|^dist/
+|^.venv/
+|^node_modules/
+|^src/cert_ra/db/migrations/
+)
+'''
+implicit_reexport = false
+warn_return_any = true
+warn_unused_configs = true
+plugins = ['pydantic.mypy']
+
+# [[tool.mypy.overrides]]
+# disallow_untyped_decorators = false
+# module = ["tests.*"]
+
+# [[tool.mypy.overrides]]
+# disallow_untyped_calls = false
+# disallow_untyped_decorators = false
+# module = ["aisoql.*"]
+
+# [[tool.mypy.overrides]]
+# ignore_missing_imports = true
+# module = [
+#   "sqlalchemy.*",
+#   "uvicorn.*",
+#   "aiohttp.*",
+#   "jsbeautifier",
+#   "jsbeautifier.*",
+#   "uvloop",
+#   "uvloop.*",
+#   "nodeenv",
+#   "docutils.*",
+# ]
+
+# [[tool.mypy.overrides]]
+# ignore_errors = true
+# module = ["cert_ra.db.migrations.*", "cert_ra.api.lib.dto.*", "tools.*"]
+
+
+#
+
+[tool.pytest.ini_options]
+env = [
+  "CERT_RA_INFLUXDB_TOKEN=test_token_for_pytest",
+  "ETHEREUM_PRIVATERPC_TOKEN=test_token_for_pytest",
+  "ETHEREUM_BEACON_TOKEN=test_token_for_pytest",
+]
+
+testpaths = ["./tests"]
+log_cli = true
+log_cli_level = "INFO"
+addopts = "--instafail --import-mode=importlib --junitxml=.coverage-junitxml.xml --cov-report=term-missing:skip-covered --cov-report xml:.coverage.xml --cov=cert_ra"
+required_plugins = "pytest-env"
+# asyncio_mode = "strict"
+[tool.pyright]
+include = ["src", "tests"]
+exclude = ["src/cert_ra/db/migrations"]
+
+[tool.slotscheck]
+exclude-modules = "cert_ra.db.migrations"
+strict-imports = false
+
+[tool.codespell]
+skip = "uv.lock,bun.lock,package-lock.json,./.venv,./.git,./node_modules,./dist,./build,./tmp,./example,./public,./rag_storage,./inputs,./modules,./api,./design,./docs,./.coverage*,./resources/lib/generated,./src/cert_ra/api/domain/web/public,./src/cert_ra/db/migrations/versions,./resources/assets,*.lock,*.log,*.min.js,*.min.css,*.map,*.svg"
+ignore-words-list = "prek,mypy,pyproject,certora,litestar,solana,selectin,alog,usde,ausdc,cusdc,steth,wsteth"
+
+[tool.coverage.run]
+branch = true
+omit = ["tests/*", "src/cert_ra/db/migrations/**/*.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+  'if TYPE_CHECKING:',
+  'pragma: no cover',
+  "if __name__ == .__main__.:",
+  'def __repr__',
+  'raise NotImplementedError',
+  '@(abc\.)?abstractmethod',
+]
+show_missing = true
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/cert_ra/_version.py"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+artifacts = ["src/cert_ra/_version.py", "src/cert_ra/api/domain/web/public/"]
+[tool.hatch.build.targets.sdist]
+artifacts = ["src/cert_ra/_version.py", "src/cert_ra/api/domain/web/public/"]
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"

@@ -1,0 +1,149 @@
+{
+  "Name": "COMPOUND_USDC",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Market solvency",
+      "desc": "Total supplied,~$372.03M USDC\nTotal borrowed,~$259.83M USDC\nAvailable cash / market liquidity,~$126.16M USDC\nUtilization rate,69.85%\nTotal reserves,Reserve buffer exists, precise current value not stated in past evidence\nReserve factor,Not stated in past evidence\nCollateral composition backing USDC borrows,WBTC, ETH, wstETH, weETH, cbBTC, tBTC, LINK, COMP, UNI, rsETH, USDe\nShare of debt by collateral,WBTC 55.4%, ETH 22.3%, wstETH 10.9%, weETH 5.3%, cbBTC 3.8%, tBTC 1.1%, others ~1.2%\nConcentration in top collateral assets,Top 4 collateral assets ~93.84% of posted collateral\nExposure to correlated collateral,BTC-linked collateral ~60.30%; ETH/LST/LRT-linked collateral ~38.49%\nRisk classification per collateral,Mostly blue-chip BTC/ETH assets and large liquid majors\nLiquidity profile of each collateral,Strong for the dominant BTC/ETH collateral set\nDependence on illiquid or long-tail collateral,Low\nDistribution of borrower sizes,Not publicly disclosed, although historical Gauntlet analysis identified whale-sized positions\nLiquidation thresholds / collateral factors by collateral,WBTC 85%, ETH 88%, wstETH 86%, weETH 80%, cbBTC 85%, tBTC 85%, LINK 79%, COMP 70%, UNI 74%, rsETH 90%, USDe 94%\nMaximum LTV per collateral,WBTC 80%, ETH 83%, wstETH 82%, weETH 75%, cbBTC 80%, tBTC 80%, LINK 73%, COMP 50%, UNI 68%, rsETH 85%, USDe 89%\nLiquidation incentives,Asset-specific liquidation penalties range from 4% to 25%\nClose factor,Not stated in past evidence\nExistence of caps, isolation, or equivalent constraints,Yes, isolated single-base-asset market and per-asset collateral supply caps\nHistorical bad debt in the market,No material bad debt specifically reported for the Ethereum USDC market\nEvidence of solvency during prior stress events,Yes, Aug. 2024 and Oct. 2025 downturn analyses showed absorption activity without reported reserve impairment\nCollateral stress test evidence,Yes, Gauntlet 2024 liquidation review modeled delayed collateral sales and potential reserve stress under additional 10–30% price declines",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Market solvency",
+      "desc": "The market is large, overcollateralized, and supported by meaningful available USDC liquidity.\nCollateral concentration is high, but the dominant collateral is mostly BTC/ETH-linked rather than illiquid long-tail assets.\nStress-event evidence is favorable, although liquidation execution and correlated collateral moves remain the main solvency risks.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Withdrawal liquidity",
+      "desc": "Current utilization,69.85%\nHistorical average utilization,Recent 2025 data ranged roughly from the low-70s to around 90%\nHistorical peak utilization,At least 97.71% observed in the 2024-01-04 to 2024-01-10 weekly update, ending that week at 95.43%\nAvailable cash ratio,~33.91% of current earning base balances\nImmediate withdrawal capacity,~$126.16M USDC\nBorrow concentration,Not publicly disclosed in the retrieved official sources\nDependence on repayments for withdrawals,Yes\nDependence on liquidations for withdrawals,Yes in stress\nEvidence of withdrawal friction during stress,Yes, Nov. 2025 governance / guardian action paused withdrawals of existing liquidity and collateral supply during deUSD / sdeUSD-related stress\nLiquidity management mechanisms,Utilization-based interest-rate curve, base-asset reserves, and discounted collateral sales via `buyCollateral`\nEvidence of persistent liquidity shortages,Not found, although utilization has periodically been very high",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Withdrawal liquidity",
+      "desc": "Normal-state liquidity is meaningful, with more than $126M immediately available.\nHistorical utilization has sometimes been extremely tight, showing that withdrawal liquidity can deteriorate materially.\nThe temporary withdrawal pause is a real practical caveat, but the evidence does not show a persistent liquidity shortage or realized market insolvency.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral dependency robustness",
+      "desc": "Quality of admitted collateral assets,High for dominant balances\nLiquidity quality of admitted collateral,Strong for major BTC/ETH collateral\nShare of collateral in blue-chip assets,High\nShare of collateral in long-tail or thinly traded assets,Low on current balances\nReliance on illiquid collateral for solvency,Low\nReliance on fragile collateral structures,Moderate due to LST/LRT exposure\nCollateral quality can materially impair solvency,Yes\nFallback protections,Collateral factors, liquidation factors, liquidation penalties, supply caps, reserves, and liquidation mechanisms\nHistorical evidence of collateral resilience during stress,Yes\nHistorical evidence of collateral-driven market impairment,No material USDC market impairment identified",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral dependency robustness",
+      "desc": "Collateral quality is generally strong because dominant backing is BTC/ETH-linked and liquid.\nConcentration and correlated exposure remain meaningful.\nThe modifier should be mildly punitive rather than heavily punitive.",
+      "value": "1.05",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Collateral and liquidity diversification",
+      "desc": "Diversity of collateral backing the market,Moderate\nConcentration in top collateral assets,Top 4 collateral assets ~93.84%\nExposure to correlated collateral,BTC-linked collateral ~60.30%; ETH/LST/LRT-linked collateral ~38.49%\nDiversity of borrower base,Not publicly disclosed\nBorrow concentration,Historical whale-sized positions identified\nDiversity of liquidity exit paths,Moderate\nFailure of one collateral group materially disruptive,Yes, potentially\nFailure of one major borrower materially disruptive,Possible but not quantified\nPublic disclosure of concentration risks,Partial\nHistorical evidence of concentration-driven stress,Partial",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Collateral and liquidity diversification",
+      "desc": "The market is diversified by number of listed collateral assets, but economically concentrated in BTC/ETH-linked collateral.\nCorrelation is the main diversification weakness.\nBorrower concentration is not fully disclosed, so the score should remain conservative.",
+      "value": "1.10",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market monitoring",
+      "desc": "Public dashboards available,Yes\nMonitoring of utilization and available cash,Yes\nMonitoring of liquidation activity,Yes / partial\nMonitoring of reserves or bad debt,Yes / partial\nMonitoring of borrower concentration,Partial\nMonitoring of collateral concentration,Yes / partial\nMonitoring of withdrawal conditions,Yes\nIncident response tooling disclosed,Yes / partial\nObservability documentation,Limited\nMonitoring public, internal, or both,Both\nEvidence of monitoring supporting market risk management,Yes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market monitoring",
+      "desc": "The market is materially observable through public dashboards, governance updates, and risk provider analysis.\nMonitoring is strongest for utilization, liquidity, collateral, reserves, and stress behavior.\nBorrower concentration and some operational details remain less fully disclosed.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market incidents history",
+      "desc": "Major market-specific incidents identified,Yes, Nov. 2025 deUSD / sdeUSD-related pause affected the Ethereum USDC market\nHistoric bad debt events identified,No material USDC market bad debt identified\nHistoric withdrawal or liquidity incidents identified,Yes, temporary withdrawal pause during stress\nPublic disclosure quality,High\nPost-mortems available,Partial\nTime since last major incident,Short\nEvidence of repeated market-specific risk pattern,Collateral / oracle configuration and operational response remain recurring themes\nIncidents resulted in insolvency or contained disruption,Contained disruption\nEvidence of effective remediation after incidents,Yes / partial",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market incidents history",
+      "desc": "No market insolvency was identified.\nThe incident record is not clean because withdrawal functionality was temporarily constrained during stress.\nThe right treatment is a modest assurance benefit, not a strong one.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Market configuration maturity",
+      "desc": "Initial deployment date of relevant market architecture,Aug. 17, 2022\nTime in production under meaningful usage,Long\nCurrent configuration recent or long-lived,Long-lived\nMaterial changes to collateral framework,Yes\nMaterial changes to parameterization,Yes\nMaterial changes to collateral factors or liquidation settings,Yes\nNumber of market cycles survived,Multiple\nEvidence of stable operation under scale,Yes\nEvidence of stable operation during severe volatility,Yes\nCurrent market configuration materially different from early versions,Yes, due to collateral, oracle, and risk-parameter changes",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Market configuration maturity",
+      "desc": "The market has meaningful production history and scale.\nIt has operated through multiple stressed episodes without identified insolvency.\nOngoing parameter and collateral changes prevent a stronger maturity benefit.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ANCHOR",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nMarket solvency,2,0.50%\nWithdrawal liquidity,2,0.50%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "CONTROL",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nCollateral dependency robustness,1.05\nCollateral and liquidity diversification,1.10",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ASSURANCE",
+      "name": "Assurance scoring",
+      "desc": "Multiplier,Score\nMarket monitoring,0.90\nMarket incidents history,0.95\nMarket configuration maturity,0.90",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "SUMMARY",
+      "name": "Probability of default",
+      "desc": "",
+      "value": "0.89%",
+      "notes": ""
+    }
+  ]
+}

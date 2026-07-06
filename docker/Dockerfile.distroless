@@ -1,0 +1,136 @@
+# syntax=docker/dockerfile:1.7
+# Multi-stage build targeting Google's distroless image — no shell or package manager at runtime.
+# Build:      docker build -f docker/Dockerfile.distroless -t app:distroless .
+# Multi-arch: docker buildx build --platform linux/amd64,linux/arm64 -f docker/Dockerfile.distroless -t app:distroless .
+
+ARG PYTHON_VERSION=3.13
+ARG DEBIAN_VERSION=bookworm
+ARG BUILDER_IMAGE=python:${PYTHON_VERSION}-slim-${DEBIAN_VERSION}
+ARG RUN_IMAGE=gcr.io/distroless/cc-debian12:nonroot
+
+# --- Base: shared between builder and runtime-prep ---
+FROM ${BUILDER_IMAGE} AS python-base
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
+    tini \
+    unzip \
+    ca-certificates \
+    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* /var/log/* /tmp/*
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# Symlink node -> bun so node_modules/.bin shebangs work (e.g. litestar-vite-typegen)
+COPY --from=oven/bun:latest /usr/local/bin/bun /usr/local/bin/bunx /usr/local/bin/
+RUN ln -s /usr/local/bin/bun /usr/local/bin/node
+
+# --- Builder: install deps and compile assets ---
+FROM python-base AS builder
+
+ENV UV_LINK_MODE=copy \
+    UV_NO_DEV=1 \
+    UV_COMPILE_BYTECODE=1 \
+    UV_PYTHON_DOWNLOADS="never" \
+    UV_PYTHON=python3 \
+    PATH="/workspace/app/.venv/bin:/usr/local/bin:$PATH" \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONHASHSEED=random \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* /var/log/* /tmp/*
+
+WORKDIR /workspace/app
+
+# Dependency files first for better layer caching
+COPY pyproject.toml uv.lock package.json bun.lock README.md ./
+COPY components.json biome.json vite.config.ts tsconfig.json ./
+
+RUN bun install --frozen-lockfile
+
+RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv \
+    uv sync --all-extras --frozen --no-install-project --no-editable
+
+COPY . /workspace/app/
+
+RUN uv run certora-risk-api assets build \
+    && cp resources/index.html src/cert_ra/api/domain/web/public/index.html \
+    && uv build
+
+# --- Runtime prep: set up venv and libs to copy into distroless ---
+FROM python-base AS runtime-prep
+
+# TARGETARCH is provided by docker buildx for multi-arch builds
+ARG TARGETARCH
+
+ENV UV_LINK_MODE=copy \
+    UV_NO_DEV=1 \
+    UV_COMPILE_BYTECODE=1 \
+    UV_PYTHON_DOWNLOADS="never" \
+    UV_PYTHON=/workspace/app/.venv/bin/python
+
+# UID/GID 65532 matches the distroless nonroot user
+RUN groupadd --system --gid 65532 nonroot \
+    && useradd --no-create-home --system --uid 65532 --gid 65532 nonroot \
+    && mkdir -p /workspace/app \
+    && chown -R nonroot:nonroot /workspace
+
+# --copies so the venv is self-contained when copied into the distroless image
+RUN python -m venv --copies /workspace/app/.venv
+
+WORKDIR /workspace/app
+
+COPY --chown=65532:65532 pyproject.toml uv.lock ./
+RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv \
+    uv sync --all-extras --frozen --no-install-project --no-editable
+
+COPY --from=builder --chown=65532:65532 /workspace/app/dist/*.whl /tmp/
+RUN uv pip install --disable-pip-version-check --no-deps /tmp/*.whl \
+    && chown -R nonroot:nonroot /workspace/app \
+    && rm -rf /var/log/* /tmp/*
+
+# Collect arch-specific shared libs so the runtime stage can copy them in one step
+RUN ARCH_DIR=$([ "$TARGETARCH" = "arm64" ] && echo "aarch64-linux-gnu" || echo "x86_64-linux-gnu") \
+    && mkdir -p /runtime-libs/lib /runtime-libs/usr/lib \
+    && cp -a /lib/${ARCH_DIR} /runtime-libs/lib/ \
+    && cp -a /usr/lib/${ARCH_DIR} /runtime-libs/usr/lib/ \
+    && echo "${ARCH_DIR}" > /runtime-libs/arch
+
+# --- Runtime: distroless, no shell or package manager ---
+FROM ${RUN_IMAGE} AS runtime
+
+ARG LITESTAR_APP="cert_ra.api.asgi:create_app"
+
+ENV PATH="/workspace/app/.venv/bin:/usr/local/bin:$PATH" \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONHASHSEED=random \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    LITESTAR_APP="${LITESTAR_APP}"
+
+COPY --from=runtime-prep /usr/local/lib/ /usr/local/lib/
+COPY --from=runtime-prep /usr/local/bin/python /usr/local/bin/python
+COPY --from=runtime-prep /etc/ld.so.cache /etc/ld.so.cache
+COPY --from=runtime-prep /usr/bin/tini /usr/local/bin/tini
+COPY --from=runtime-prep /runtime-libs/lib/ /lib/
+COPY --from=runtime-prep /runtime-libs/usr/lib/ /usr/lib/
+COPY --from=runtime-prep /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+WORKDIR /workspace/app
+COPY --from=runtime-prep --chown=65532:65532 /workspace/app/.venv /workspace/app/.venv
+
+STOPSIGNAL SIGTERM
+EXPOSE 8000
+
+ENTRYPOINT ["/usr/local/bin/tini", "--"]
+CMD ["litestar", "run", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,0 +1,293 @@
+{
+  "Name": "MORPHO_V2",
+  "metrics": [
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Accounting correctness",
+      "desc": "Version in scope,Morpho V2 / MarketV2 / Morpho Blue core variable-rate market.\nAccounting model type,Isolated variable-rate lending market.\nDeposits represented as,User supply shares.\nBorrows represented as,User borrow shares.\nCollateral represented as,User collateral balance.\nInterest accrual mechanism,Market-level accrueInterest.\nMarket state fields,total supply assets/shares, total borrow assets/shares, last update, fee.\nReserve accounting model,Fee-recipient supply position; no scored reserve solvency claim.\nFee accrual mechanism,Governance-set market fee; fee recipient receives fees via supply position.\nCurrent fee status,Official docs state no fees currently applied.\nBad debt accounting,Market-level outcome; excluded from protocol-level scoring.\nShared accounting logic across markets,Single core logic for markets.\nMarket-specific accounting customizations,Five immutable market parameters only.\nUse math-sensitive logic,Asset/share conversions, interest indices, price scaling, rounding.\nUpgradeable,Core contract immutable.\nKnown historical accounting bugs,No unresolved Morpho V1 core accounting issue found in reviewed sources.\nOut-of-scope historical issue,Legacy optimizer index-caching vulnerability, mitigated, V0 context.\nOperation evidence at scale,Large Morpho ecosystem TVL and active loans; maturity proxy only.\nPublic documentation,Official docs, repository, audits, formal verification.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Accounting correctness",
+      "desc": "Share-based accounting is simple, unified, and documented at core-market level.\nCore logic is immutable, reducing upgrade-induced accounting drift.\nFormal verification, audits, fuzzing, and invariant testing support a below-average protocol accounting risk.\nScore is not 1 because the accounting is math-sensitive and depends on token, oracle, and IRM assumptions documented by the protocol.\nMarket bad debt is excluded from this anchor unless caused by protocol-level accounting failure.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Liquidation reliability",
+      "desc": "Liquidation trigger mechanism,LTV above LLTV.\nHealth metric,Health factor below 1.\nLiquidation executor,Permissionless external liquidators.\nLiquidation type,Standard full or partial liquidation in core.\nClose factor,Up to 100% of debt.\nLiquidation incentive,LLTV-based liquidation incentive factor.\nLiquidation fee,No protocol liquidation fee in standard liquidation docs.\nLiquidation ordering,First-come-first-served; no auction.\nLiquidator participation,Bots and external liquidators required.\nOracle dependency,Market oracle price.\nMarket parameter dependency,LLTV and oracle are immutable market parameters.\nCore implementation,liquidate function in Morpho core.\nExternal liquidation dependencies,RPC, wallet, bots, profitability.\nKnown historical liquidation bugs,No unresolved Morpho V1 core liquidation bug found in reviewed sources.\nMarket-level liquidation failures,Excluded from direct protocol scoring.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Liquidation reliability",
+      "desc": "Core liquidation logic is explicit, permissionless, and integrated into the protocol.\nLiquidation reliability depends on external liquidator action; the protocol does not perform liquidations itself.\nThe mechanism depends directly on oracle correctness and immutable LLTV selection.\nFirst-come-first-served liquidation is simpler than auctions but introduces MEV and execution-race dependence.\nMarket-specific bad debt or insufficient liquidation depth is excluded from this protocol score.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Oracle integrity",
+      "desc": "Oracle model,Oracle-agnostic.\nOracle address mutability,Immutable per market.\nOracle interface,price() function.\nPrice output format,Collateral price quoted in loan token with protocol scaling.\nReference oracle implementation,MorphoChainlinkOracleV2.\nSupported oracle source types,Price-feed, exchange-rate, fixed-price patterns.\nOracle selection responsibility,Market creators and curators, not Morpho core.\nOracle governance control,No core oracle whitelist identified in reviewed docs.\nOracle failure behavior,Oracle reverts or incorrect values can affect liveness or correctness.\nPrice scaling assumptions,Oracle must return correct scaling.\nKnown protocol-level oracle bugs,No unresolved Morpho V1 core oracle-interface bug found in reviewed sources.\nKnown market-level oracle incidents,PAXG/USDC oracle misconfiguration; cUSDO/USDC LP oracle manipulation.\nPublic documentation,Official oracle documentation and reference implementation.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Oracle integrity",
+      "desc": "The core oracle interface is intentionally minimal and immutable per market.\nOracle-agnostic design avoids a single enshrined oracle dependency, but delegates correctness to market configuration.\nPrice scaling and oracle liveness are explicit protocol-level assumptions.\nMarket-level oracle incidents are not scored as direct protocol failures, but they support the importance of oracle-interface and configuration risk.\nScore is not higher because Morpho core does not itself issue prices or guarantee asset redemption.",
+      "value": "3",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Evidence",
+      "name": "Governance and upgrade safety",
+      "desc": "Core contract upgradeability,Immutable.\nMarket parameter mutability,Immutable after market creation.\nOwner powers,Owner transfer, IRM enablement, LLTV enablement, fee setting, fee recipient.\nFee cap,25% of borrower interest.\nIRM control,Governance can whitelist IRMs.\nLLTV control,Governance can whitelist LLTVs.\nOracle control,Oracle chosen per market; no reviewed core oracle whitelist.\nGovernance voting mechanism,MORPHO token voting through Snapshot.\nProposal threshold,500,000 MORPHO delegated or held.\nExecution mechanism,Governance actions implemented by 5-of-9 multisig.\nToken upgradeability,Wrapped MORPHO token upgradeable.\nPause powers,No core market pause power identified in reviewed official governance powers.\nAsset seizure powers,No core user-asset seizure power identified in reviewed official governance powers.\nDocumented governance scope,Treasury, token, fee switch, LLTV/IRM whitelisting, ENS/license.\nKnown governance execution issues,No unresolved Morpho V1 core governance-execution issue found in reviewed sources.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ANCHORS",
+      "sub_category": "Risk score",
+      "name": "Governance and upgrade safety",
+      "desc": "Immutable core markets materially reduce upgrade-risk default vectors.\nGovernance powers are documented and narrower than full protocol upgrade control.\nFee, IRM whitelist, and LLTV whitelist powers can affect future or active market economics, so governance risk is not negligible.\nToken upgradeability and multisig execution are scored mainly in control modifiers, not double-counted here.\nNo evidence found of unsafe core upgrades, governance capture event, or opaque protocol-level execution.",
+      "value": "2",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Upgradeability and admin control",
+      "desc": "Core upgradeable,No.\nMarket upgradeable,No; markets immutable.\nMarket params mutable,No after creation.\nOwner powers,Yes; fee, fee recipient, LLTV/IRM enablement, owner transfer.\nAdmin fee control,Yes; capped.\nAdmin risk-parameter control,Limited to whitelisting LLTVs and IRMs.\nAdmin oracle control,No reviewed core oracle whitelist.\nPause control,Not identified for core markets.\nUpgrade delay,Not applicable to immutable core.\nCross-chain admin surface,Multiple deployments; chain-hard-fork assumptions outside Morpho control.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Upgradeability and admin control",
+      "desc": "Core immutability lowers protocol-level default risk.\nImmutable market parameters reduce post-creation admin intervention risk.\nResidual owner powers justify a moderate, not extreme, reduction.\nMulti-chain deployment adds some residual operational surface.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance execution integrity",
+      "desc": "Proposal venue,Morpho governance forum.\nVoting venue,Snapshot.\nVoting token,MORPHO.\nProposal threshold,500,000 MORPHO delegated or held.\nExecution wallet,Governance multisig.\nExecution threshold,5 of 9.\nTimelock,Not identified in reviewed official governance docs.\nOnchain transparency,Multisig addresses documented.\nProcedure documentation,Governance scope and process documented.\nKnown execution failures,No unresolved core governance-execution issue found in reviewed sources.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance execution integrity",
+      "desc": "Governance execution process is documented.\nSnapshot plus multisig execution is operationally clear.\nAbsence of a reviewed explicit timelock prevents a risk-reducing score.\nNo evidence found of core governance execution failure.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Governance power concentration",
+      "desc": "Voting model,Token-weighted MORPHO governance.\nToken max supply,1,000,000,000 MORPHO.\nGovernance-controlled allocation,35.4% in official allocation schedule.\nStrategic partner allocation,27.5% in official allocation schedule.\nFounder allocation,15.2% in official allocation schedule.\nCirculating supply schedule,Transferability enabled on 21 November 2024.\nDelegation model,Delegation and voting through MORPHO governance flow.\nQuorum,Not identified in reviewed official governance docs.\nConcentration signal,Material structural concentration.\nCounterbalancing controls,Immutable core and limited governance scope.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Governance power concentration",
+      "desc": "Token-weighted voting and allocation structure create governance concentration risk.\nImmutable core reduces the impact of concentrated voting power.\nConcentration affects future parameter whitelisting, fees, treasury, and token matters more than existing core-market code.\nThis risk is applied here rather than over-penalizing the governance anchor.",
+      "value": "1.08",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Operational complexity",
+      "desc": "Core architecture,Minimal immutable singleton core.\nContract footprint,Main core logic concentrated in Morpho.sol with internal libraries.\nMarket architecture,Isolated markets.\nExternal dependencies,ERC20 tokens, oracle, IRM.\nParameter count,Five market parameters.\nCross-chain deployments,Multiple EVM deployments.\nCallback support,Present in core actions.\nFlash loan support,Present; zero flash fee.\nPeriphery dependency,Periphery not used by core.\nToken compatibility assumptions,No fee-on-transfer; compliant token assumptions.\nOracle/IRM liveness assumptions,Oracle or IRM reverts can affect liveness.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Operational complexity",
+      "desc": "Core architecture is deliberately simple and immutable.\nIsolated markets reduce cross-market contagion at protocol-accounting level.\nExternal oracle, IRM, token, callback, and flash-loan surfaces prevent a stronger reduction.\nCross-chain deployment adds operational surface but not a core-design failure by itself.",
+      "value": "0.92",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Evidence",
+      "name": "Privileged roles scope",
+      "desc": "Owner role,Yes.\nGovernance role,Yes.\nMultisig role,5-of-9 execution.\nFee role,Governance/owner can set market fee up to cap.\nIRM whitelist role,Governance/owner can enable IRMs.\nLLTV whitelist role,Governance/owner can enable LLTVs.\nOracle whitelist role,Not identified in core docs.\nMarket creator role,Permissionless within enabled LLTV/IRM constraints.\nPauser role,Not identified for core markets.\nAsset recovery role,No core user-asset seizure role identified in reviewed docs.\nToken admin role,Wrapped MORPHO upgradeable.\nRewards/admin roles,Out of scope.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "CONTROL",
+      "sub_category": "Multiplier",
+      "name": "Privileged roles scope",
+      "desc": "Privileged roles exist but are narrower than full upgrade or custody powers.\nNo reviewed evidence of core pause, seizure, or market-parameter rewrite powers.\nFee and whitelist powers retain some protocol-level governance impact.\nToken-admin scope is relevant to governance but not core market accounting.",
+      "value": "0.95",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Audits",
+      "desc": "Core audit count,Multiple Morpho V1 reviews listed.\nCore audit firms,OpenZeppelin, Spearbit, Cantina.\nContest coverage,Cantina Morpho V1 competition.\nPre-deployment review,External reviews before deployment.\nPost-deployment review,Additional listed reviews and contests.\nPeriphery audit separation,Separate vault/periphery audits listed.\nAudit reports public,Public audits page and repository references.\nCritical unresolved findings,No unresolved Morpho V1 core critical issue found in reviewed sources.\nScope match to Morpho V1,Strong for core.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Audits",
+      "desc": "Multiple reputable security reviews cover Morpho V1 core.\nAudit coverage is public and version-specific.\nContest coverage adds breadth beyond firm audits.\nAudits reduce but do not eliminate protocol-level implementation risk.",
+      "value": "0.92",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Formal verification",
+      "desc": "Core FV coverage,Morpho V1 core logic.\nFV providers,Certora and Halmos.\nFV tooling,Certora, Halmos.\nVerified invariants,Core accounting and safety invariants.\nPublic FV artifacts,Formal verification reports listed publicly.\nLiquidation FV coverage,Pre-liquidation core logic formally verified; opt-in pre-liquidation is not core standard liquidation.\nOracle FV coverage,Interface assumptions remain market-dependent.\nCoverage limitations,Market configuration and external oracle correctness not fully eliminated.\nScope match to Morpho V1,Strong for core logic.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Formal verification",
+      "desc": "Formal verification directly covers Morpho V1 core logic.\nIndependent tools and providers improve assurance.\nVerification is especially relevant to accounting and state-transition correctness.\nExternal oracle and token assumptions remain outside full FV protection.",
+      "value": "0.90",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Testing",
+      "desc": "Unit tests,Yes.\nIntegration tests,Yes.\nFork tests,Yes.\nFuzz tests,Yes.\nMutation tests,Yes.\nBranch coverage target,All branches targeted.\nPublic test suite,Repository public.\nCI status,Not scored.\nCore logic coverage,Strong documented coverage.\nScope match to Morpho V1,Strong.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Testing",
+      "desc": "Testing stack is broad across unit, integration, fork, fuzz, and mutation testing.\nBranch-targeted testing is especially useful for compact core logic.\nPublic repository improves reproducibility.\nTesting cannot fully cover adversarial market configuration or external oracle failures.",
+      "value": "0.92",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Monitoring",
+      "desc": "Invariant monitoring,Continuous invariant bots described.\nMarket-level monitoring,Invariants checked after market transactions.\nTransaction-level monitoring,Yes, per security framework.\nCircuit breakers,No circuit breakers by design.\nIncident response process,Documented security-process framework.\nApproval monitoring,Added after 2025 app incident.\nGovernance monitoring,Not separately scored.\nPublic dashboards,DefiLlama ecosystem data available.\nLiquidator monitoring,Permissionless liquidator ecosystem.\nScope match to Morpho V1,Moderate to strong.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Monitoring",
+      "desc": "Invariant monitoring improves detection of protocol-level anomalies.\nNo circuit breakers limits ability to stop failures after detection.\nPermissionless liquidation means monitoring does not guarantee liquidation execution.\nApp-level remediation is useful operational context but not core protocol control.",
+      "value": "0.97",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Incident history",
+      "desc": "Core exploit history,No unresolved Morpho V1 core exploit found in reviewed sources.\nAccounting incident history,No unresolved Morpho V1 core accounting incident found in reviewed sources.\nLiquidation incident history,No unresolved Morpho V1 core liquidation incident found in reviewed sources.\nOracle incident history,Market-level oracle incidents identified; direct scoring excluded.\nGovernance incident history,No unresolved Morpho V1 core governance incident found in reviewed sources.\nFrontend/app incidents,April 2025 app configuration incident; smart contracts unaffected; no funds lost.\nMarket-level incidents,cUSDO/USDC and PAXG/USDC market-level oracle incidents.\nLegacy-version incidents,June 2023 optimizer/index issue; out of scope.\nFunds lost at protocol level,No Morpho V1 core protocol-level loss identified in reviewed sources.\nUnresolved protocol-level issues,None identified in reviewed sources.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Incident history",
+      "desc": "No reviewed unresolved core exploit materially supports the protocol.\nMarket-level oracle losses show real operational risk around market configuration, but are excluded from direct protocol PD.\nFrontend/app incident did not affect smart contracts, but modestly weakens operational assurance.\nLegacy optimizer issue is out of scope but relevant as historical learning context.",
+      "value": "1.02",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "Operational changes history",
+      "desc": "Core upgrade history,Core MarketV1 immutable; no core upgrade path.\nToken migration history,Legacy MORPHO to wrapped MORPHO.\nGovernance changes,Transferability enabled on 21 November 2024.\nSecurity-process changes,Security framework documented.\nIncident-remediation changes,SDK fixes, review process, approval monitoring after app incident.\nDeprecated architecture,Morpho V0 / optimizers out of scope.\nCross-chain deployment changes,Multiple chain deployments documented.\nPeripheral contract changes,Vaults, adapters, bundlers out of scope.\nChange-management transparency,Governance docs and forum process documented.\nScope match to Morpho V1,Moderate.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "Operational changes history",
+      "desc": "Core immutability means operational changes mainly affect governance, periphery, token, and app surfaces.\nDocumented security and remediation processes support neutral-to-positive assurance.\nToken and app changes are relevant but not direct core-market changes.\nNo adjustment beyond neutral is applied to avoid double counting immutability and audits.",
+      "value": "1.00",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Evidence",
+      "name": "System maturity and production track record",
+      "desc": "Production deployment,Core contracts deployed across multiple EVM networks.\nMulti-chain footprint,Ethereum and multiple L2 / EVM deployments documented.\nPublic code,GitHub repository public.\nPublic docs,Official docs public.\nProduction TVL proxy,DefiLlama reports large combined Morpho TVL; maturity proxy only.\nActive loans proxy,DefiLlama reports large combined active loans; maturity proxy only.\nTime in production,Public Morpho Blue code and security materials date from 2023–2024.\nSecurity program maturity,Audits, FV, testing, monitoring, contests.\nGovernance maturity,Documented governance process and multisig.\nEcosystem dependency,High; not scored as market solvency.\nScope limitations,TVL includes broader Morpho ecosystem, not only one market.",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "ASSURANCE",
+      "sub_category": "Multiplier",
+      "name": "System maturity and production track record",
+      "desc": "Public code, public docs, and public security artifacts support maturity.\nLarge production usage is relevant as operational evidence, not market solvency evidence.\nMulti-chain deployment shows operational depth but also increases environment surface.\nTrack record supports a moderate assurance reduction.",
+      "value": "0.92",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ANCHOR",
+      "name": "Anchor scoring",
+      "desc": "Anchor,Score,Anchor PD\nAccounting correctness,2,0.50%\nLiquidation reliability,3,2.00%\nOracle integrity,3,2.00%\nGovernance and upgrade safety,2,0.50%",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "CONTROL",
+      "name": "Control modifiers scoring",
+      "desc": "Modifier,Score\nUpgradeability and admin control,0.90\nGovernance execution integrity,1.00\nGovernance power concentration,1.08\nOperational complexity,0.92\nPrivileged roles scope,0.95",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "ASSURANCE",
+      "name": "Assurance scoring",
+      "desc": "Multiplier,Score\nAudits,0.92\nFormal verification,0.90\nTesting,0.92\nMonitoring,0.97\nIncidents history,1.02\nOperational changes history,1.00\nSystem maturity and production track record,0.92",
+      "value": "",
+      "notes": ""
+    },
+    {
+      "category": "PROTOCOL_SCORE",
+      "sub_category": "SUMMARY",
+      "name": "Probability of default",
+      "desc": "",
+      "value": "3.13%",
+      "notes": ""
+    }
+  ]
+}
