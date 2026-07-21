@@ -178,6 +178,13 @@ class LitestarServiceProps:
     """OIDC provider operators must use, e.g. 'google'
     (CERT_RA_OPERATOR_TEAM_ENFORCED_PROVIDER)."""
 
+    blocked_host_headers: tuple[str, ...] = ()
+    """Hostnames the public listener must refuse with a fixed 421. Used
+    during a domain migration: a third-party proxy (e.g. the old parent
+    domain's DNS provider) may keep sending the ALB traffic for the OLD
+    hostname with non-strict TLS, so swapping the cert and deleting the
+    Route53 records is not enough to take the old name dark."""
+
     container_port: int = DEFAULT_CONTAINER_PORT
     cpu: int = DEFAULT_CPU
     memory_mib: int = DEFAULT_MEMORY_MIB
@@ -545,6 +552,34 @@ class LitestarService(Construct):
             default_target_groups=[self.green_target_group],
             ssl_policy=elbv2.SslPolicy.RECOMMENDED_TLS,
         )
+
+        # Refuse decommissioned hostnames before they reach the app. The
+        # rule (not the default action) carries the block so CodeDeploy
+        # can keep swapping the default forward action between blue and
+        # green untouched. 421 Misdirected Request is the status defined
+        # for "this server is not configured for that authority".
+        if props.blocked_host_headers:
+            for listener_id, listener in (
+                ("Production", self.production_listener),
+                ("Test", self.test_listener),
+            ):
+                elbv2.ApplicationListenerRule(
+                    self,
+                    f"BlockedHosts{listener_id}",
+                    listener=listener,
+                    priority=5,
+                    conditions=[
+                        elbv2.ListenerCondition.host_headers(
+                            list(props.blocked_host_headers)
+                        )
+                    ],
+                    action=elbv2.ListenerAction.fixed_response(
+                        421,
+                        content_type="text/plain",
+                        message_body="This hostname is no longer served.",
+                    ),
+                )
+
         props.alb_security_group.add_ingress_rule(
             peer=ec2.Peer.ipv4(props.vpc.vpc_cidr_block),
             connection=ec2.Port.tcp(TEST_LISTENER_PORT),

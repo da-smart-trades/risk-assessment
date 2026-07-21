@@ -282,6 +282,15 @@ class AppStack(Stack):
                 alb=app_props.network.public_alb.alb,
                 alb_security_group=app_props.network.security_groups.alb,
                 certificate_arn=app_props.dns.active.certificate_arn,
+                # During a domain migration the old hostname must go dark,
+                # but a proxy outside our control (the old parent domain's
+                # DNS provider) may still forward it to this ALB with
+                # non-strict TLS — so the listener refuses it explicitly.
+                blocked_host_headers=(
+                    (env_config.domain, f"www.{env_config.domain}")
+                    if env_config.next_domain is not None
+                    else ()
+                ),
                 ecr_repo_arn=app_props.identity.ecr.repository_arn,
                 ecr_repo_name=app_props.identity.ecr.repository.repository_name,
                 ecr_cmk_arn=app_props.identity.ecr.encryption_cmk_arn,
