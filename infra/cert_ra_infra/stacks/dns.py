@@ -31,6 +31,7 @@ class DnsStack(Stack):
     """
 
     dns: HostedZoneWithCert
+    dns_next: HostedZoneWithCert | None
 
     def __init__(
         self,
@@ -52,22 +53,47 @@ class DnsStack(Stack):
             ),
         )
 
+        # Domain migration (see EnvConfig.next_domain): build the new
+        # zone + cert ALONGSIDE the old one. AppStack consumes `active`,
+        # so it cuts over to the new cert/zone in its own deploy — CFN
+        # can't atomically swap a cross-stack cert export, so old and
+        # new must coexist until the cutover completes.
+        self.dns_next = None
+        if env_config.next_domain is not None:
+            self.dns_next = HostedZoneWithCert(
+                self,
+                "DnsNext",
+                props=HostedZoneWithCertProps(
+                    domain_name=env_config.next_domain,
+                    hosted_zone_id=env_config.next_dns_zone_id,
+                    delegation_parent_zone_id=env_config.next_dns_parent_zone_id,
+                    delegation_parent_zone_name=env_config.next_dns_parent_zone_name,
+                ),
+            )
+            # Pin the OLD cert's auto-generated cross-stack export. When
+            # AppStack switches to the new cert, the implicit export of
+            # the old ARN would otherwise vanish from this template while
+            # the still-deployed AppStack imports it — and CFN refuses to
+            # update this stack ("export in use"). Remove this pin only
+            # at final cleanup, after AppStack no longer imports it.
+            self.export_value(self.dns.certificate_arn)
+
         cdk.CfnOutput(
             self,
             "HostedZoneId",
-            value=self.dns.hosted_zone_id,
+            value=self.active.hosted_zone_id,
             export_name=f"{self.stack_name}-HostedZoneId",
         )
         cdk.CfnOutput(
             self,
             "DomainName",
-            value=self.dns.hosted_zone_name,
+            value=self.active.hosted_zone_name,
             export_name=f"{self.stack_name}-DomainName",
         )
         cdk.CfnOutput(
             self,
             "CertificateArn",
-            value=self.dns.certificate_arn,
+            value=self.active.certificate_arn,
             export_name=f"{self.stack_name}-CertificateArn",
         )
         # NS records are a token list — emit as a CSV string so the
@@ -87,3 +113,35 @@ class DnsStack(Stack):
                 ),
                 export_name=f"{self.stack_name}-NameServers",
             )
+
+        if self.dns_next is not None:
+            # Capture this into EnvConfig.next_dns_zone_id after the first
+            # deploy so later deploys reference the zone instead of owning
+            # it (same rationale as dns_zone_id).
+            cdk.CfnOutput(
+                self,
+                "NextHostedZoneId",
+                value=self.dns_next.hosted_zone_id,
+                export_name=f"{self.stack_name}-NextHostedZoneId",
+            )
+            next_ns = self.dns_next.name_servers
+            if next_ns is not None:
+                cdk.CfnOutput(
+                    self,
+                    "NextNameServers",
+                    value=cdk.Fn.join(",", next_ns),
+                    description=(
+                        "NS records of the next-domain zone. Delegate "
+                        "these in the parent zone (automatic only when "
+                        "next_dns_parent_zone_id is configured; otherwise "
+                        "add them manually in the account holding the "
+                        "parent zone) so cert validation can complete."
+                    ),
+                    export_name=f"{self.stack_name}-NextNameServers",
+                )
+
+    @property
+    def active(self) -> HostedZoneWithCert:
+        """The zone/cert the app should serve with right now — the
+        migration target while one is in progress, else the primary."""
+        return self.dns_next if self.dns_next is not None else self.dns

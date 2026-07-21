@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from aws_cdk import RemovalPolicy
+from aws_cdk import Duration, RemovalPolicy
 from aws_cdk import aws_certificatemanager as acm
 from aws_cdk import aws_route53 as route53
 from constructs import Construct
@@ -38,6 +38,15 @@ class HostedZoneWithCertProps:
     """If True, automatically add `*.{domain_name}` as a SAN. Default lets
     sub-paths under the domain (e.g. `api.cert-ra.staging.certora.com`)
     use the same cert."""
+
+    delegation_parent_zone_id: str | None = None
+    delegation_parent_zone_name: str | None = None
+    """Route53 zone id/name of the PARENT zone (e.g. `example.com` for
+    domain `risk.example.com`) when that parent lives in THIS AWS
+    account. When set (and this construct creates the zone), an NS
+    record delegating `domain_name` is written into the parent zone and
+    the cert waits on it — replacing the out-of-band registrar step that
+    an externally-hosted parent requires. Both must be set together."""
 
 
 class HostedZoneWithCert(Construct):
@@ -125,6 +134,35 @@ class HostedZoneWithCert(Construct):
             ],
         )
 
+        # Same-account parent zone: write the NS delegation ourselves so
+        # DNS validation can resolve without any registrar/console step.
+        # Only meaningful when we created the zone (a referenced zone is
+        # already delegated).
+        delegation: route53.NsRecord | None = None
+        if self.owns_zone and props.delegation_parent_zone_id is not None:
+            if props.delegation_parent_zone_name is None:
+                msg = (
+                    "delegation_parent_zone_name is required when "
+                    "delegation_parent_zone_id is set"
+                )
+                raise ValueError(msg)
+            parent_zone = route53.PublicHostedZone.from_hosted_zone_attributes(
+                self,
+                "DelegationParentZone",
+                hosted_zone_id=props.delegation_parent_zone_id,
+                zone_name=props.delegation_parent_zone_name,
+            )
+            name_servers = self.hosted_zone.hosted_zone_name_servers
+            assert name_servers is not None  # created public zones always have NS
+            delegation = route53.NsRecord(
+                self,
+                "ParentDelegation",
+                zone=parent_zone,
+                record_name=f"{props.domain_name}.",
+                values=name_servers,
+                ttl=Duration.hours(1),
+            )
+
         self.certificate = acm.Certificate(
             self,
             "Certificate",
@@ -133,6 +171,8 @@ class HostedZoneWithCert(Construct):
             validation=acm.CertificateValidation.from_dns(self.hosted_zone),
         )
         self.certificate.node.add_dependency(caa)
+        if delegation is not None:
+            self.certificate.node.add_dependency(delegation)
 
     @property
     def hosted_zone_id(self) -> str:

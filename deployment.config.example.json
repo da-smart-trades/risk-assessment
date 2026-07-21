@@ -24,7 +24,12 @@
       "vpc_cidr": "10.1.0.0/16",
       "max_azs": 3,
       "nat_gateways": 3,
-      "dns_zone_id": "Z0000000000000000PROD"
+      "dns_zone_id": "Z0000000000000000PROD",
+      "_comment_next": "Optional domain-migration keys (see EnvConfig in infra/cert_ra_infra/stacks/_config.py). Set next_domain to start a phased move to a new hostname; set next_dns_parent_zone_id/-name only when the parent zone is in the same AWS account (enables automatic NS delegation); capture next_dns_zone_id after the first deploy creates the zone.",
+      "next_domain": null,
+      "next_dns_parent_zone_id": null,
+      "next_dns_parent_zone_name": null,
+      "next_dns_zone_id": null
     }
   }
 }

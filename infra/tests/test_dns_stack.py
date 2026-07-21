@@ -111,3 +111,81 @@ def test_emits_nameservers_output_when_creating_zone() -> None:
     outputs = template.find_outputs("NameServers")
     (output,) = outputs.values()
     assert "delegate" in output.get("Description", "").lower()
+
+
+_NEXT_DOMAIN = "risk-next.example.com"
+
+
+def _migration_cfg() -> EnvConfig:
+    """Prod-shaped config exercising the FIRST migration deploy (zone not
+    yet captured), with a same-account parent zone for the delegation."""
+    return dataclasses.replace(
+        load_env("prod"),
+        next_domain=_NEXT_DOMAIN,
+        next_dns_parent_zone_id="ZPARENT0000TEST",
+        next_dns_parent_zone_name="example.com",
+        next_dns_zone_id=None,
+    )
+
+
+def test_migration_builds_next_zone_alongside_old_cert() -> None:
+    """With next_domain set, the old cert stays (AppStack still imports it
+    until its own cutover deploy) and the new zone + wildcard cert appear."""
+    cfg = _migration_cfg()
+    template = _synth_cfg(cfg)
+    template.has_resource_properties(
+        "AWS::Route53::HostedZone", {"Name": f"{_NEXT_DOMAIN}."}
+    )
+    certs = template.find_resources("AWS::CertificateManager::Certificate")
+    domains = {c["Properties"]["DomainName"] for c in certs.values()}
+    assert domains == {cfg.domain, _NEXT_DOMAIN}
+    next_cert = next(
+        c for c in certs.values() if c["Properties"]["DomainName"] == _NEXT_DOMAIN
+    )
+    sans = next_cert["Properties"].get("SubjectAlternativeNames", [])
+    assert f"*.{_NEXT_DOMAIN}" in sans
+
+
+def test_migration_delegates_ns_into_parent_zone() -> None:
+    """The same-account parent zone gets the NS delegation record, and the
+    new cert waits on it so DNS validation can resolve."""
+    template = _synth_cfg(_migration_cfg())
+    recordsets = template.find_resources("AWS::Route53::RecordSet")
+    ns = [
+        r
+        for r in recordsets.values()
+        if r["Properties"].get("Type") == "NS"
+        and r["Properties"].get("Name") == f"{_NEXT_DOMAIN}."
+    ]
+    (delegation,) = ns
+    assert delegation["Properties"]["HostedZoneId"] == "ZPARENT0000TEST"
+    certs = template.find_resources("AWS::CertificateManager::Certificate")
+    next_cert = next(
+        c for c in certs.values() if c["Properties"]["DomainName"] == _NEXT_DOMAIN
+    )
+    depends_on = next_cert.get("DependsOn", [])
+    if isinstance(depends_on, str):
+        depends_on = [depends_on]
+    assert any("ParentDelegation" in d for d in depends_on), depends_on
+
+
+def test_migration_outputs_point_at_next_domain() -> None:
+    """Operator-facing outputs (used by upgrade.sh / verify-deploy.sh
+    health checks) must follow the ACTIVE domain during a migration."""
+    template = _synth_cfg(_migration_cfg())
+    outputs = template.find_outputs("DomainName")
+    (domain_out,) = outputs.values()
+    assert domain_out["Value"] == _NEXT_DOMAIN
+    assert "NextHostedZoneId" in template.find_outputs("*")
+
+
+def test_migration_pins_old_certificate_export() -> None:
+    """The old cert ARN's auto-export must survive while the deployed
+    AppStack still imports it, or the DnsStack update is rejected."""
+    template = _synth_cfg(_migration_cfg())
+    exports = [
+        o
+        for name, o in template.find_outputs("*").items()
+        if name.startswith("ExportsOutput") and "Certificate" in name
+    ]
+    assert exports, "expected a pinned export for the old certificate ARN"

@@ -281,7 +281,7 @@ class AppStack(Stack):
                 app_security_group=app_props.network.security_groups.app,
                 alb=app_props.network.public_alb.alb,
                 alb_security_group=app_props.network.security_groups.alb,
-                certificate_arn=app_props.dns.dns.certificate_arn,
+                certificate_arn=app_props.dns.active.certificate_arn,
                 ecr_repo_arn=app_props.identity.ecr.repository_arn,
                 ecr_repo_name=app_props.identity.ecr.repository.repository_name,
                 ecr_cmk_arn=app_props.identity.ecr.encryption_cmk_arn,
@@ -305,7 +305,7 @@ class AppStack(Stack):
                 rds_endpoint=app_props.data.postgres.endpoint_address,
                 rds_port=app_props.data.postgres.endpoint_port,
                 logs_cmk_arn=app_props.observability.logs_cmk.key.key_arn,
-                app_url=f"https://{env_config.domain}",
+                app_url=f"https://{env_config.active_domain}",
                 temporal_frontend_endpoint=app_props.temporal.cluster.frontend_endpoint,
                 # Matches the SNI used by WorkersStack + MaintenanceStack;
                 # set once in TemporalStack's `mtls_dns_suffix` default.
@@ -335,7 +335,7 @@ class AppStack(Stack):
         # production hostname on :8443 (same ACM cert covers it). In
         # staging we also accept the IP-only path so the hook can
         # reach the listener even when DNS hasn't propagated yet.
-        test_listener_url = f"https://{app_props.dns.dns.hosted_zone_name}:8443"
+        test_listener_url = f"https://{app_props.dns.active.hosted_zone_name}:8443"
 
         self.blue_green = BlueGreenDeployment(
             self,
@@ -376,8 +376,8 @@ class AppStack(Stack):
         self.alb_alias_record = route53.ARecord(
             self,
             "AlbAliasRecord",
-            zone=app_props.dns.dns.hosted_zone,
-            record_name=app_props.dns.dns.hosted_zone_name,
+            zone=app_props.dns.active.hosted_zone,
+            record_name=app_props.dns.active.hosted_zone_name,
             target=alb_alias_target,
         )
         # Mirror the apex on `www.` so users typing the www prefix land
@@ -385,8 +385,8 @@ class AppStack(Stack):
         self.www_alias_record = route53.ARecord(
             self,
             "WwwAliasRecord",
-            zone=app_props.dns.dns.hosted_zone,
-            record_name=f"www.{app_props.dns.dns.hosted_zone_name}",
+            zone=app_props.dns.active.hosted_zone,
+            record_name=f"www.{app_props.dns.active.hosted_zone_name}",
             target=alb_alias_target,
         )
 
